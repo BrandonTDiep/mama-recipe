@@ -129,7 +129,7 @@ class _MyHomePageState extends State<MyHomePage> {
               onTap: () {
                 Navigator.push(
                   context,
-                  MaterialPageRoute(builder: (context) => const BreakfastPage(title: "My Page No. 3")),
+                  MaterialPageRoute(builder: (context) => const BreakfastPage()),
                 );
               },
             ),
