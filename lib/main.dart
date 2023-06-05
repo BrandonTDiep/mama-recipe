@@ -2,6 +2,7 @@ import 'package:easy_search_bar/easy_search_bar.dart';
 import 'package:flutter/material.dart';
 import 'package:mama_recipe_app/shopping_list.dart';
 
+
 void main() {
   runApp(const MyApp());
 }
@@ -38,6 +39,7 @@ class MyHomePage extends StatefulWidget {
 class _MyHomePageState extends State<MyHomePage> {
   String searchValue = '';
   final List<String> _suggestions = ['Apple', 'Pear','Grape'];
+  final List<String> meals = ["Breakfast", "Lunch", "Dinner"];
 
   Future<List<String>> _fetchSuggestions(String searchValue) async {
     return _suggestions.where ((element){
@@ -46,18 +48,6 @@ class _MyHomePageState extends State<MyHomePage> {
   }
 
   int _selectedIndex = 0;
-  static const TextStyle optionStyle =
-  TextStyle(fontSize: 30, fontWeight: FontWeight.bold);
-  static const List<Widget> _widgetOptions = <Widget>[
-    Text(
-      'Index 0: Home',
-      style: optionStyle,
-    ),
-    Text(
-      'Index 1: Business',
-      style: optionStyle,
-    ),
-  ];
 
   void _onItemTapped(int index) {
     setState(() {
@@ -84,19 +74,23 @@ class _MyHomePageState extends State<MyHomePage> {
           asyncSuggestions: (value) async =>
               await _fetchSuggestions(searchValue)
         ),
-      body: const Center(
+      body:  Center(
         child: Column(
           mainAxisAlignment: MainAxisAlignment.center,
-          children: <Widget>[
-            Text(
-              'Breakfast',
+          children: [
+            Container(
+                margin: EdgeInsets.only(bottom: 20),
+                child: buildBreakfastCard()
             ),
-            Text(
-              'Lunch',
-            ),
-            Text(
-              'Dinner',
-            ),
+            Container(
+                margin: EdgeInsets.only(bottom: 20),
+
+                child: buildLunchCard()),
+            Container(
+                margin: EdgeInsets.only(bottom: 20),
+
+                child: buildDinnerCard())
+
           ],
         ),
       ),
@@ -109,7 +103,7 @@ class _MyHomePageState extends State<MyHomePage> {
           ),
           BottomNavigationBarItem(
             icon: Icon(Icons.create_sharp),
-            label: 'Business',
+            label: 'Shopping List',
             backgroundColor: Colors.red
           ),
         ],
@@ -119,6 +113,101 @@ class _MyHomePageState extends State<MyHomePage> {
       ),
     );
   }
+  Widget buildBreakfastCard() {
+    return Card(
+      clipBehavior: Clip.antiAlias,
+      shape: RoundedRectangleBorder(
+        borderRadius: BorderRadius.circular(24),
+      ),
+      child: Stack(
+        alignment: Alignment.center,
+        children: [
+          Ink.image(
+            image: NetworkImage(
+              'https://assets-westchestermagazine-com.s3-accelerate.amazonaws.com/2020/09/all-day-breakfast-in-westchester.jpg',
+            ),
+            child: InkWell(
+              onTap: () {},
+            ),
+            height: 170,
+            fit: BoxFit.cover,
+          ),
+          Text(
+            'Breakfast',
+            style: TextStyle(
+              fontWeight: FontWeight.bold,
+              color: Colors.white,
+              fontSize: 30,
+            ),
+          ),
+        ],
+      ),
+    );
+  }
+  Widget buildLunchCard() {
+    return Card(
+      clipBehavior: Clip.antiAlias,
+      shape: RoundedRectangleBorder(
+        borderRadius: BorderRadius.circular(24),
+      ),
+      child: Stack(
+        alignment: Alignment.center,
+        children: [
+          Ink.image(
+            image: NetworkImage(
+              'https://popmenucloud.com/lmkrqzuh/4691eba0-150b-40f5-b335-b2ba15b57424',
+            ),
+            child: InkWell(
+              onTap: () {},
+            ),
+            height: 170,
+            fit: BoxFit.cover,
+          ),
+          Text(
+            'Lunch',
+            style: TextStyle(
+              fontWeight: FontWeight.bold,
+              color: Colors.white,
+              fontSize: 30,
+            ),
+          ),
+        ],
+      ),
+    );
+  }
+  Widget buildDinnerCard() {
+    return Card(
+      clipBehavior: Clip.antiAlias,
+      shape: RoundedRectangleBorder(
+        borderRadius: BorderRadius.circular(24),
+      ),
+      child: Stack(
+        alignment: Alignment.center,
+        children: [
+          Ink.image(
+            image: NetworkImage(
+              'https://www.newzealand.com/assets/Operator-Database/img-1637315723-7218-10523-tss-walter-peak_september2018_72dpi_070__aWxvdmVrZWxseQo_CropResizeWzk0MCw1MzAsNzUsImpwZyJd.jpg',
+            ),
+            child: InkWell(
+              onTap: () {},
+            ),
+            height: 170,
+            fit: BoxFit.cover,
+          ),
+          Text(
+            'Dinner',
+            style: TextStyle(
+              fontWeight: FontWeight.bold,
+              color: Colors.white,
+              fontSize: 30,
+            ),
+          ),
+        ],
+      ),
+    );
+  }
+
+
 }
 
 
