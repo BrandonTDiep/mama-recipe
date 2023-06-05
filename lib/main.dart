@@ -1,5 +1,8 @@
 import 'package:easy_search_bar/easy_search_bar.dart';
 import 'package:flutter/material.dart';
+import 'package:mama_recipe_app/breakfast_page.dart';
+import 'package:mama_recipe_app/dinner_page.dart';
+import 'package:mama_recipe_app/lunch_page.dart';
 import 'package:mama_recipe_app/shopping_list.dart';
 
 
@@ -78,18 +81,12 @@ class _MyHomePageState extends State<MyHomePage> {
         child: Column(
           mainAxisAlignment: MainAxisAlignment.center,
           children: [
+            buildBreakfastCard(),
             Container(
-                margin: EdgeInsets.only(bottom: 20),
-                child: buildBreakfastCard()
+                margin: EdgeInsets.only(top: 25, bottom: 25),
+                child: buildLunchCard()
             ),
-            Container(
-                margin: EdgeInsets.only(bottom: 20),
-
-                child: buildLunchCard()),
-            Container(
-                margin: EdgeInsets.only(bottom: 20),
-
-                child: buildDinnerCard())
+            buildDinnerCard()
 
           ],
         ),
@@ -123,16 +120,21 @@ class _MyHomePageState extends State<MyHomePage> {
         alignment: Alignment.center,
         children: [
           Ink.image(
-            image: NetworkImage(
+            image: const NetworkImage(
               'https://assets-westchestermagazine-com.s3-accelerate.amazonaws.com/2020/09/all-day-breakfast-in-westchester.jpg',
             ),
-            child: InkWell(
-              onTap: () {},
-            ),
-            height: 170,
+            height: 180,
             fit: BoxFit.cover,
+            child: InkWell(
+              onTap: () {
+                Navigator.push(
+                  context,
+                  MaterialPageRoute(builder: (context) => const BreakfastPage(title: "My Page No. 3")),
+                );
+              },
+            ),
           ),
-          Text(
+          const Text(
             'Breakfast',
             style: TextStyle(
               fontWeight: FontWeight.bold,
@@ -154,16 +156,21 @@ class _MyHomePageState extends State<MyHomePage> {
         alignment: Alignment.center,
         children: [
           Ink.image(
-            image: NetworkImage(
+            image: const NetworkImage(
               'https://popmenucloud.com/lmkrqzuh/4691eba0-150b-40f5-b335-b2ba15b57424',
             ),
-            child: InkWell(
-              onTap: () {},
-            ),
-            height: 170,
+            height: 180,
             fit: BoxFit.cover,
+            child: InkWell(
+              onTap: () {
+                Navigator.push(
+                  context,
+                  MaterialPageRoute(builder: (context) => const LunchPage(title: "My Page No. 3")),
+                );
+              },
+            ),
           ),
-          Text(
+          const Text(
             'Lunch',
             style: TextStyle(
               fontWeight: FontWeight.bold,
@@ -185,16 +192,21 @@ class _MyHomePageState extends State<MyHomePage> {
         alignment: Alignment.center,
         children: [
           Ink.image(
-            image: NetworkImage(
+            image: const NetworkImage(
               'https://www.newzealand.com/assets/Operator-Database/img-1637315723-7218-10523-tss-walter-peak_september2018_72dpi_070__aWxvdmVrZWxseQo_CropResizeWzk0MCw1MzAsNzUsImpwZyJd.jpg',
             ),
-            child: InkWell(
-              onTap: () {},
-            ),
-            height: 170,
+            height: 180,
             fit: BoxFit.cover,
+            child: InkWell(
+              onTap: () {
+                Navigator.push(
+                  context,
+                  MaterialPageRoute(builder: (context) => const DinnerPage(title: "My Page No. 3")),
+                );
+              },
+            ),
           ),
-          Text(
+          const Text(
             'Dinner',
             style: TextStyle(
               fontWeight: FontWeight.bold,
