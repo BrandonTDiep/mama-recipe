@@ -4,8 +4,6 @@ import 'package:mama_recipe_app/breakfast_recipes.dart';
 import 'package:mama_recipe_app/main.dart';
 import 'package:mama_recipe_app/shopping_list.dart';
 import 'breakfast_data.dart';
-import 'dart:math';
-
 
 class BreakfastPage extends StatefulWidget {
   const BreakfastPage({Key? key}) : super(key: key);
@@ -75,8 +73,48 @@ class _BreakfastPageState extends State<BreakfastPage> {
       body: ListView.builder(
           itemCount: breakfastRecipes.length,
           itemBuilder: (BuildContext context, int index) {
+            return  Card(
+              clipBehavior: Clip.antiAlias,
+              shape: RoundedRectangleBorder(
+                borderRadius: BorderRadius.circular(24),
+              ),
+              child: Stack(
+                alignment: Alignment.bottomLeft,
+                children: [
+                  Ink.image(
+                    image:  NetworkImage(breakfastRecipes[index].imgUrl),
+                    height: 150,
+                    fit: BoxFit.cover,
+                    child: InkWell(
+                      onTap: () {
+                        Navigator.push(
+                          context,
+                          MaterialPageRoute(builder: (context) => BreakfastRecipesPage(breakfastRecipes[index])),
+                        );
+                      },
+                    ),
+                  ),
+                  Container(
+                    decoration: BoxDecoration(
+                      color: Colors.black.withOpacity(0.5),
+                      borderRadius: BorderRadius.circular(10)
+                    ),
+                    margin: EdgeInsets.only(left: 8, bottom: 5),
+                    child: Text(
+                      breakfastRecipes[index].name,
+                      style: const TextStyle(
+                        fontWeight: FontWeight.bold,
+                        color: Colors.white,
+                        fontSize: 20,
+                      ),
+                    ),
+                  ),
+                ],
+              ),
+            );
+          }
+          ),
 
-          }),
       bottomNavigationBar: BottomNavigationBar(
         items: const <BottomNavigationBarItem>[
           BottomNavigationBarItem(
@@ -92,39 +130,6 @@ class _BreakfastPageState extends State<BreakfastPage> {
         selectedItemColor: Colors.red,
         //backgroundColor: Colors.red,
         onTap: _onItemTapped,
-      ),
-    );
-  }
-  Widget buildBreakfastMealCard() {
-    return Card(
-      clipBehavior: Clip.antiAlias,
-      shape: RoundedRectangleBorder(
-        borderRadius: BorderRadius.circular(24),
-      ),
-      child: Stack(
-        alignment: Alignment.center,
-        children: [
-          Ink.image(
-            image: const NetworkImage(
-              'https://assets-westchestermagazine-com.s3-accelerate.amazonaws.com/2020/09/all-day-breakfast-in-westchester.jpg',
-            ),
-            height: 180,
-            fit: BoxFit.cover,
-            child: InkWell(
-              onTap: () {
-
-              },
-            ),
-          ),
-          const Text(
-            'Breakfast',
-            style: TextStyle(
-              fontWeight: FontWeight.bold,
-              color: Colors.white,
-              fontSize: 30,
-            ),
-          ),
-        ],
       ),
     );
   }
