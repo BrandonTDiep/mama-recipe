@@ -18,7 +18,6 @@ class MyApp extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
-      title: 'Flutter Demo',
       theme: ThemeData(
         colorScheme: ColorScheme.fromSeed(seedColor: Colors.red),
         useMaterial3: true,
@@ -26,14 +25,13 @@ class MyApp extends StatelessWidget {
           color: Colors.white
         )
       ),
-      home: const MyHomePage(title: 'Home'),
+      home: MyHomePage(),
     );
   }
 }
 
 class MyHomePage extends StatefulWidget {
-  const MyHomePage({super.key, required this.title});
-  final String title;
+  const MyHomePage({super.key});
 
   @override
   State<MyHomePage> createState() => _MyHomePageState();
@@ -58,7 +56,8 @@ class _MyHomePageState extends State<MyHomePage> {
       if(_selectedIndex == 1){
         Navigator.push(
           context,
-          MaterialPageRoute(builder: (context) => const ShoppingListPage(title: "My Page No. 3")),
+          MaterialPageRoute(builder: (context) => const ShoppingListPage()
+          ),
         );
       }
     });
@@ -69,7 +68,7 @@ class _MyHomePageState extends State<MyHomePage> {
     return Scaffold(
       appBar: EasySearchBar(
           backgroundColor: Colors.red,
-          title: Text(widget.title, style: const TextStyle(
+          title: const Text("Home", style: TextStyle(
               color: Colors.white,
               fontWeight: FontWeight.bold
           ),),
@@ -77,35 +76,39 @@ class _MyHomePageState extends State<MyHomePage> {
           asyncSuggestions: (value) async =>
               await _fetchSuggestions(searchValue)
         ),
-      body:  Center(
-        child: Column(
-          mainAxisAlignment: MainAxisAlignment.center,
-          children: [
-            buildBreakfastCard(),
-            Container(
-                margin: EdgeInsets.only(top: 25, bottom: 25),
-                child: buildLunchCard()
-            ),
-            buildDinnerCard()
+      body: ListView(
+        children: [
+          Column(
+            mainAxisAlignment: MainAxisAlignment.center,
+            children: [
+              Container(
+                  margin: EdgeInsets.only(top: 15),
+                  child: buildBreakfastCard()
+              ),
+              Container(
+                  margin: EdgeInsets.only(top: 25, bottom: 25),
+                  child: buildLunchCard()
+              ),
+              buildDinnerCard()
 
-          ],
-        ),
+            ],
+          ),
+        ],
       ),
       bottomNavigationBar: BottomNavigationBar(
         items: const <BottomNavigationBarItem>[
           BottomNavigationBarItem(
             icon: Icon(Icons.home),
             label: 'Home',
-            backgroundColor: Colors.red
           ),
           BottomNavigationBarItem(
             icon: Icon(Icons.create_sharp),
             label: 'Shopping List',
-            backgroundColor: Colors.red
           ),
         ],
         currentIndex: _selectedIndex,
-        selectedItemColor: Colors.amber[800],
+        selectedItemColor: Colors.red,
+        //backgroundColor: Colors.red,
         onTap: _onItemTapped,
       ),
     );
@@ -165,7 +168,7 @@ class _MyHomePageState extends State<MyHomePage> {
               onTap: () {
                 Navigator.push(
                   context,
-                  MaterialPageRoute(builder: (context) => const LunchPage(title: "My Page No. 3")),
+                  MaterialPageRoute(builder: (context) => const LunchPage()),
                 );
               },
             ),

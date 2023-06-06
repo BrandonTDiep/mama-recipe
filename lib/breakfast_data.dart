@@ -1,24 +1,32 @@
 class Breakfast {
   String name;
-  String phone;
-  String imageUrl;
-  String type;
+  String imgUrl;
+  String cookTime;
+  String servings;
+  String ingredients;
+  String instructions;
+  String description;
 
-  Breakfast(this.name, this.phone, this.imageUrl, this.type);
+  Breakfast(this.name, this. imgUrl, this.cookTime, this.servings,
+      this.ingredients, this.instructions, this.description);
 
   String get breakfastName {
     return name;
   }
 
-  String get breakfastPhone {
-    return phone;
-  }
-
   String get breakfastImageUrl {
-    return imageUrl;
+    return imgUrl;
   }
 
-  String get breakfastType {
-    return type;
+  String get breakfastCookTime {
+    return cookTime;
+  }
+
+  String get breakfastServings {
+    return servings;
+  }
+
+  String get breakfastIngredients {
+    return ingredients;
   }
 }

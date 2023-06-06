@@ -17,9 +17,13 @@ class _BreakfastRecipesPageState extends State<BreakfastRecipesPage> {
       body: Column(
         children: [
           Text(widget.breakfast.name),
-          Text(widget.breakfast.phone),
-          Text(widget.breakfast.type),
-          Text(widget.breakfast.imageUrl),
+          Text(widget.breakfast.imgUrl),
+          Text(widget.breakfast.cookTime),
+          Text(widget.breakfast.servings),
+          Text(widget.breakfast.ingredients),
+          Text(widget.breakfast.instructions),
+          Text(widget.breakfast.description),
+
         ],
       ),
     );
