@@ -27,12 +27,12 @@ class _BreakfastPageState extends State<BreakfastPage> {
 
   _BreakfastPageState() {
     Breakfast b1 = Breakfast("Pho",
-        "https://images.squarespace-cdn.com/content/v1/56cf7cfb0442626af6cd8f70/1617248613571-Z6NLJJ5GYBT8Z9AGTO6C/Pho+Above+%5Bmobile%5D.jpg?format=1000w",
-        "1 hr",  "2", "Broth, noodles, meat", "Step 1: Broil Broth Step 2: Cook meat");
+        "https://media.timeout.com/images/105950096/750/422/image.jpg",
+        "1 hr",  "2", "Broth\nnoodles\nmeat", "Step 1: Broil Broth\nStep 2: Cook meat");
     Breakfast b2 = Breakfast("Chicken Rice",
         "https://www.thespruceeats.com/thmb/_JsWPTIIvL9hvlnkyrqCfjzJf34=/1500x0/filters:no_upscale():max_bytes(150000):strip_icc()/hainanese-chicken-rice-very-detailed-recipe-3030408-hero-01-91c4d305f0ae400198cf7c63d8b7261f.jpg",
         "30 minutes",
-        "4", "rice, chicken", "Step 1: Cook Rice Step 2: Cook chicken");
+        "4", "rice\nchicken", "Step 1: Cook Rice\nStep 2: Cook chicken");
 
     breakfastRecipes = [b1, b2];
   }

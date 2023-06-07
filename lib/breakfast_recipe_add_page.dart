@@ -4,8 +4,7 @@ import 'package:image_picker/image_picker.dart';
 import 'dart:io';
 
 import 'breakfast_data.dart';
-import 'breakfast_page.dart';
-import 'breakfast_recipes.dart';
+
 
 
 
@@ -215,9 +214,12 @@ class _BreakfastRecipeAddPageState extends State<BreakfastRecipeAddPage> {
                 ),
               ),
             ),
-            ElevatedButton(
-                onPressed: createBreakfastRecipe,
-                child: Text("Create Recipe")
+            Container(
+              margin: EdgeInsets.only(top: 30),
+              child: ElevatedButton(
+                  onPressed: createBreakfastRecipe,
+                  child: Text("Create Recipe")
+              ),
             )
           ],
       ),
