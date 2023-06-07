@@ -21,8 +21,7 @@ class _BreakfastRecipesPageState extends State<BreakfastRecipesPage> {
           Text(widget.breakfast.cookTime),
           Text(widget.breakfast.servings),
           Text(widget.breakfast.ingredients),
-          Text(widget.breakfast.instructions),
-          Text(widget.breakfast.description),
+          Text(widget.breakfast.directions),
 
         ],
       ),

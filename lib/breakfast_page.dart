@@ -1,9 +1,12 @@
 import 'package:easy_search_bar/easy_search_bar.dart';
 import 'package:flutter/material.dart';
+import 'package:mama_recipe_app/breakfast_recipe_add_page.dart';
 import 'package:mama_recipe_app/breakfast_recipes.dart';
 import 'package:mama_recipe_app/main.dart';
 import 'package:mama_recipe_app/shopping_list.dart';
 import 'breakfast_data.dart';
+import 'package:shared_preferences/shared_preferences.dart';
+
 
 class BreakfastPage extends StatefulWidget {
   const BreakfastPage({Key? key}) : super(key: key);
@@ -14,15 +17,43 @@ class BreakfastPage extends StatefulWidget {
 
 class _BreakfastPageState extends State<BreakfastPage> {
   int _selectedIndex = 0;
+  int _counter = 0;
 
   String searchValue = '';
   final List<String> _suggestions = ['Apple', 'Pear','Grape'];
   final List<String> meals = ["Breakfast", "Lunch", "Dinner"];
 
+  List<Breakfast> breakfastRecipes = [];
+
+  _BreakfastPageState() {
+    Breakfast b1 = Breakfast("Pho",
+        "https://images.squarespace-cdn.com/content/v1/56cf7cfb0442626af6cd8f70/1617248613571-Z6NLJJ5GYBT8Z9AGTO6C/Pho+Above+%5Bmobile%5D.jpg?format=1000w",
+        "1 hr",  "2", "Broth, noodles, meat", "Step 1: Broil Broth Step 2: Cook meat");
+    Breakfast b2 = Breakfast("Chicken Rice",
+        "https://www.thespruceeats.com/thmb/_JsWPTIIvL9hvlnkyrqCfjzJf34=/1500x0/filters:no_upscale():max_bytes(150000):strip_icc()/hainanese-chicken-rice-very-detailed-recipe-3030408-hero-01-91c4d305f0ae400198cf7c63d8b7261f.jpg",
+        "30 minutes",
+        "4", "rice, chicken", "Step 1: Cook Rice Step 2: Cook chicken");
+
+    breakfastRecipes = [b1, b2];
+  }
+
   Future<List<String>> _fetchSuggestions(String searchValue) async {
     return _suggestions.where ((element){
       return element.toLowerCase().contains(searchValue.toLowerCase());
     }).toList();
+  }
+
+  Future<void> _addRecipe() async {
+    final updatedRecipe = await Navigator.push(
+      context,
+      MaterialPageRoute(builder: (context) =>  BreakfastRecipeAddPage(breakfastRecipes)),
+    );
+
+    if(updatedRecipe != null) {
+      setState(() {
+        breakfastRecipes = updatedRecipe;
+      });
+    }
   }
 
   void _onItemTapped(int index) {
@@ -44,25 +75,12 @@ class _BreakfastPageState extends State<BreakfastPage> {
     });
   }
 
-  List<Breakfast> breakfastRecipes = [];
-
-  _BreakfastPageState() {
-    Breakfast b1 = Breakfast("Pho",
-        "https://images.squarespace-cdn.com/content/v1/56cf7cfb0442626af6cd8f70/1617248613571-Z6NLJJ5GYBT8Z9AGTO6C/Pho+Above+%5Bmobile%5D.jpg?format=1000w",
-        "1 hr",  "2", "Broth, noodles, meat", "Step 1: Broil Broth Step 2: Cook meat","A vietnamese noodle soup");
-    Breakfast b2 = Breakfast("Chicken Rice",
-        "https://www.thespruceeats.com/thmb/_JsWPTIIvL9hvlnkyrqCfjzJf34=/1500x0/filters:no_upscale():max_bytes(150000):strip_icc()/hainanese-chicken-rice-very-detailed-recipe-3030408-hero-01-91c4d305f0ae400198cf7c63d8b7261f.jpg",
-        "30 mins",
-        "4", "rice, chicken", "Step 1: Cook Rice Step 2: Cook chicken","A chicken and rice dish");
-
-    breakfastRecipes = [b1, b2];
-  }
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: EasySearchBar(
           backgroundColor: Colors.red,
-          title: const Text("Breakfast", style: TextStyle(
+          title: const Text("Breakfast Recipes", style: TextStyle(
               color: Colors.white,
               fontWeight: FontWeight.bold
           ),),
@@ -73,6 +91,7 @@ class _BreakfastPageState extends State<BreakfastPage> {
       body: ListView.builder(
           itemCount: breakfastRecipes.length,
           itemBuilder: (BuildContext context, int index) {
+            print(breakfastRecipes.length);
             return  Card(
               clipBehavior: Clip.antiAlias,
               shape: RoundedRectangleBorder(
@@ -94,20 +113,40 @@ class _BreakfastPageState extends State<BreakfastPage> {
                       },
                     ),
                   ),
-                  Container(
-                    decoration: BoxDecoration(
-                      color: Colors.black.withOpacity(0.5),
-                      borderRadius: BorderRadius.circular(10)
-                    ),
-                    margin: EdgeInsets.only(left: 8, bottom: 5),
-                    child: Text(
-                      breakfastRecipes[index].name,
-                      style: const TextStyle(
-                        fontWeight: FontWeight.bold,
-                        color: Colors.white,
-                        fontSize: 20,
+                  Row(
+                    children: [
+                      Container(
+                        decoration: BoxDecoration(
+                            color: Colors.black.withOpacity(0.5),
+                            borderRadius: BorderRadius.circular(10)
+                        ),
+                        margin: EdgeInsets.only(left: 8, bottom: 5),
+                        child: Text(
+                          breakfastRecipes[index].name,
+                          style: const TextStyle(
+                            fontWeight: FontWeight.bold,
+                            color: Colors.white,
+                            fontSize: 22,
+                          ),
+                        ),
                       ),
-                    ),
+                      const Spacer(),
+                      Container(
+                        decoration: BoxDecoration(
+                            color: Colors.black.withOpacity(0.5),
+                            borderRadius: BorderRadius.circular(10)
+                        ),
+                        margin: EdgeInsets.only(right: 8, bottom: 5),
+                        child: Text(
+                          breakfastRecipes[index].cookTime,
+                          style: const TextStyle(
+                            fontWeight: FontWeight.bold,
+                            color: Colors.white,
+                            fontSize: 22,
+                          ),
+                        ),
+                      ),
+                    ],
                   ),
                 ],
               ),
@@ -131,6 +170,11 @@ class _BreakfastPageState extends State<BreakfastPage> {
         //backgroundColor: Colors.red,
         onTap: _onItemTapped,
       ),
+      floatingActionButton: FloatingActionButton(
+        onPressed: _addRecipe,
+        tooltip: 'Add Recipe',
+        child: const Icon(Icons.add),
+      ), // Th
     );
   }
 }

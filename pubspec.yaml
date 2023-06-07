@@ -37,6 +37,12 @@ dependencies:
   cupertino_icons: ^1.0.2
   flutter_native_splash: ^2.3.0
   easy_search_bar: ^2.5.0
+  image_picker: ^0.8.7+5
+  path_provider: ^2.0.15
+  shared_preferences: ^2.1.1
+
+
+
 
 
 

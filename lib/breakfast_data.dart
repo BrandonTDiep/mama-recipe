@@ -4,11 +4,10 @@ class Breakfast {
   String cookTime;
   String servings;
   String ingredients;
-  String instructions;
-  String description;
+  String directions;
 
   Breakfast(this.name, this. imgUrl, this.cookTime, this.servings,
-      this.ingredients, this.instructions, this.description);
+      this.ingredients, this.directions);
 
   String get breakfastName {
     return name;
@@ -28,5 +27,9 @@ class Breakfast {
 
   String get breakfastIngredients {
     return ingredients;
+  }
+
+  String get breakfastDirections {
+    return directions;
   }
 }
