@@ -1,6 +1,6 @@
 import 'package:easy_search_bar/easy_search_bar.dart';
 import 'package:flutter/material.dart';
-import 'package:mama_recipe_app/breakfast_recipes.dart';
+import 'package:mama_recipe_app/breakfast_recipe.dart';
 import 'package:mama_recipe_app/main.dart';
 import 'package:mama_recipe_app/shopping_list.dart';
 import 'breakfast_data.dart';

@@ -1,23 +1,18 @@
-import 'package:path_provider/path_provider.dart';
+import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 import 'package:image_picker/image_picker.dart';
 import 'dart:io';
-
 import 'breakfast_data.dart';
 
-
-
-
 class BreakfastRecipeAddPage extends StatefulWidget {
-  final List<Breakfast> breakfastRecipes;
-  const BreakfastRecipeAddPage(this.breakfastRecipes, {super.key});
+  const BreakfastRecipeAddPage({super.key});
 
   @override
   State<BreakfastRecipeAddPage> createState() => _BreakfastRecipeAddPageState();
 }
 
 class _BreakfastRecipeAddPageState extends State<BreakfastRecipeAddPage> {
-  final TextEditingController recipeNameController = TextEditingController();
+  final TextEditingController nameController = TextEditingController();
   final TextEditingController timeController = TextEditingController();
   final TextEditingController servingsController = TextEditingController();
   final TextEditingController ingredientsController = TextEditingController();
@@ -25,26 +20,27 @@ class _BreakfastRecipeAddPageState extends State<BreakfastRecipeAddPage> {
 
   void createBreakfastRecipe(){
     String imagePath = _image.path;
-    Breakfast newRecipe = Breakfast(
-      recipeNameController.text,
-        imagePath,
-      timeController.text,
-      servingsController.text,
-      ingredientsController.text,
-      directionsController.text
-    );
-
-    widget.breakfastRecipes.add(newRecipe);
-
-    Navigator.pop(
-      context, widget.breakfastRecipes);
+    FirebaseFirestore.instance.collection("breakfast-recipes").add(
+        {
+          "name" : nameController.text,
+          "time" : timeController.text,
+          "servings" : servingsController.text,
+          "ingredients" : ingredientsController.text,
+          "directions" : directionsController.text,
+          "image" : imagePath,
+        }
+    ).then((value){
+      print("Successfully added the recipe.");
+    }).catchError((error){
+      print("Failed to add the recipe.");
+      print(error);
+    });
   }
 
   late File _image;
   final imagePicker = ImagePicker();
-
   Future<void> _selectGallery() async {
-    final image = await imagePicker.pickImage(source: ImageSource.camera);
+    final image = await imagePicker.pickImage(source: ImageSource.gallery);
     if (image == null) return;
     setState(() {
        _image = File(image.path);
@@ -96,7 +92,7 @@ class _BreakfastRecipeAddPageState extends State<BreakfastRecipeAddPage> {
                 width: 350,
                 height: 50,
                 child: TextField(
-                  controller: recipeNameController,
+                  controller: nameController,
                   decoration: const InputDecoration(
                     border: OutlineInputBorder(),
                     hintText: 'Recipe Name',

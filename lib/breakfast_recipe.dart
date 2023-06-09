@@ -1,16 +1,16 @@
 import 'package:flutter/material.dart';
 import 'breakfast_data.dart';
 
-class BreakfastRecipesPage extends StatefulWidget {
+class BreakfastRecipePage extends StatefulWidget {
   final Breakfast breakfast;
 
-  BreakfastRecipesPage(this.breakfast);
+  BreakfastRecipePage(this.breakfast);
 
   @override
-  State<BreakfastRecipesPage> createState() => _BreakfastRecipesPageState();
+  State<BreakfastRecipePage> createState() => _BreakfastRecipePageState();
 }
 
-class _BreakfastRecipesPageState extends State<BreakfastRecipesPage> {
+class _BreakfastRecipePageState extends State<BreakfastRecipePage> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -65,7 +65,7 @@ class _BreakfastRecipesPageState extends State<BreakfastRecipesPage> {
                       Container(
                         alignment: Alignment.centerLeft,
                         child: Text(
-                          widget.breakfast.cookTime,
+                          widget.breakfast.time,
                           style: const TextStyle(
                             fontSize: 16,
                               fontWeight: FontWeight.bold

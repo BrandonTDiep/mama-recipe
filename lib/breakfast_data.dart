@@ -1,12 +1,12 @@
 class Breakfast {
   String name;
   String imgUrl;
-  String cookTime;
+  String time;
   String servings;
   String ingredients;
   String directions;
 
-  Breakfast(this.name, this. imgUrl, this.cookTime, this.servings,
+  Breakfast(this.name, this. imgUrl, this.time, this.servings,
       this.ingredients, this.directions);
 
   String get breakfastName {
@@ -18,7 +18,7 @@ class Breakfast {
   }
 
   String get breakfastCookTime {
-    return cookTime;
+    return time;
   }
 
   String get breakfastServings {
