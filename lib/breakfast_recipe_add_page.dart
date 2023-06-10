@@ -2,7 +2,6 @@ import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 import 'package:image_picker/image_picker.dart';
 import 'dart:io';
-import 'breakfast_data.dart';
 
 class BreakfastRecipeAddPage extends StatefulWidget {
   const BreakfastRecipeAddPage({super.key});
@@ -45,14 +44,10 @@ class _BreakfastRecipeAddPageState extends State<BreakfastRecipeAddPage> {
     if (image == null) return;
     setState(() {
        _image = File(image.path);
-       print(image.path);
     });
 }
   @override
   Widget build(BuildContext context) {
-    iconTheme: const IconThemeData(
-        color: Colors.white
-    );
     return Scaffold(
       appBar: AppBar(
         iconTheme: const IconThemeData(
@@ -67,14 +62,21 @@ class _BreakfastRecipeAddPageState extends State<BreakfastRecipeAddPage> {
       body: ListView(
           children: [
             Container(
-              height: 80,
-              margin: const EdgeInsets.only(top: 15),
-              child: ElevatedButton(
-                  onPressed: _selectGallery,
-                  child: const Icon(Icons.camera_alt),
-                  ),
+              margin: const EdgeInsets.only(top: 12),
+              child: const Text("New Recipe", textAlign: TextAlign.center, style: TextStyle(
+                fontWeight: FontWeight.bold,
+                fontSize: 20,
+              ),),
             ),
-
+            Container(
+              height: 60,
+              margin: const EdgeInsets.only(top: 10),
+              child: ElevatedButton.icon(
+                onPressed: _selectGallery,
+                icon: const Icon(Icons.camera_alt),
+                label: const Text("Add a Photo"),
+              ),
+            ),
             Container(
               margin: const EdgeInsets.only(left: 22, top: 15),
               alignment: Alignment.centerLeft,
@@ -212,10 +214,10 @@ class _BreakfastRecipeAddPageState extends State<BreakfastRecipeAddPage> {
               ),
             ),
             Container(
-              margin: EdgeInsets.only(top: 30),
+              margin: const EdgeInsets.only(top: 20),
               child: ElevatedButton(
-                  onPressed: createBreakfastRecipe,
-                  child: Text("Create Recipe")
+                onPressed: createBreakfastRecipe,
+                child: const Text("Create Recipe"),
               ),
             )
           ],

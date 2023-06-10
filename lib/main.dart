@@ -28,6 +28,9 @@ class MyApp extends StatelessWidget {
         useMaterial3: true,
         iconTheme: const IconThemeData(
           color: Colors.white
+        ),
+        bottomNavigationBarTheme: BottomNavigationBarThemeData(
+          backgroundColor: Colors.deepOrange[50]
         )
       ),
       home: MyHomePage(),
@@ -45,7 +48,6 @@ class MyHomePage extends StatefulWidget {
 class _MyHomePageState extends State<MyHomePage> {
   String searchValue = '';
   final List<String> _suggestions = ['Apple', 'Pear','Grape'];
-  final List<String> meals = ["Breakfast", "Lunch", "Dinner"];
 
   Future<List<String>> _fetchSuggestions(String searchValue) async {
     return _suggestions.where ((element){
@@ -75,7 +77,8 @@ class _MyHomePageState extends State<MyHomePage> {
           backgroundColor: Colors.red,
           title: const Text("Mama's Recipes", style: TextStyle(
               color: Colors.white,
-              fontWeight: FontWeight.bold
+              fontWeight: FontWeight.bold,
+            fontSize: 30,
           ),),
           onSearch: (value) => setState(() => searchValue = value),
           asyncSuggestions: (value) async =>
@@ -83,15 +86,21 @@ class _MyHomePageState extends State<MyHomePage> {
         ),
       body: ListView(
         children: [
+          Container(
+            margin: const EdgeInsets.only(top: 5, left: 15),
+            child: const Text("Mealtimes", style: TextStyle(
+                fontWeight: FontWeight.bold,
+              fontSize: 30,
+            ),),
+          ),
           Column(
             mainAxisAlignment: MainAxisAlignment.center,
             children: [
               Container(
-                  margin: EdgeInsets.only(top: 15),
                   child: buildBreakfastCard()
               ),
               Container(
-                  margin: EdgeInsets.only(top: 25, bottom: 25),
+                  margin: EdgeInsets.only(top: 22, bottom: 22),
                   child: buildLunchCard()
               ),
               buildDinnerCard()
@@ -111,7 +120,7 @@ class _MyHomePageState extends State<MyHomePage> {
           ),
         ],
         currentIndex: _selectedIndex,
-        selectedItemColor: Colors.yellow,
+        selectedItemColor: Colors.red,
         //backgroundColor: Colors.red,
         onTap: _onItemTapped,
       ),
@@ -130,7 +139,7 @@ class _MyHomePageState extends State<MyHomePage> {
             image: const NetworkImage(
               'https://assets-westchestermagazine-com.s3-accelerate.amazonaws.com/2020/09/all-day-breakfast-in-westchester.jpg',
             ),
-            height: 180,
+            height: 170,
             fit: BoxFit.cover,
             child: InkWell(
               onTap: () {
@@ -141,12 +150,18 @@ class _MyHomePageState extends State<MyHomePage> {
               },
             ),
           ),
-          const Text(
-            'Breakfast',
-            style: TextStyle(
-              fontWeight: FontWeight.bold,
-              color: Colors.white,
-              fontSize: 30,
+          Container(
+            decoration: BoxDecoration(
+                color: Colors.black.withOpacity(0.5),
+                borderRadius: BorderRadius.circular(12)
+            ),
+            child: const Text(
+              'Breakfast',
+              style: TextStyle(
+                fontWeight: FontWeight.bold,
+                color: Colors.white,
+                fontSize: 30,
+              ),
             ),
           ),
         ],
@@ -166,7 +181,7 @@ class _MyHomePageState extends State<MyHomePage> {
             image: const NetworkImage(
               'https://popmenucloud.com/lmkrqzuh/4691eba0-150b-40f5-b335-b2ba15b57424',
             ),
-            height: 180,
+            height: 170,
             fit: BoxFit.cover,
             child: InkWell(
               onTap: () {
@@ -177,12 +192,18 @@ class _MyHomePageState extends State<MyHomePage> {
               },
             ),
           ),
-          const Text(
-            'Lunch',
-            style: TextStyle(
-              fontWeight: FontWeight.bold,
-              color: Colors.white,
-              fontSize: 30,
+          Container(
+            decoration: BoxDecoration(
+                color: Colors.black.withOpacity(0.5),
+                borderRadius: BorderRadius.circular(12)
+            ),
+            child: const Text(
+              'Lunch',
+              style: TextStyle(
+                fontWeight: FontWeight.bold,
+                color: Colors.white,
+                fontSize: 30,
+              ),
             ),
           ),
         ],
@@ -202,7 +223,7 @@ class _MyHomePageState extends State<MyHomePage> {
             image: const NetworkImage(
               'https://www.newzealand.com/assets/Operator-Database/img-1637315723-7218-10523-tss-walter-peak_september2018_72dpi_070__aWxvdmVrZWxseQo_CropResizeWzk0MCw1MzAsNzUsImpwZyJd.jpg',
             ),
-            height: 180,
+            height: 170,
             fit: BoxFit.cover,
             child: InkWell(
               onTap: () {
@@ -213,12 +234,18 @@ class _MyHomePageState extends State<MyHomePage> {
               },
             ),
           ),
-          const Text(
-            'Dinner',
-            style: TextStyle(
-              fontWeight: FontWeight.bold,
-              color: Colors.white,
-              fontSize: 30,
+          Container(
+            decoration: BoxDecoration(
+                color: Colors.black.withOpacity(0.5),
+                borderRadius: BorderRadius.circular(12)
+            ),
+            child: const Text(
+              'Dinner',
+              style: TextStyle(
+                fontWeight: FontWeight.bold,
+                color: Colors.white,
+                fontSize: 30,
+              ),
             ),
           ),
         ],

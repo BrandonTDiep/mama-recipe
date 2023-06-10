@@ -1,10 +1,11 @@
-import 'package:easy_search_bar/easy_search_bar.dart';
+import 'dart:io';
+
 import 'package:flutter/material.dart';
-import 'package:mama_recipe_app/breakfast_recipe.dart';
+import 'package:mama_recipe_app/breakfast_recipe_add_page.dart';
+import 'package:mama_recipe_app/breakfast_recipe_info.dart';
 import 'package:mama_recipe_app/main.dart';
 import 'package:mama_recipe_app/shopping_list.dart';
-import 'breakfast_data.dart';
-import 'dart:math';
+import 'package:cloud_firestore/cloud_firestore.dart';
 
 
 class LunchPage extends StatefulWidget {
@@ -17,14 +18,39 @@ class LunchPage extends StatefulWidget {
 class _LunchPageState extends State<LunchPage> {
   int _selectedIndex = 0;
 
-  String searchValue = '';
-  final List<String> _suggestions = ['Apple', 'Pear','Grape'];
-  final List<String> meals = ["Breakfast", "Lunch", "Dinner"];
+  var breakfastRecipes = [];
 
-  Future<List<String>> _fetchSuggestions(String searchValue) async {
-    return _suggestions.where ((element){
-      return element.toLowerCase().contains(searchValue.toLowerCase());
-    }).toList();
+  _LunchPageState(){
+    FirebaseFirestore.instance.collection("breakfast-recipes").get()
+        .then((querySnapshot) {
+      print("Successfully load all the recipes");
+      print(querySnapshot);
+      var recipeTmpList = [];
+      querySnapshot.docs.forEach((element){
+        breakfastRecipes.add(element.data());
+        recipeTmpList.add(element.data());
+        print(element.data());
+      });
+      breakfastRecipes = recipeTmpList;
+      setState(() {
+
+      });
+    }).catchError((error) {
+      print("Failed to load all the recipes.");
+      print(error);
+    });
+  }
+
+  void _addRecipe() async {
+    final newRecipe = await Navigator.push(
+      context,
+      MaterialPageRoute(builder: (context) =>  const BreakfastRecipeAddPage()),
+    );
+    if(newRecipe != null){
+      setState(() {
+        breakfastRecipes.add(newRecipe);
+      });
+    }
   }
 
   void _onItemTapped(int index) {
@@ -46,37 +72,87 @@ class _LunchPageState extends State<LunchPage> {
     });
   }
 
-  List<Breakfast> breakfastRecipes = [];
-
-  _BreakfastPageState() {
-    Breakfast b1 = Breakfast("Pho",
-        "https://images.squarespace-cdn.com/content/v1/56cf7cfb0442626af6cd8f70/1617248613571-Z6NLJJ5GYBT8Z9AGTO6C/Pho+Above+%5Bmobile%5D.jpg?format=1000w",
-        "1 hr",  "2", "Broth, noodles, meat", "Step 1: Broil Broth Step 2: Cook meat");
-    Breakfast b2 = Breakfast("Chicken Rice",
-        "https://www.thespruceeats.com/thmb/_JsWPTIIvL9hvlnkyrqCfjzJf34=/1500x0/filters:no_upscale():max_bytes(150000):strip_icc()/hainanese-chicken-rice-very-detailed-recipe-3030408-hero-01-91c4d305f0ae400198cf7c63d8b7261f.jpg",
-        "30 mins",
-        "4", "rice, chicken", "Step 1: Cook Rice Step 2: Cook chicken");
-
-    breakfastRecipes = [b1, b2];
-  }
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: EasySearchBar(
-          backgroundColor: Colors.red,
-          title: const Text("Lunch", style: TextStyle(
-              color: Colors.white,
-              fontWeight: FontWeight.bold
-          ),),
-          onSearch: (value) => setState(() => searchValue = value),
-          asyncSuggestions: (value) async =>
-          await _fetchSuggestions(searchValue)
-      ),
+      appBar: AppBar(
+        iconTheme: const IconThemeData(
+            color: Colors.white
+        ),
+        backgroundColor: Colors.red,
+        title: const Text("Breakfast Recipes", style: TextStyle(
+            color: Colors.white,
+            fontWeight: FontWeight.bold
+        ),),
+      ), //
       body: ListView.builder(
           itemCount: breakfastRecipes.length,
           itemBuilder: (BuildContext context, int index) {
-
-          }),
+            print(breakfastRecipes.length);
+            final String imagePath = '${breakfastRecipes[index]['image']}';
+            return  Container(
+              child: Card(
+                clipBehavior: Clip.antiAlias,
+                shape: RoundedRectangleBorder(
+                  borderRadius: BorderRadius.circular(24),
+                ),
+                child: Stack(
+                  alignment: Alignment.bottomLeft,
+                  children: [
+                    Ink.image(
+                      image:  FileImage(File(imagePath)),
+                      height: 150,
+                      fit: BoxFit.cover,
+                      child: InkWell(
+                        onTap: () {
+                          Navigator.push(
+                            context,
+                            MaterialPageRoute(builder: (context) => BreakfastRecipeInfoPage(breakfastRecipes[index])),
+                          );
+                        },
+                      ),
+                    ),
+                    Column(
+                      crossAxisAlignment: CrossAxisAlignment.start,
+                      children: [
+                        Container(
+                          decoration: BoxDecoration(
+                              color: Colors.black.withOpacity(0.5),
+                              borderRadius: BorderRadius.circular(10)
+                          ),
+                          margin: const EdgeInsets.only(left: 8, bottom: 5),
+                          child: Text(
+                            '${breakfastRecipes[index]['name']}',
+                            style: const TextStyle(
+                              fontWeight: FontWeight.bold,
+                              color: Colors.white,
+                              fontSize: 22,
+                            ),
+                          ),
+                        ),
+                        Container(
+                          decoration: BoxDecoration(
+                              color: Colors.black.withOpacity(0.5),
+                              borderRadius: BorderRadius.circular(10)
+                          ),
+                          margin: const EdgeInsets.only(left: 8, bottom: 5),
+                          child: Text(
+                            '${breakfastRecipes[index]['time']}',
+                            style: const TextStyle(
+                              fontWeight: FontWeight.bold,
+                              color: Colors.white,
+                              fontSize: 22,
+                            ),
+                          ),
+                        ),
+                      ],
+                    ),
+                  ],
+                ),
+              ),
+            );
+          }
+      ),
       bottomNavigationBar: BottomNavigationBar(
         items: const <BottomNavigationBarItem>[
           BottomNavigationBarItem(
@@ -93,39 +169,11 @@ class _LunchPageState extends State<LunchPage> {
         //backgroundColor: Colors.red,
         onTap: _onItemTapped,
       ),
-    );
-  }
-  Widget buildBreakfastMealCard() {
-    return Card(
-      clipBehavior: Clip.antiAlias,
-      shape: RoundedRectangleBorder(
-        borderRadius: BorderRadius.circular(24),
-      ),
-      child: Stack(
-        alignment: Alignment.center,
-        children: [
-          Ink.image(
-            image: const NetworkImage(
-              'https://assets-westchestermagazine-com.s3-accelerate.amazonaws.com/2020/09/all-day-breakfast-in-westchester.jpg',
-            ),
-            height: 180,
-            fit: BoxFit.cover,
-            child: InkWell(
-              onTap: () {
-
-              },
-            ),
-          ),
-          const Text(
-            'Breakfast',
-            style: TextStyle(
-              fontWeight: FontWeight.bold,
-              color: Colors.white,
-              fontSize: 30,
-            ),
-          ),
-        ],
-      ),
+      floatingActionButton: FloatingActionButton(
+        onPressed: _addRecipe,
+        tooltip: 'Add Recipe',
+        child: const Icon(Icons.add),
+      ), // Th
     );
   }
 }
