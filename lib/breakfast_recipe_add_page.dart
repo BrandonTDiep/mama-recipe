@@ -3,14 +3,14 @@ import 'package:flutter/material.dart';
 import 'package:image_picker/image_picker.dart';
 import 'dart:io';
 
-class BreakfastRecipeAddPage extends StatefulWidget {
-  const BreakfastRecipeAddPage({super.key});
+class LunchRecipeAddPage extends StatefulWidget {
+  const LunchRecipeAddPage({super.key});
 
   @override
-  State<BreakfastRecipeAddPage> createState() => _BreakfastRecipeAddPageState();
+  State<LunchRecipeAddPage> createState() => _LunchRecipeAddPageState();
 }
 
-class _BreakfastRecipeAddPageState extends State<BreakfastRecipeAddPage> {
+class _LunchRecipeAddPageState extends State<LunchRecipeAddPage> {
   final TextEditingController nameController = TextEditingController();
   final TextEditingController timeController = TextEditingController();
   final TextEditingController servingsController = TextEditingController();

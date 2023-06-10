@@ -1,11 +1,10 @@
 import 'dart:io';
-
 import 'package:flutter/material.dart';
-import 'package:mama_recipe_app/breakfast_recipe_add_page.dart';
-import 'package:mama_recipe_app/breakfast_recipe_info.dart';
 import 'package:mama_recipe_app/main.dart';
 import 'package:mama_recipe_app/shopping_list.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
+import 'lunch_recipe_add_page.dart';
+import 'lunch_recipe_info.dart';
 
 
 class LunchPage extends StatefulWidget {
@@ -18,20 +17,19 @@ class LunchPage extends StatefulWidget {
 class _LunchPageState extends State<LunchPage> {
   int _selectedIndex = 0;
 
-  var breakfastRecipes = [];
+  var lunchRecipes = [];
 
   _LunchPageState(){
-    FirebaseFirestore.instance.collection("breakfast-recipes").get()
+    FirebaseFirestore.instance.collection("lunch-recipes").get()
         .then((querySnapshot) {
       print("Successfully load all the recipes");
       print(querySnapshot);
       var recipeTmpList = [];
       querySnapshot.docs.forEach((element){
-        breakfastRecipes.add(element.data());
         recipeTmpList.add(element.data());
         print(element.data());
       });
-      breakfastRecipes = recipeTmpList;
+      lunchRecipes = recipeTmpList;
       setState(() {
 
       });
@@ -44,11 +42,11 @@ class _LunchPageState extends State<LunchPage> {
   void _addRecipe() async {
     final newRecipe = await Navigator.push(
       context,
-      MaterialPageRoute(builder: (context) =>  const BreakfastRecipeAddPage()),
+      MaterialPageRoute(builder: (context) =>  const LunchRecipeAddPage()),
     );
     if(newRecipe != null){
       setState(() {
-        breakfastRecipes.add(newRecipe);
+        lunchRecipes.add(newRecipe);
       });
     }
   }
@@ -80,75 +78,73 @@ class _LunchPageState extends State<LunchPage> {
             color: Colors.white
         ),
         backgroundColor: Colors.red,
-        title: const Text("Breakfast Recipes", style: TextStyle(
+        title: const Text("Lunch Recipes", style: TextStyle(
             color: Colors.white,
             fontWeight: FontWeight.bold
         ),),
       ), //
       body: ListView.builder(
-          itemCount: breakfastRecipes.length,
+          itemCount: lunchRecipes.length,
           itemBuilder: (BuildContext context, int index) {
-            print(breakfastRecipes.length);
-            final String imagePath = '${breakfastRecipes[index]['image']}';
-            return  Container(
-              child: Card(
-                clipBehavior: Clip.antiAlias,
-                shape: RoundedRectangleBorder(
-                  borderRadius: BorderRadius.circular(24),
-                ),
-                child: Stack(
-                  alignment: Alignment.bottomLeft,
-                  children: [
-                    Ink.image(
-                      image:  FileImage(File(imagePath)),
-                      height: 150,
-                      fit: BoxFit.cover,
-                      child: InkWell(
-                        onTap: () {
-                          Navigator.push(
-                            context,
-                            MaterialPageRoute(builder: (context) => BreakfastRecipeInfoPage(breakfastRecipes[index])),
-                          );
-                        },
+            print(lunchRecipes.length);
+            final String imagePath = '${lunchRecipes[index]['image']}';
+            return Card(
+              clipBehavior: Clip.antiAlias,
+              shape: RoundedRectangleBorder(
+                borderRadius: BorderRadius.circular(24),
+              ),
+              child: Stack(
+                alignment: Alignment.bottomLeft,
+                children: [
+                  Ink.image(
+                    image:  FileImage(File(imagePath)),
+                    height: 150,
+                    fit: BoxFit.cover,
+                    child: InkWell(
+                      onTap: () {
+                        Navigator.push(
+                          context,
+                          MaterialPageRoute(builder: (context) => LunchRecipeInfoPage(lunchRecipes[index])),
+                        );
+                      },
+                    ),
+                  ),
+                  Column(
+                    crossAxisAlignment: CrossAxisAlignment.start,
+                    children: [
+                      Container(
+                        decoration: BoxDecoration(
+                            color: Colors.black.withOpacity(0.5),
+                            borderRadius: BorderRadius.circular(10)
+                        ),
+                        margin: const EdgeInsets.only(left: 8, bottom: 5),
+                        child: Text(
+                          '${lunchRecipes[index]['name']}',
+                          style: const TextStyle(
+                            fontWeight: FontWeight.bold,
+                            color: Colors.white,
+                            fontSize: 22,
+                          ),
+                        ),
                       ),
-                    ),
-                    Column(
-                      crossAxisAlignment: CrossAxisAlignment.start,
-                      children: [
-                        Container(
-                          decoration: BoxDecoration(
-                              color: Colors.black.withOpacity(0.5),
-                              borderRadius: BorderRadius.circular(10)
-                          ),
-                          margin: const EdgeInsets.only(left: 8, bottom: 5),
-                          child: Text(
-                            '${breakfastRecipes[index]['name']}',
-                            style: const TextStyle(
-                              fontWeight: FontWeight.bold,
-                              color: Colors.white,
-                              fontSize: 22,
-                            ),
+                      Container(
+                        decoration: BoxDecoration(
+                            color: Colors.black.withOpacity(0.5),
+                            borderRadius: BorderRadius.circular(10)
+                        ),
+                        margin: const EdgeInsets.only(left: 8, bottom: 5),
+                        child: Text(
+                          '${lunchRecipes[index]['time']}',
+                          style: const TextStyle(
+                            fontWeight: FontWeight.bold,
+                            color: Colors.white,
+                            fontSize: 22,
                           ),
                         ),
-                        Container(
-                          decoration: BoxDecoration(
-                              color: Colors.black.withOpacity(0.5),
-                              borderRadius: BorderRadius.circular(10)
-                          ),
-                          margin: const EdgeInsets.only(left: 8, bottom: 5),
-                          child: Text(
-                            '${breakfastRecipes[index]['time']}',
-                            style: const TextStyle(
-                              fontWeight: FontWeight.bold,
-                              color: Colors.white,
-                              fontSize: 22,
-                            ),
-                          ),
-                        ),
-                      ],
-                    ),
-                  ],
-                ),
+                      ),
+                    ],
+                  ),
+                ],
               ),
             );
           }

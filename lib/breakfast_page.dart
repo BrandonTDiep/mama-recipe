@@ -27,7 +27,6 @@ class _BreakfastPageState extends State<BreakfastPage> {
       //print(querySnapshot);
       var recipeTmpList = [];
       querySnapshot.docs.forEach((element){
-        breakfastRecipes.add(element.data());
         recipeTmpList.add(element.data());
         //print(element.data());
       });
@@ -44,7 +43,7 @@ class _BreakfastPageState extends State<BreakfastPage> {
    void _addRecipe() async {
     final newRecipe = await Navigator.push(
       context,
-      MaterialPageRoute(builder: (context) =>  const BreakfastRecipeAddPage()),
+      MaterialPageRoute(builder: (context) =>  const LunchRecipeAddPage()),
     );
     if(newRecipe != null){
       setState(() {
@@ -90,65 +89,63 @@ class _BreakfastPageState extends State<BreakfastPage> {
           itemBuilder: (BuildContext context, int index) {
             print(breakfastRecipes.length);
             final String imagePath = '${breakfastRecipes[index]['image']}';
-            return  Container(
-              child: Card(
-                clipBehavior: Clip.antiAlias,
-                shape: RoundedRectangleBorder(
-                  borderRadius: BorderRadius.circular(24),
-                ),
-                child: Stack(
-                  alignment: Alignment.bottomLeft,
-                  children: [
-                    Ink.image(
-                      image:  FileImage(File(imagePath)),
-                      height: 150,
-                      fit: BoxFit.cover,
-                      child: InkWell(
-                        onTap: () {
-                          Navigator.push(
-                            context,
-                            MaterialPageRoute(builder: (context) => BreakfastRecipeInfoPage(breakfastRecipes[index])),
-                          );
-                        },
+            return Card(
+              clipBehavior: Clip.antiAlias,
+              shape: RoundedRectangleBorder(
+                borderRadius: BorderRadius.circular(24),
+              ),
+              child: Stack(
+                alignment: Alignment.bottomLeft,
+                children: [
+                  Ink.image(
+                    image:  FileImage(File(imagePath)),
+                    height: 150,
+                    fit: BoxFit.cover,
+                    child: InkWell(
+                      onTap: () {
+                        Navigator.push(
+                          context,
+                          MaterialPageRoute(builder: (context) => BreakfastRecipeInfoPage(breakfastRecipes[index])),
+                        );
+                      },
+                    ),
+                  ),
+                  Column(
+                    crossAxisAlignment: CrossAxisAlignment.start,
+                    children: [
+                      Container(
+                        decoration: BoxDecoration(
+                            color: Colors.black.withOpacity(0.5),
+                            borderRadius: BorderRadius.circular(10)
+                        ),
+                        margin: const EdgeInsets.only(left: 8, bottom: 5),
+                        child: Text(
+                          '${breakfastRecipes[index]['name']}',
+                          style: const TextStyle(
+                            fontWeight: FontWeight.bold,
+                            color: Colors.white,
+                            fontSize: 22,
+                          ),
+                        ),
                       ),
-                    ),
-                    Column(
-                      crossAxisAlignment: CrossAxisAlignment.start,
-                      children: [
-                        Container(
-                          decoration: BoxDecoration(
-                              color: Colors.black.withOpacity(0.5),
-                              borderRadius: BorderRadius.circular(10)
-                          ),
-                          margin: const EdgeInsets.only(left: 8, bottom: 5),
-                          child: Text(
-                            '${breakfastRecipes[index]['name']}',
-                            style: const TextStyle(
-                              fontWeight: FontWeight.bold,
-                              color: Colors.white,
-                              fontSize: 22,
-                            ),
+                      Container(
+                        decoration: BoxDecoration(
+                            color: Colors.black.withOpacity(0.5),
+                            borderRadius: BorderRadius.circular(10)
+                        ),
+                        margin: const EdgeInsets.only(left: 8, bottom: 5),
+                        child: Text(
+                          '${breakfastRecipes[index]['time']}',
+                          style: const TextStyle(
+                            fontWeight: FontWeight.bold,
+                            color: Colors.white,
+                            fontSize: 22,
                           ),
                         ),
-                        Container(
-                          decoration: BoxDecoration(
-                              color: Colors.black.withOpacity(0.5),
-                              borderRadius: BorderRadius.circular(10)
-                          ),
-                          margin: const EdgeInsets.only(left: 8, bottom: 5),
-                          child: Text(
-                            '${breakfastRecipes[index]['time']}',
-                            style: const TextStyle(
-                              fontWeight: FontWeight.bold,
-                              color: Colors.white,
-                              fontSize: 22,
-                            ),
-                          ),
-                        ),
-                      ],
-                    ),
-                  ],
-                ),
+                      ),
+                    ],
+                  ),
+                ],
               ),
             );
           }
