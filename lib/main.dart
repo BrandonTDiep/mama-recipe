@@ -3,7 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:mama_recipe_app/breakfast_page.dart';
 import 'package:mama_recipe_app/dinner_page.dart';
 import 'package:mama_recipe_app/lunch_page.dart';
-import 'package:mama_recipe_app/shopping_list.dart';
+import 'package:mama_recipe_app/favorites_page.dart';
 import 'package:firebase_core/firebase_core.dart';
 import 'firebase_options.dart';
 
@@ -63,7 +63,7 @@ class _MyHomePageState extends State<MyHomePage> {
       if(_selectedIndex == 1){
         Navigator.push(
           context,
-          MaterialPageRoute(builder: (context) => const ShoppingListPage()
+          MaterialPageRoute(builder: (context) => const FavoriteRecipesPage()
           ),
         );
       }
@@ -100,7 +100,7 @@ class _MyHomePageState extends State<MyHomePage> {
                   child: buildBreakfastCard()
               ),
               Container(
-                  margin: EdgeInsets.only(top: 22, bottom: 22),
+                  margin: const EdgeInsets.only(top: 22, bottom: 22),
                   child: buildLunchCard()
               ),
               buildDinnerCard()
@@ -116,7 +116,7 @@ class _MyHomePageState extends State<MyHomePage> {
           ),
           BottomNavigationBarItem(
             icon: Icon(Icons.create_sharp),
-            label: 'Shopping List',
+            label: 'Favorite Recipes',
           ),
         ],
         currentIndex: _selectedIndex,
@@ -229,7 +229,7 @@ class _MyHomePageState extends State<MyHomePage> {
               onTap: () {
                 Navigator.push(
                   context,
-                  MaterialPageRoute(builder: (context) => const DinnerPage(title: "My Page No. 3")),
+                  MaterialPageRoute(builder: (context) => const DinnerPage()),
                 );
               },
             ),

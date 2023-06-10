@@ -2,15 +2,15 @@ import 'package:flutter/material.dart';
 
 import 'main.dart';
 
-class ShoppingListPage extends StatefulWidget {
-  const ShoppingListPage({super.key});
+class FavoriteRecipesPage extends StatefulWidget {
+  const FavoriteRecipesPage({super.key});
 
 
   @override
-  State<ShoppingListPage> createState() => _ShoppingListPageState();
+  State<FavoriteRecipesPage> createState() => _FavoriteRecipesPageState();
 }
 
-class _ShoppingListPageState extends State<ShoppingListPage> {
+class _FavoriteRecipesPageState extends State<FavoriteRecipesPage> {
   int _counter = 0;
 
   void _incrementCounter() {

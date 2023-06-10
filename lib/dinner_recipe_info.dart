@@ -1,16 +1,16 @@
 import 'dart:io';
 import 'package:flutter/material.dart';
 
-class BreakfastRecipeInfoPage extends StatefulWidget {
-  final Map<String, dynamic> breakfastRecipe;
+class DinnerRecipeInfoPage extends StatefulWidget {
+  final Map<String, dynamic> dinnerRecipe;
 
-  const BreakfastRecipeInfoPage(this.breakfastRecipe, {super.key});
+  const DinnerRecipeInfoPage(this.dinnerRecipe, {super.key});
 
   @override
-  State<BreakfastRecipeInfoPage> createState() => _BreakfastRecipeInfoPageState();
+  State<DinnerRecipeInfoPage> createState() => _DinnerRecipeInfoPageState();
 }
 
-class _BreakfastRecipeInfoPageState extends State<BreakfastRecipeInfoPage> {
+class _DinnerRecipeInfoPageState extends State<DinnerRecipeInfoPage> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -19,7 +19,7 @@ class _BreakfastRecipeInfoPageState extends State<BreakfastRecipeInfoPage> {
             color: Colors.white
         ),
         backgroundColor: Colors.red,
-        title: Text(widget.breakfastRecipe['name'], style: const TextStyle(
+        title: Text(widget.dinnerRecipe['name'], style: const TextStyle(
             color: Colors.white,
             fontWeight: FontWeight.bold
         ),),
@@ -29,7 +29,7 @@ class _BreakfastRecipeInfoPageState extends State<BreakfastRecipeInfoPage> {
           Expanded(
             flex: 9,
             child: Image(
-              image:  FileImage(File(widget.breakfastRecipe['image'])),
+              image:  FileImage(File(widget.dinnerRecipe['image'])),
               fit: BoxFit.cover,
             ),
           ),
@@ -42,7 +42,7 @@ class _BreakfastRecipeInfoPageState extends State<BreakfastRecipeInfoPage> {
                   Container(
                     margin: const EdgeInsets.only(top: 15, left: 20, right: 20),
                     child: Text(
-                      widget.breakfastRecipe['name'],
+                      widget.dinnerRecipe['name'],
                       style: const TextStyle(
                         fontWeight: FontWeight.bold,
                         fontSize: 30,
@@ -58,16 +58,16 @@ class _BreakfastRecipeInfoPageState extends State<BreakfastRecipeInfoPage> {
                           child: const Text(
                             "Total Time: ",
                             style: TextStyle(
-                                fontSize: 16,
+                              fontSize: 16,
                             ),
                           ),
                         ),
                         Container(
                           alignment: Alignment.centerLeft,
                           child: Text(
-                            widget.breakfastRecipe['time'],
+                            widget.dinnerRecipe['time'],
                             style: const TextStyle(
-                              fontSize: 17,
+                                fontSize: 17,
                                 fontWeight: FontWeight.bold
                             ),
                           ),
@@ -83,9 +83,9 @@ class _BreakfastRecipeInfoPageState extends State<BreakfastRecipeInfoPage> {
                           margin: const EdgeInsets.only(right: 20),
                           alignment: Alignment.centerLeft,
                           child: Text(
-                            widget.breakfastRecipe['servings'],
+                            widget.dinnerRecipe['servings'],
                             style: const TextStyle(
-                              fontSize: 17,
+                                fontSize: 17,
                                 fontWeight: FontWeight.bold
 
                             ),
@@ -113,7 +113,7 @@ class _BreakfastRecipeInfoPageState extends State<BreakfastRecipeInfoPage> {
                     margin: const EdgeInsets.only(left: 20, right: 20, bottom: 10),
                     alignment: Alignment.centerLeft,
                     child: Text(
-                      widget.breakfastRecipe['ingredients'],
+                      widget.dinnerRecipe['ingredients'],
                       style: const TextStyle(
                         fontSize: 17,
                       ),
@@ -135,7 +135,7 @@ class _BreakfastRecipeInfoPageState extends State<BreakfastRecipeInfoPage> {
                     margin: const EdgeInsets.only(left: 20, right: 20, bottom: 10),
                     alignment: Alignment.centerLeft,
                     child: Text(
-                      widget.breakfastRecipe['directions'],
+                      widget.dinnerRecipe['directions'],
                       style: const TextStyle(
                         fontSize: 17,
                       ),

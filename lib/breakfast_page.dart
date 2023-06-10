@@ -4,7 +4,7 @@ import 'package:flutter/material.dart';
 import 'package:mama_recipe_app/breakfast_recipe_add_page.dart';
 import 'package:mama_recipe_app/breakfast_recipe_info.dart';
 import 'package:mama_recipe_app/main.dart';
-import 'package:mama_recipe_app/shopping_list.dart';
+import 'package:mama_recipe_app/favorites_page.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 
 
@@ -58,7 +58,7 @@ class _BreakfastPageState extends State<BreakfastPage> {
       if(_selectedIndex == 1){
         Navigator.push(
           context,
-          MaterialPageRoute(builder: (context) => const ShoppingListPage()),
+          MaterialPageRoute(builder: (context) => const FavoriteRecipesPage()),
         );
       }
       else{

@@ -80,7 +80,7 @@ class _LunchRecipeInfoPageState extends State<LunchRecipeInfoPage> {
                           ),
                         ),
                         Container(
-                          margin: EdgeInsets.only(right: 20),
+                          margin: const EdgeInsets.only(right: 20),
                           alignment: Alignment.centerLeft,
                           child: Text(
                             widget.lunchRecipe['servings'],
