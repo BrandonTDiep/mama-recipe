@@ -73,7 +73,7 @@ class _MyHomePageState extends State<MyHomePage> {
     return Scaffold(
       appBar: EasySearchBar(
           backgroundColor: Colors.red,
-          title: const Text("Home", style: TextStyle(
+          title: const Text("Mama's Recipes", style: TextStyle(
               color: Colors.white,
               fontWeight: FontWeight.bold
           ),),
@@ -111,7 +111,7 @@ class _MyHomePageState extends State<MyHomePage> {
           ),
         ],
         currentIndex: _selectedIndex,
-        selectedItemColor: Colors.red,
+        selectedItemColor: Colors.yellow,
         //backgroundColor: Colors.red,
         onTap: _onItemTapped,
       ),

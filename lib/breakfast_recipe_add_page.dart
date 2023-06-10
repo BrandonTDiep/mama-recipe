@@ -20,21 +20,22 @@ class _BreakfastRecipeAddPageState extends State<BreakfastRecipeAddPage> {
 
   void createBreakfastRecipe(){
     String imagePath = _image.path;
-    FirebaseFirestore.instance.collection("breakfast-recipes").add(
-        {
-          "name" : nameController.text,
-          "time" : timeController.text,
-          "servings" : servingsController.text,
-          "ingredients" : ingredientsController.text,
-          "directions" : directionsController.text,
-          "image" : imagePath,
-        }
-    ).then((value){
+    Map<String, dynamic> newRecipe = {
+      "name" : nameController.text,
+      "time" : timeController.text,
+      "servings" : servingsController.text,
+      "ingredients" : ingredientsController.text,
+      "directions" : directionsController.text,
+      "image" : imagePath,
+    };
+    FirebaseFirestore.instance.collection("breakfast-recipes").add(newRecipe)
+        .then((value){
       print("Successfully added the recipe.");
     }).catchError((error){
       print("Failed to add the recipe.");
       print(error);
     });
+    Navigator.pop(context, newRecipe);
   }
 
   late File _image;

@@ -41,11 +41,16 @@ class _BreakfastPageState extends State<BreakfastPage> {
     });
   }
 
-   void _addRecipe()  {
-    Navigator.push(
+   void _addRecipe() async {
+    final newRecipe = await Navigator.push(
       context,
-      MaterialPageRoute(builder: (context) =>  BreakfastRecipeAddPage()),
+      MaterialPageRoute(builder: (context) =>  const BreakfastRecipeAddPage()),
     );
+    if(newRecipe != null){
+      setState(() {
+        breakfastRecipes.add(newRecipe);
+      });
+    }
   }
 
   void _onItemTapped(int index) {
@@ -75,7 +80,7 @@ class _BreakfastPageState extends State<BreakfastPage> {
             color: Colors.white
         ),
         backgroundColor: Colors.red,
-        title: const Text("Breakfast", style: TextStyle(
+        title: const Text("Breakfast Recipes", style: TextStyle(
             color: Colors.white,
             fontWeight: FontWeight.bold
         ),),
@@ -113,7 +118,7 @@ class _BreakfastPageState extends State<BreakfastPage> {
                             color: Colors.black.withOpacity(0.5),
                             borderRadius: BorderRadius.circular(10)
                         ),
-                        margin: EdgeInsets.only(left: 8, bottom: 5),
+                        margin: const EdgeInsets.only(left: 8, bottom: 5),
                         child: Text(
                           '${breakfastRecipes[index]['name']}',
                           style: const TextStyle(
@@ -129,7 +134,7 @@ class _BreakfastPageState extends State<BreakfastPage> {
                             color: Colors.black.withOpacity(0.5),
                             borderRadius: BorderRadius.circular(10)
                         ),
-                        margin: EdgeInsets.only(right: 8, bottom: 5),
+                        margin: const EdgeInsets.only(right: 8, bottom: 5),
                         child: Text(
                           '${breakfastRecipes[index]['time']}',
                           style: const TextStyle(
