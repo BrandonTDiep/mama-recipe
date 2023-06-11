@@ -156,8 +156,8 @@ class _LunchPageState extends State<LunchPage> {
             label: 'Home',
           ),
           BottomNavigationBarItem(
-            icon: Icon(Icons.create_sharp),
-            label: 'Shopping List',
+            icon: Icon(Icons.favorite),
+            label: 'Favorite',
           ),
         ],
         currentIndex: _selectedIndex,

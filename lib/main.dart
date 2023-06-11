@@ -115,8 +115,8 @@ class _MyHomePageState extends State<MyHomePage> {
             label: 'Home',
           ),
           BottomNavigationBarItem(
-            icon: Icon(Icons.create_sharp),
-            label: 'Favorite Recipes',
+            icon: Icon(Icons.favorite),
+            label: 'Favorite',
           ),
         ],
         currentIndex: _selectedIndex,

@@ -1,6 +1,9 @@
 import 'dart:io';
 import 'package:flutter/material.dart';
 
+import 'favorites_page.dart';
+import 'main.dart';
+
 class BreakfastRecipeInfoPage extends StatefulWidget {
   final Map<String, dynamic> breakfastRecipe;
 
@@ -11,6 +14,26 @@ class BreakfastRecipeInfoPage extends StatefulWidget {
 }
 
 class _BreakfastRecipeInfoPageState extends State<BreakfastRecipeInfoPage> {
+  int _selectedIndex = 0;
+
+  void _onItemTapped(int index) {
+    setState(() {
+      _selectedIndex = index;
+      if(_selectedIndex == 1){
+        Navigator.push(
+          context,
+          MaterialPageRoute(builder: (context) => const FavoriteRecipesPage()),
+        );
+      }
+      else{
+        Navigator.pushAndRemoveUntil(
+            context,
+            MaterialPageRoute(builder: (context) => const MyHomePage()),
+                (route) => false
+        );
+      }
+    });
+  }
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -27,14 +50,14 @@ class _BreakfastRecipeInfoPageState extends State<BreakfastRecipeInfoPage> {
       body: Column(
         children: [
           Expanded(
-            flex: 9,
+            flex: 11,
             child: Image(
               image:  FileImage(File(widget.breakfastRecipe['image'])),
               fit: BoxFit.cover,
             ),
           ),
           Expanded(
-            flex: 15,
+            flex: 16,
             child: Container(
               color: Colors.orange[50],
               child: ListView(
@@ -145,8 +168,23 @@ class _BreakfastRecipeInfoPageState extends State<BreakfastRecipeInfoPage> {
               ),
             ),
           ),
-
         ],
+      ),
+      bottomNavigationBar: BottomNavigationBar(
+        items: const <BottomNavigationBarItem>[
+          BottomNavigationBarItem(
+            icon: Icon(Icons.home),
+            label: 'Home',
+          ),
+          BottomNavigationBarItem(
+            icon: Icon(Icons.favorite),
+            label: 'Favorite',
+          ),
+        ],
+        currentIndex: _selectedIndex,
+        selectedItemColor: Colors.red,
+        //backgroundColor: Colors.red,
+        onTap: _onItemTapped,
       ),
     );
   }

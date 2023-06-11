@@ -1,6 +1,9 @@
 import 'dart:io';
 import 'package:flutter/material.dart';
 
+import 'favorites_page.dart';
+import 'main.dart';
+
 class LunchRecipeInfoPage extends StatefulWidget {
   final Map<String, dynamic> lunchRecipe;
 
@@ -11,6 +14,26 @@ class LunchRecipeInfoPage extends StatefulWidget {
 }
 
 class _LunchRecipeInfoPageState extends State<LunchRecipeInfoPage> {
+  int _selectedIndex = 0;
+
+  void _onItemTapped(int index) {
+    setState(() {
+      _selectedIndex = index;
+      if(_selectedIndex == 1){
+        Navigator.push(
+          context,
+          MaterialPageRoute(builder: (context) => const FavoriteRecipesPage()),
+        );
+      }
+      else{
+        Navigator.pushAndRemoveUntil(
+            context,
+            MaterialPageRoute(builder: (context) => const MyHomePage()),
+                (route) => false
+        );
+      }
+    });
+  }
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -27,14 +50,14 @@ class _LunchRecipeInfoPageState extends State<LunchRecipeInfoPage> {
       body: Column(
         children: [
           Expanded(
-            flex: 9,
+            flex: 11,
             child: Image(
               image:  FileImage(File(widget.lunchRecipe['image'])),
               fit: BoxFit.cover,
             ),
           ),
           Expanded(
-            flex: 15,
+            flex: 16,
             child: Container(
               color: Colors.orange[50],
               child: ListView(
@@ -145,8 +168,23 @@ class _LunchRecipeInfoPageState extends State<LunchRecipeInfoPage> {
               ),
             ),
           ),
-
         ],
+      ),
+      bottomNavigationBar: BottomNavigationBar(
+        items: const <BottomNavigationBarItem>[
+          BottomNavigationBarItem(
+            icon: Icon(Icons.home),
+            label: 'Home',
+          ),
+          BottomNavigationBarItem(
+            icon: Icon(Icons.favorite),
+            label: 'Favorite',
+          ),
+        ],
+        currentIndex: _selectedIndex,
+        selectedItemColor: Colors.red,
+        //backgroundColor: Colors.red,
+        onTap: _onItemTapped,
       ),
     );
   }

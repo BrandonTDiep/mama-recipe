@@ -18,7 +18,7 @@ class BreakfastPage extends StatefulWidget {
 class _BreakfastPageState extends State<BreakfastPage> {
   int _selectedIndex = 0;
 
-   var breakfastRecipes = [];
+  var breakfastRecipes = [];
 
   _BreakfastPageState(){
     FirebaseFirestore.instance.collection("breakfast-recipes").get()
@@ -157,8 +157,8 @@ class _BreakfastPageState extends State<BreakfastPage> {
             label: 'Home',
           ),
           BottomNavigationBarItem(
-            icon: Icon(Icons.create_sharp),
-            label: 'Shopping List',
+            icon: Icon(Icons.favorite),
+            label: 'Favorite',
           ),
         ],
         currentIndex: _selectedIndex,
@@ -170,7 +170,7 @@ class _BreakfastPageState extends State<BreakfastPage> {
         onPressed: _addRecipe,
         tooltip: 'Add Recipe',
         child: const Icon(Icons.add),
-      ), // Th
+      ),
     );
   }
 }
