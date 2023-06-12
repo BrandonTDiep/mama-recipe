@@ -11,17 +11,25 @@ class FavoriteRecipesPage extends StatefulWidget {
 }
 
 class _FavoriteRecipesPageState extends State<FavoriteRecipesPage> {
-  int _counter = 0;
+  int _selectedIndex = 0;
 
-  void _incrementCounter() {
+  void _onItemTapped(int index) {
     setState(() {
-      _counter++;
-      print("The counter has been increased to " + _counter.toString());
+      _selectedIndex = index;
+      if(_selectedIndex == 1){
+        Navigator.push(
+          context,
+          MaterialPageRoute(builder: (context) => const FavoriteRecipesPage()),
+        );
+      }
+      else{
+        Navigator.pushAndRemoveUntil(
+            context,
+            MaterialPageRoute(builder: (context) => const MyHomePage()),
+                (route) => false
+        );
+      }
     });
-    Navigator.push(
-      context,
-      MaterialPageRoute(builder: (context) => const MyHomePage()),
-    );
   }
 
   @override
@@ -31,34 +39,42 @@ class _FavoriteRecipesPageState extends State<FavoriteRecipesPage> {
         backgroundColor: Theme.of(context).colorScheme.inversePrimary,
         title: Text("Shopping list"),
       ),
-      body: Center(
+      body: const Center(
         child: Column(
           mainAxisAlignment: MainAxisAlignment.center,
           children: <Widget>[
-            const Text(
+            Text(
               'App Logo - Screen No. 3',
             ),
-            const Text(
+            Text(
               'My Demo App - Screen No. 3',
             ),
-            const Text(
+            Text(
               'Login First Please',
             ),
-            const Text(
+            Text(
               'You have pushed the button this many times!!!',
             ),
-            Text(
-              '$_counter',
-              style: Theme.of(context).textTheme.headlineMedium,
-            ),
+
           ],
         ),
       ),
-      floatingActionButton: FloatingActionButton(
-        onPressed: _incrementCounter,
-        tooltip: 'Increment',
-        child: const Icon(Icons.add),
-      ), // This trailing comma makes auto-formatting nicer for build methods.
+      bottomNavigationBar: BottomNavigationBar(
+        items: const <BottomNavigationBarItem>[
+          BottomNavigationBarItem(
+            icon: Icon(Icons.home),
+            label: 'Home',
+          ),
+          BottomNavigationBarItem(
+            icon: Icon(Icons.favorite),
+            label: 'Favorite',
+          ),
+        ],
+        currentIndex: 1,
+        selectedItemColor: Colors.red,
+        //backgroundColor: Colors.red,
+        onTap: _onItemTapped,
+      ),
     );
   }
 }

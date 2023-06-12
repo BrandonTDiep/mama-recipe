@@ -2,6 +2,7 @@ import 'package:easy_search_bar/easy_search_bar.dart';
 import 'package:flutter/material.dart';
 import 'package:mama_recipe_app/breakfast_page.dart';
 import 'package:mama_recipe_app/dinner_page.dart';
+import 'package:mama_recipe_app/login_page.dart';
 import 'package:mama_recipe_app/lunch_page.dart';
 import 'package:mama_recipe_app/favorites_page.dart';
 import 'package:firebase_core/firebase_core.dart';
@@ -33,7 +34,7 @@ class MyApp extends StatelessWidget {
           backgroundColor: Colors.deepOrange[50]
         )
       ),
-      home: MyHomePage(),
+      home: LoginPage(),
     );
   }
 }
@@ -89,7 +90,8 @@ class _MyHomePageState extends State<MyHomePage> {
           Container(
             margin: const EdgeInsets.only(top: 5, left: 15),
             child: const Text("Mealtimes", style: TextStyle(
-                fontWeight: FontWeight.bold,
+              fontWeight: FontWeight.bold,
+              color: Colors.black,
               fontSize: 30,
             ),),
           ),
