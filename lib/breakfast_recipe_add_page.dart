@@ -1,4 +1,5 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:image_picker/image_picker.dart';
 import 'dart:io';
@@ -27,13 +28,15 @@ class _LunchRecipeAddPageState extends State<LunchRecipeAddPage> {
       "directions" : directionsController.text,
       "image" : imagePath,
     };
-    FirebaseFirestore.instance.collection("breakfast-recipes").add(newRecipe)
+    var currentUser = FirebaseAuth.instance.currentUser;
+    FirebaseFirestore.instance.collection("users").doc(currentUser?.uid)
+        .collection('breakfast-recipes').add(newRecipe)
         .then((value){
-      print("Successfully added the recipe.");
-    }).catchError((error){
-      print("Failed to add the recipe.");
-      print(error);
-    });
+          print("Successfully added the recipe.");
+        }).catchError((error){
+          print("Failed to add the recipe.");
+          print(error);
+        });
     Navigator.pop(context, newRecipe);
   }
 

@@ -1,5 +1,6 @@
 import 'dart:io';
 
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:mama_recipe_app/breakfast_recipe_add_page.dart';
 import 'package:mama_recipe_app/breakfast_recipe_info.dart';
@@ -21,23 +22,25 @@ class _BreakfastPageState extends State<BreakfastPage> {
   var breakfastRecipes = [];
 
   _BreakfastPageState(){
-    FirebaseFirestore.instance.collection("breakfast-recipes").get()
+    var currentUser = FirebaseAuth.instance.currentUser;
+    FirebaseFirestore.instance.collection("users").doc(currentUser?.uid)
+        .collection('breakfast-recipes').get()
         .then((querySnapshot) {
-      print("Successfully load all the recipes");
-      //print(querySnapshot);
-      var recipeTmpList = [];
-      querySnapshot.docs.forEach((element){
-        recipeTmpList.add(element.data());
-        //print(element.data());
-      });
-      breakfastRecipes = recipeTmpList;
-      setState(() {
+          print("Successfully load all the recipes");
+          //print(querySnapshot);
+          var recipeTmpList = [];
+          querySnapshot.docs.forEach((element){
+            recipeTmpList.add(element.data());
+            //print(element.data());
+          });
+          breakfastRecipes = recipeTmpList;
+          setState(() {
 
-      });
-    }).catchError((error) {
-      print("Failed to load all the recipes.");
-      print(error);
-    });
+          });
+        }).catchError((error) {
+          print("Failed to load all the recipes.");
+          print(error);
+        });
   }
 
    void _addRecipe() async {
