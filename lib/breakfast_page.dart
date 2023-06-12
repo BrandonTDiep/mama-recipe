@@ -27,11 +27,9 @@ class _BreakfastPageState extends State<BreakfastPage> {
         .collection('breakfast-recipes').get()
         .then((querySnapshot) {
           print("Successfully load all the recipes");
-          //print(querySnapshot);
           var recipeTmpList = [];
           querySnapshot.docs.forEach((element){
             recipeTmpList.add(element.data());
-            //print(element.data());
           });
           breakfastRecipes = recipeTmpList;
           setState(() {

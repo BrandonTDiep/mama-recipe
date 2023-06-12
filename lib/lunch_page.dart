@@ -1,4 +1,5 @@
 import 'dart:io';
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:mama_recipe_app/main.dart';
 import 'package:mama_recipe_app/favorites_page.dart';
@@ -20,23 +21,23 @@ class _LunchPageState extends State<LunchPage> {
   var lunchRecipes = [];
 
   _LunchPageState(){
-    FirebaseFirestore.instance.collection("lunch-recipes").get()
+    var currentUser = FirebaseAuth.instance.currentUser;
+    FirebaseFirestore.instance.collection("users").doc(currentUser?.uid)
+        .collection('lunch-recipes').get()
         .then((querySnapshot) {
-      print("Successfully load all the recipes");
-      print(querySnapshot);
-      var recipeTmpList = [];
-      querySnapshot.docs.forEach((element){
-        recipeTmpList.add(element.data());
-        print(element.data());
-      });
-      lunchRecipes = recipeTmpList;
-      setState(() {
+          print("Successfully load all the recipes");
+          var recipeTmpList = [];
+          querySnapshot.docs.forEach((element){
+            recipeTmpList.add(element.data());
+          });
+          lunchRecipes = recipeTmpList;
+          setState(() {
 
-      });
-    }).catchError((error) {
-      print("Failed to load all the recipes.");
-      print(error);
-    });
+          });
+        }).catchError((error) {
+          print("Failed to load all the recipes.");
+          print(error);
+        });
   }
 
   void _addRecipe() async {

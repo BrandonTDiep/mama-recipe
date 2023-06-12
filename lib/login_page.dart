@@ -76,9 +76,10 @@ class _LoginPageState extends State<LoginPage> {
                               email: emailController.text, password: passwordController.text)
                               .then((value){
                                 print("Successfully login!");
-                                Navigator.push(
+                                Navigator.pushAndRemoveUntil(
                                   context,
                                   MaterialPageRoute(builder: (context) => const MyHomePage()),
+                                        (route) => false
                                 );
                               }).catchError((error){
                                 print("Failed to login");
