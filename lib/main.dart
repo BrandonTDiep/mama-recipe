@@ -1,4 +1,3 @@
-import 'package:easy_search_bar/easy_search_bar.dart';
 import 'package:flutter/material.dart';
 import 'package:mama_recipe_app/breakfast_page.dart';
 import 'package:mama_recipe_app/dinner_page.dart';
@@ -18,7 +17,6 @@ void main() async{
 
 class MyApp extends StatelessWidget {
   const MyApp({super.key});
-
 
   // This widget is the root of your application.
   @override
@@ -47,14 +45,6 @@ class MyHomePage extends StatefulWidget {
 }
 
 class _MyHomePageState extends State<MyHomePage> {
-  String searchValue = '';
-  final List<String> _suggestions = ['Apple', 'Pear','Grape'];
-
-  Future<List<String>> _fetchSuggestions(String searchValue) async {
-    return _suggestions.where ((element){
-      return element.toLowerCase().contains(searchValue.toLowerCase());
-    }).toList();
-  }
 
   int _selectedIndex = 0;
 
@@ -74,17 +64,17 @@ class _MyHomePageState extends State<MyHomePage> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: EasySearchBar(
-          backgroundColor: Colors.red,
-          title: const Text("Mama's Recipes", style: TextStyle(
-              color: Colors.white,
-              fontWeight: FontWeight.bold,
-            fontSize: 30,
-          ),),
-          onSearch: (value) => setState(() => searchValue = value),
-          asyncSuggestions: (value) async =>
-              await _fetchSuggestions(searchValue)
+      appBar: AppBar(
+        iconTheme: const IconThemeData(
+            color: Colors.white
         ),
+        backgroundColor: Colors.red,
+        title: const Text("Mama's Recipes", style: TextStyle(
+          color: Colors.white,
+          fontWeight: FontWeight.bold,
+          fontSize: 35,
+        ),),
+      ), //
       body: ListView(
         children: [
           Container(
@@ -138,9 +128,7 @@ class _MyHomePageState extends State<MyHomePage> {
         alignment: Alignment.center,
         children: [
           Ink.image(
-            image: const NetworkImage(
-              'https://assets-westchestermagazine-com.s3-accelerate.amazonaws.com/2020/09/all-day-breakfast-in-westchester.jpg',
-            ),
+            image: const AssetImage('assets/breakfast.jpg'),
             height: 170,
             fit: BoxFit.cover,
             child: InkWell(
@@ -180,9 +168,7 @@ class _MyHomePageState extends State<MyHomePage> {
         alignment: Alignment.center,
         children: [
           Ink.image(
-            image: const NetworkImage(
-              'https://popmenucloud.com/lmkrqzuh/4691eba0-150b-40f5-b335-b2ba15b57424',
-            ),
+            image: const AssetImage('assets/lunch.jpg'),
             height: 170,
             fit: BoxFit.cover,
             child: InkWell(
@@ -222,9 +208,7 @@ class _MyHomePageState extends State<MyHomePage> {
         alignment: Alignment.center,
         children: [
           Ink.image(
-            image: const NetworkImage(
-              'https://www.newzealand.com/assets/Operator-Database/img-1637315723-7218-10523-tss-walter-peak_september2018_72dpi_070__aWxvdmVrZWxseQo_CropResizeWzk0MCw1MzAsNzUsImpwZyJd.jpg',
-            ),
+            image: const AssetImage('assets/dinner.jpg'),
             height: 170,
             fit: BoxFit.cover,
             child: InkWell(

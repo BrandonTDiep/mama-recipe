@@ -1,7 +1,10 @@
 import 'dart:io';
+import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 
 import 'favorites_page.dart';
+import 'favorite_button.dart';
 import 'main.dart';
 
 class BreakfastRecipeInfoPage extends StatefulWidget {
@@ -15,6 +18,14 @@ class BreakfastRecipeInfoPage extends StatefulWidget {
 
 class _BreakfastRecipeInfoPageState extends State<BreakfastRecipeInfoPage> {
   int _selectedIndex = 0;
+  final currentUser = FirebaseAuth.instance.currentUser;
+  bool isFavorite = false;
+
+  @override
+  void initState() {
+    super.initState();
+    _loadFavoriteState();
+  }
 
   void _onItemTapped(int index) {
     setState(() {
@@ -34,6 +45,56 @@ class _BreakfastRecipeInfoPageState extends State<BreakfastRecipeInfoPage> {
       }
     });
   }
+   void _loadFavoriteState() async{
+    FirebaseFirestore.instance.collection("users").doc(currentUser?.uid)
+        .collection('favorites').where("name", isEqualTo: widget.breakfastRecipe['name']).get()
+        .then((value){
+          print("Successfully loaded favorite status of the recipe.");
+          if(value.docs.isNotEmpty){
+            setState(() {
+              isFavorite = true;
+            });
+          }
+        }).catchError((error){
+          print("Failed to load favorite status of the recipe.");
+          print(error);
+        });
+  }
+
+  void toggleFavorite(){
+    setState(() {
+      isFavorite = !isFavorite;
+      if(isFavorite){
+        FirebaseFirestore.instance.collection("users").doc(currentUser?.uid)
+            .collection('favorites').add(widget.breakfastRecipe)
+            .then((value){
+              print("Successfully favorite the recipe.");
+            }).catchError((error){
+              print("Failed to favorite the recipe.");
+              print(error);
+            });
+      }
+      else{
+        FirebaseFirestore.instance.collection("users").doc(currentUser?.uid)
+            .collection('favorites').where("name", isEqualTo: widget.breakfastRecipe['name']).get()
+            .then((value){
+              String docId = value.docs.first.id;
+              FirebaseFirestore.instance.collection("users").doc(currentUser?.uid)
+                  .collection('favorites').doc(docId).delete()
+                  .then((value){
+                    print("Successfully remove favorite status of the recipe.");
+                  }).catchError((error){
+                    print("Failed to remove favorite status of the recipe.");
+                    print(error);
+                  });
+            }).catchError((error){
+              print("Failed to delete the favorite recipe.");
+              print(error);
+            });
+      }
+    });
+  }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -46,7 +107,7 @@ class _BreakfastRecipeInfoPageState extends State<BreakfastRecipeInfoPage> {
             color: Colors.white,
             fontWeight: FontWeight.bold
         ),),
-      ), //
+      ),
       body: Column(
         children: [
           Expanded(
@@ -62,15 +123,27 @@ class _BreakfastRecipeInfoPageState extends State<BreakfastRecipeInfoPage> {
               color: Colors.orange[50],
               child: ListView(
                 children: [
-                  Container(
-                    margin: const EdgeInsets.only(top: 15, left: 20, right: 20),
-                    child: Text(
-                      widget.breakfastRecipe['name'],
-                      style: const TextStyle(
-                        fontWeight: FontWeight.bold,
-                        fontSize: 30,
+                  Row(
+                    children: [
+                      Container(
+                        margin: const EdgeInsets.only(top: 15, left: 20, right: 20),
+                        child: Text(
+                          widget.breakfastRecipe['name'],
+                          style: const TextStyle(
+                            fontWeight: FontWeight.bold,
+                            fontSize: 30,
+                          ),
+                        ),
                       ),
-                    ),
+                      Spacer(),
+                      Container(
+                          margin: const EdgeInsets.only(top: 15, left: 20, right: 20),
+                          child: FavoriteButton(
+                              isFavorite: isFavorite,
+                              onTap: toggleFavorite,
+                          )
+                      ),
+                    ],
                   ),
                   Container(
                     margin: const EdgeInsets.only(top: 15, bottom: 10),
@@ -119,7 +192,7 @@ class _BreakfastRecipeInfoPageState extends State<BreakfastRecipeInfoPage> {
                   ),
                   const Divider(
                     color: Colors.black,
-                    thickness: 0.2,
+                    thickness: 0.3,
                   ),
                   Container(
                     margin: const EdgeInsets.only(left: 20, right: 20, bottom: 2, top: 5),
