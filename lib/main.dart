@@ -52,10 +52,10 @@ class _MyHomePageState extends State<MyHomePage> {
     setState(() {
       _selectedIndex = index;
       if(_selectedIndex == 1){
-        Navigator.push(
+        Navigator.pushAndRemoveUntil(
           context,
-          MaterialPageRoute(builder: (context) => const FavoriteRecipesPage()
-          ),
+          MaterialPageRoute(builder: (context) => const FavoriteRecipesPage()),
+                (route) => false
         );
       }
     });

@@ -5,16 +5,16 @@ import 'package:flutter/material.dart';
 import 'favorites_page.dart';
 import 'main.dart';
 
-class BreakfastRecipeInfoPage extends StatefulWidget {
-  final Map<String, dynamic> breakfastRecipe;
+class FavoriteRecipeInfoPage extends StatefulWidget {
+  final Map<String, dynamic> favoriteRecipe;
 
-  const BreakfastRecipeInfoPage(this.breakfastRecipe, {super.key});
+  const FavoriteRecipeInfoPage(this.favoriteRecipe, {super.key});
 
   @override
-  State<BreakfastRecipeInfoPage> createState() => _BreakfastRecipeInfoPageState();
+  State<FavoriteRecipeInfoPage> createState() => _FavoriteRecipeInfoPageState();
 }
 
-class _BreakfastRecipeInfoPageState extends State<BreakfastRecipeInfoPage> {
+class _FavoriteRecipeInfoPageState extends State<FavoriteRecipeInfoPage> {
   int _selectedIndex = 0;
   final currentUser = FirebaseAuth.instance.currentUser;
   bool isFavorite = false;
@@ -46,7 +46,7 @@ class _BreakfastRecipeInfoPageState extends State<BreakfastRecipeInfoPage> {
   }
    void _loadFavoriteState() async{
     FirebaseFirestore.instance.collection("users").doc(currentUser?.uid)
-        .collection('favorites').where("name", isEqualTo: widget.breakfastRecipe['name']).get()
+        .collection('favorites').where("name", isEqualTo: widget.favoriteRecipe['name']).get()
         .then((value){
           print("Successfully loaded favorite status of the recipe.");
           if(value.docs.isNotEmpty){
@@ -65,7 +65,7 @@ class _BreakfastRecipeInfoPageState extends State<BreakfastRecipeInfoPage> {
       isFavorite = !isFavorite;
       if(isFavorite){
         FirebaseFirestore.instance.collection("users").doc(currentUser?.uid)
-            .collection('favorites').add(widget.breakfastRecipe)
+            .collection('favorites').add(widget.favoriteRecipe)
             .then((value){
               print("Successfully favorite the recipe.");
             }).catchError((error){
@@ -75,7 +75,7 @@ class _BreakfastRecipeInfoPageState extends State<BreakfastRecipeInfoPage> {
       }
       else{
         FirebaseFirestore.instance.collection("users").doc(currentUser?.uid)
-            .collection('favorites').where("name", isEqualTo: widget.breakfastRecipe['name']).get()
+            .collection('favorites').where("name", isEqualTo: widget.favoriteRecipe['name']).get()
             .then((value){
               String docId = value.docs.first.id;
               FirebaseFirestore.instance.collection("users").doc(currentUser?.uid)
@@ -103,7 +103,7 @@ class _BreakfastRecipeInfoPageState extends State<BreakfastRecipeInfoPage> {
             color: Colors.white
         ),
         backgroundColor: Colors.red,
-        title: Text(widget.breakfastRecipe['name'], style: const TextStyle(
+        title: Text(widget.favoriteRecipe['name'], style: const TextStyle(
             color: Colors.white,
             fontWeight: FontWeight.bold,
           fontSize: 25,
@@ -118,7 +118,7 @@ class _BreakfastRecipeInfoPageState extends State<BreakfastRecipeInfoPage> {
               Expanded(
                 flex: 10,
                 child: Image(
-                  image:  FileImage(File(widget.breakfastRecipe['image'])),
+                  image:  FileImage(File(widget.favoriteRecipe['image'])),
                   fit: BoxFit.cover,
                 ),
               ),
@@ -134,7 +134,7 @@ class _BreakfastRecipeInfoPageState extends State<BreakfastRecipeInfoPage> {
                             child: Container(
                               margin: const EdgeInsets.only(top: 15, left: 20),
                               child: Text(
-                                widget.breakfastRecipe['name'],
+                                widget.favoriteRecipe['name'],
                                 style: const TextStyle(
                                   fontWeight: FontWeight.bold,
                                   fontSize: 28,
@@ -171,7 +171,7 @@ class _BreakfastRecipeInfoPageState extends State<BreakfastRecipeInfoPage> {
                             Container(
                               alignment: Alignment.centerLeft,
                               child: Text(
-                                widget.breakfastRecipe['time'],
+                                widget.favoriteRecipe['time'],
                                 style: const TextStyle(
                                   fontSize: 17,
                                     fontWeight: FontWeight.bold
@@ -189,7 +189,7 @@ class _BreakfastRecipeInfoPageState extends State<BreakfastRecipeInfoPage> {
                               margin: const EdgeInsets.only(right: 20),
                               alignment: Alignment.centerLeft,
                               child: Text(
-                                widget.breakfastRecipe['servings'],
+                                widget.favoriteRecipe['servings'],
                                 style: const TextStyle(
                                   fontSize: 17,
                                     fontWeight: FontWeight.bold
@@ -218,7 +218,7 @@ class _BreakfastRecipeInfoPageState extends State<BreakfastRecipeInfoPage> {
                         margin: const EdgeInsets.only(left: 20, right: 20, bottom: 10),
                         alignment: Alignment.centerLeft,
                         child: Text(
-                          widget.breakfastRecipe['ingredients'],
+                          widget.favoriteRecipe['ingredients'],
                           style: const TextStyle(
                             fontSize: 17,
                           ),
@@ -240,7 +240,7 @@ class _BreakfastRecipeInfoPageState extends State<BreakfastRecipeInfoPage> {
                         margin: const EdgeInsets.only(left: 20, right: 20, bottom: 10),
                         alignment: Alignment.centerLeft,
                         child: Text(
-                          widget.breakfastRecipe['directions'],
+                          widget.favoriteRecipe['directions'],
                           style: const TextStyle(
                             fontSize: 17,
                           ),
@@ -265,7 +265,7 @@ class _BreakfastRecipeInfoPageState extends State<BreakfastRecipeInfoPage> {
             label: 'Favorite',
           ),
         ],
-        currentIndex: _selectedIndex,
+        currentIndex: 1,
         selectedItemColor: Colors.red,
         //backgroundColor: Colors.red,
         onTap: _onItemTapped,

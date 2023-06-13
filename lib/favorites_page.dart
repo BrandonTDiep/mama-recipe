@@ -1,4 +1,9 @@
+import 'dart:io';
+
+import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
+import 'package:mama_recipe_app/favorite_recipe_info.dart';
 
 import 'main.dart';
 
@@ -12,6 +17,27 @@ class FavoriteRecipesPage extends StatefulWidget {
 
 class _FavoriteRecipesPageState extends State<FavoriteRecipesPage> {
   int _selectedIndex = 0;
+  var favoriteRecipes = [];
+
+  _FavoriteRecipesPageState(){
+    var currentUser = FirebaseAuth.instance.currentUser;
+    FirebaseFirestore.instance.collection("users").doc(currentUser?.uid)
+        .collection('favorites').get()
+        .then((querySnapshot) {
+      print("Successfully load all the favorite recipes");
+      var recipeTmpList = [];
+      querySnapshot.docs.forEach((element){
+        recipeTmpList.add(element.data());
+      });
+      favoriteRecipes = recipeTmpList;
+      setState(() {
+
+      });
+    }).catchError((error) {
+      print("Failed to load all the favorite recipes.");
+      print(error);
+    });
+  }
 
   void _onItemTapped(int index) {
     setState(() {
@@ -36,28 +62,85 @@ class _FavoriteRecipesPageState extends State<FavoriteRecipesPage> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        backgroundColor: Theme.of(context).colorScheme.inversePrimary,
-        title: Text("Shopping list"),
-      ),
-      body: const Center(
-        child: Column(
-          mainAxisAlignment: MainAxisAlignment.center,
-          children: <Widget>[
-            Text(
-              'App Logo - Screen No. 3',
-            ),
-            Text(
-              'My Demo App - Screen No. 3',
-            ),
-            Text(
-              'Login First Please',
-            ),
-            Text(
-              'You have pushed the button this many times!!!',
-            ),
-
-          ],
+        iconTheme: const IconThemeData(
+            color: Colors.white
         ),
+        backgroundColor: Colors.red,
+        title: const Text("Favorite Recipes", style: TextStyle(
+          color: Colors.white,
+          fontWeight: FontWeight.bold,
+          fontSize: 25,
+        ),),
+      ),
+      body: ListView.builder(
+          itemCount: favoriteRecipes.length,
+          itemBuilder: (BuildContext context, int index) {
+            print(favoriteRecipes.length);
+            final String imagePath = '${favoriteRecipes[index]['image']}';
+            return Container(
+              margin: const EdgeInsets.only(top: 15),
+              child: Card(
+                elevation: 10,
+                clipBehavior: Clip.antiAlias,
+                shape: RoundedRectangleBorder(
+                  borderRadius: BorderRadius.circular(24),
+                ),
+                child: Stack(
+                  alignment: Alignment.bottomLeft,
+                  children: [
+                    Ink.image(
+                      image:  FileImage(File(imagePath)),
+                      height: 150,
+                      fit: BoxFit.cover,
+                      child: InkWell(
+                        onTap: () {
+                          Navigator.push(
+                            context,
+                            MaterialPageRoute(builder: (context) => FavoriteRecipeInfoPage(favoriteRecipes[index])),
+                          );
+                        },
+                      ),
+                    ),
+                    Column(
+                      crossAxisAlignment: CrossAxisAlignment.start,
+                      children: [
+                        Container(
+                          decoration: BoxDecoration(
+                              color: Colors.black.withOpacity(0.5),
+                              borderRadius: BorderRadius.circular(10)
+                          ),
+                          margin: const EdgeInsets.only(left: 8, bottom: 5),
+                          child: Text(
+                            '${favoriteRecipes[index]['name']}',
+                            style: const TextStyle(
+                              fontWeight: FontWeight.bold,
+                              color: Colors.white,
+                              fontSize: 22,
+                            ),
+                          ),
+                        ),
+                        Container(
+                          decoration: BoxDecoration(
+                              color: Colors.black.withOpacity(0.5),
+                              borderRadius: BorderRadius.circular(10)
+                          ),
+                          margin: const EdgeInsets.only(left: 8, bottom: 5),
+                          child: Text(
+                            '${favoriteRecipes[index]['time']}',
+                            style: const TextStyle(
+                              fontWeight: FontWeight.bold,
+                              color: Colors.white,
+                              fontSize: 22,
+                            ),
+                          ),
+                        ),
+                      ],
+                    ),
+                  ],
+                ),
+              ),
+            );
+          }
       ),
       bottomNavigationBar: BottomNavigationBar(
         items: const <BottomNavigationBarItem>[

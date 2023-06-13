@@ -84,9 +84,8 @@ class _BreakfastPageState extends State<BreakfastPage> {
             color: Colors.white,
             fontWeight: FontWeight.bold,
           fontSize: 25,
-
         ),),
-      ), //
+      ),
       body: ListView.builder(
           itemCount: breakfastRecipes.length,
           itemBuilder: (BuildContext context, int index) {
