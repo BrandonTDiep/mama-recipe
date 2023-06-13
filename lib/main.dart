@@ -30,7 +30,7 @@ class MyApp extends StatelessWidget {
         ),
         bottomNavigationBarTheme: BottomNavigationBarThemeData(
           backgroundColor: Colors.deepOrange[50]
-        )
+        ),
       ),
       home: LoginPage(),
     );
@@ -92,7 +92,7 @@ class _MyHomePageState extends State<MyHomePage> {
                   child: buildBreakfastCard()
               ),
               Container(
-                  margin: const EdgeInsets.only(top: 22, bottom: 22),
+                  margin: const EdgeInsets.only(top: 18, bottom: 18),
                   child: buildLunchCard()
               ),
               buildDinnerCard()
@@ -120,6 +120,7 @@ class _MyHomePageState extends State<MyHomePage> {
   }
   Widget buildBreakfastCard() {
     return Card(
+      elevation: 10,
       clipBehavior: Clip.antiAlias,
       shape: RoundedRectangleBorder(
         borderRadius: BorderRadius.circular(24),
@@ -129,7 +130,7 @@ class _MyHomePageState extends State<MyHomePage> {
         children: [
           Ink.image(
             image: const AssetImage('assets/breakfast.jpg'),
-            height: 170,
+            height: 175,
             fit: BoxFit.cover,
             child: InkWell(
               onTap: () {
@@ -160,6 +161,7 @@ class _MyHomePageState extends State<MyHomePage> {
   }
   Widget buildLunchCard() {
     return Card(
+      elevation: 10,
       clipBehavior: Clip.antiAlias,
       shape: RoundedRectangleBorder(
         borderRadius: BorderRadius.circular(24),
@@ -169,7 +171,7 @@ class _MyHomePageState extends State<MyHomePage> {
         children: [
           Ink.image(
             image: const AssetImage('assets/lunch.jpg'),
-            height: 170,
+            height: 175,
             fit: BoxFit.cover,
             child: InkWell(
               onTap: () {
@@ -200,6 +202,7 @@ class _MyHomePageState extends State<MyHomePage> {
   }
   Widget buildDinnerCard() {
     return Card(
+      elevation: 10,
       clipBehavior: Clip.antiAlias,
       shape: RoundedRectangleBorder(
         borderRadius: BorderRadius.circular(24),
@@ -209,7 +212,7 @@ class _MyHomePageState extends State<MyHomePage> {
         children: [
           Ink.image(
             image: const AssetImage('assets/dinner.jpg'),
-            height: 170,
+            height: 175,
             fit: BoxFit.cover,
             child: InkWell(
               onTap: () {

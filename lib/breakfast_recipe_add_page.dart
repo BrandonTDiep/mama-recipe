@@ -4,14 +4,19 @@ import 'package:flutter/material.dart';
 import 'package:image_picker/image_picker.dart';
 import 'dart:io';
 
-class LunchRecipeAddPage extends StatefulWidget {
-  const LunchRecipeAddPage({super.key});
+import 'favorites_page.dart';
+import 'main.dart';
+
+class BreakfastRecipeAddPage extends StatefulWidget {
+  const BreakfastRecipeAddPage({super.key});
 
   @override
-  State<LunchRecipeAddPage> createState() => _LunchRecipeAddPageState();
+  State<BreakfastRecipeAddPage> createState() => _BreakfastRecipeAddPageState();
 }
 
-class _LunchRecipeAddPageState extends State<LunchRecipeAddPage> {
+class _BreakfastRecipeAddPageState extends State<BreakfastRecipeAddPage> {
+  int _selectedIndex = 0;
+
   final TextEditingController nameController = TextEditingController();
   final TextEditingController timeController = TextEditingController();
   final TextEditingController servingsController = TextEditingController();
@@ -48,7 +53,28 @@ class _LunchRecipeAddPageState extends State<LunchRecipeAddPage> {
     setState(() {
        _image = File(image.path);
     });
-}
+  }
+
+  void _onItemTapped(int index) {
+    setState(() {
+      _selectedIndex = index;
+      if(_selectedIndex == 1){
+        Navigator.pushAndRemoveUntil(
+            context,
+            MaterialPageRoute(builder: (context) => const FavoriteRecipesPage()),
+                (route) => false
+        );
+      }
+      else{
+        Navigator.pushAndRemoveUntil(
+            context,
+            MaterialPageRoute(builder: (context) => const MyHomePage()),
+                (route) => false
+        );
+      }
+    });
+  }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -62,168 +88,185 @@ class _LunchRecipeAddPageState extends State<LunchRecipeAddPage> {
             fontWeight: FontWeight.bold
         ),),
       ), //
-      body: ListView(
-          children: [
-            Container(
-              margin: const EdgeInsets.only(top: 12),
-              child: const Text("New Recipe", textAlign: TextAlign.center, style: TextStyle(
-                fontWeight: FontWeight.bold,
-                fontSize: 20,
-              ),),
-            ),
-            Container(
-              height: 60,
-              margin: const EdgeInsets.only(top: 10),
-              child: ElevatedButton.icon(
-                onPressed: _selectGallery,
-                icon: const Icon(Icons.camera_alt),
-                label: const Text("Add a Photo"),
-              ),
-            ),
-            Container(
-              margin: const EdgeInsets.only(left: 22, top: 15),
-              alignment: Alignment.centerLeft,
-              child: const Text(
-                "Recipe Name",
-                style: TextStyle(
-                  fontWeight: FontWeight.bold,
-                  fontSize: 20,
-                ),
-              ),
-            ),
-            Container(
-              alignment: Alignment.centerLeft,
-              margin: const EdgeInsets.only(left: 22, right: 22),
-              child: SizedBox(
-                width: 350,
-                height: 50,
-                child: TextField(
-                  controller: nameController,
-                  decoration: const InputDecoration(
-                    border: OutlineInputBorder(),
-                    hintText: 'Recipe Name',
+      body: SingleChildScrollView(
+        child: ConstrainedBox(
+          constraints: const BoxConstraints(maxHeight: 670),
+          child: Column(
+              children: [
+                Container(
+                  width: 350,
+                  height: 60,
+                  margin: const EdgeInsets.only(top: 14),
+                  child: ElevatedButton.icon(
+                    onPressed: _selectGallery,
+                    icon: const Icon(Icons.camera_alt),
+                    label: const Text("Add a Photo"),
                   ),
                 ),
-              ),
-            ),
-
-            Container(
-              margin: const EdgeInsets.only(left: 22, top: 15),
-              alignment: Alignment.centerLeft,
-              child: const Text(
-                "Time",
-                style: TextStyle(
-                  fontWeight: FontWeight.bold,
-                  fontSize: 20,
-                ),
-              ),
-            ),
-            Container(
-              alignment: Alignment.centerLeft,
-              margin: const EdgeInsets.only(left: 22, right: 22),
-              child: SizedBox(
-                width: 100,
-                height: 50,
-                child: TextField(
-                  controller: timeController,
-                  decoration: const InputDecoration(
-                    border: OutlineInputBorder(),
-                    hintText: 'Time',
-                  ),
-                ),
-              ),
-            ),
-
-            Container(
-              margin: const EdgeInsets.only(left: 22, top: 15),
-              alignment: Alignment.centerLeft,
-              child: const Text(
-                "Servings",
-                style: TextStyle(
-                  fontWeight: FontWeight.bold,
-                  fontSize: 20,
-                ),
-              ),
-            ),
-            Container(
-              alignment: Alignment.centerLeft,
-              margin: const EdgeInsets.only(left: 22, right: 22),
-              child: SizedBox(
-                width: 150,
-                height: 50,
-                child: TextField(
-                  controller: servingsController,
-                  decoration: const InputDecoration(
-                    border: OutlineInputBorder(),
-                    hintText: 'Servings',
-                  ),
-                ),
-              ),
-            ),
-
-            Container(
-              margin: const EdgeInsets.only(left: 22, top: 15),
-              alignment: Alignment.centerLeft,
-              child: const Text(
-                "Ingredients",
-                style: TextStyle(
-                  fontWeight: FontWeight.bold,
-                  fontSize: 20,
-                ),
-              ),
-            ),
-            Container(
-              alignment: Alignment.centerLeft,
-              margin: const EdgeInsets.only(left: 22),
-              child: SizedBox(
-                width: 350,
-                child: TextField(
-                    controller: ingredientsController,
-                    decoration: const InputDecoration(
-                    border: OutlineInputBorder(),
-                    hintText: 'Ingredients',
-                  ),
-                  keyboardType: TextInputType.multiline,
-                    maxLines: null
-                ),
-              ),
-            ),
-
-            Container(
-              margin: const EdgeInsets.only(left: 22, top: 15),
-              alignment: Alignment.centerLeft,
-              child: const Text(
-                "Directions",
-                style: TextStyle(
-                  fontWeight: FontWeight.bold,
-                  fontSize: 20,
-                ),
-              ),
-            ),
-            Container(
-              alignment: Alignment.centerLeft,
-              margin: const EdgeInsets.only(left: 22),
-              child: SizedBox(
-                width: 350,
-                child: TextField(
-                    controller: directionsController,
-                    decoration: const InputDecoration(
-                      border: OutlineInputBorder(),
-                      hintText: 'Directions',
+                Container(
+                  margin: const EdgeInsets.only(left: 22, top: 14),
+                  alignment: Alignment.centerLeft,
+                  child: const Text(
+                    "Recipe Name",
+                    style: TextStyle(
+                      fontWeight: FontWeight.bold,
+                      fontSize: 20,
                     ),
-                    keyboardType: TextInputType.multiline,
-                    maxLines: null
+                  ),
                 ),
-              ),
-            ),
-            Container(
-              margin: const EdgeInsets.only(top: 20),
-              child: ElevatedButton(
-                onPressed: createBreakfastRecipe,
-                child: const Text("Create Recipe"),
-              ),
-            )
-          ],
+                Container(
+                  alignment: Alignment.centerLeft,
+                  margin: const EdgeInsets.only(left: 22, right: 22),
+                  child: SizedBox(
+                    width: 350,
+                    height: 50,
+                    child: TextField(
+                      controller: nameController,
+                      decoration: const InputDecoration(
+                        border: OutlineInputBorder(),
+                        hintText: 'Recipe Name',
+                      ),
+                    ),
+                  ),
+                ),
+
+                Container(
+                  margin: const EdgeInsets.only(left: 22, top: 14),
+                  alignment: Alignment.centerLeft,
+                  child: const Text(
+                    "Time",
+                    style: TextStyle(
+                      fontWeight: FontWeight.bold,
+                      fontSize: 20,
+                    ),
+                  ),
+                ),
+                Container(
+                  alignment: Alignment.centerLeft,
+                  margin: const EdgeInsets.only(left: 22, right: 22),
+                  child: SizedBox(
+                    width: 100,
+                    height: 50,
+                    child: TextField(
+                      controller: timeController,
+                      decoration: const InputDecoration(
+                        border: OutlineInputBorder(),
+                        hintText: 'Time',
+                      ),
+                    ),
+                  ),
+                ),
+
+                Container(
+                  margin: const EdgeInsets.only(left: 22, top: 14),
+                  alignment: Alignment.centerLeft,
+                  child: const Text(
+                    "Servings",
+                    style: TextStyle(
+                      fontWeight: FontWeight.bold,
+                      fontSize: 20,
+                    ),
+                  ),
+                ),
+                Container(
+                  alignment: Alignment.centerLeft,
+                  margin: const EdgeInsets.only(left: 22, right: 22),
+                  child: SizedBox(
+                    width: 150,
+                    height: 50,
+                    child: TextField(
+                      controller: servingsController,
+                      decoration: const InputDecoration(
+                        border: OutlineInputBorder(),
+                        hintText: 'Servings',
+                      ),
+                    ),
+                  ),
+                ),
+
+                Container(
+                  margin: const EdgeInsets.only(left: 22, top: 14),
+                  alignment: Alignment.centerLeft,
+                  child: const Text(
+                    "Ingredients",
+                    style: TextStyle(
+                      fontWeight: FontWeight.bold,
+                      fontSize: 20,
+                    ),
+                  ),
+                ),
+                Container(
+                  alignment: Alignment.centerLeft,
+                  margin: const EdgeInsets.only(left: 22),
+                  child: SizedBox(
+                    width: 350,
+                    child: TextField(
+                        controller: ingredientsController,
+                        decoration: const InputDecoration(
+                        border: OutlineInputBorder(),
+                        hintText: 'Ingredients',
+                      ),
+                      keyboardType: TextInputType.multiline,
+                        maxLines: null
+                    ),
+                  ),
+                ),
+
+                Container(
+                  margin: const EdgeInsets.only(left: 22, top: 14),
+                  alignment: Alignment.centerLeft,
+                  child: const Text(
+                    "Directions",
+                    style: TextStyle(
+                      fontWeight: FontWeight.bold,
+                      fontSize: 20,
+                    ),
+                  ),
+                ),
+                Container(
+                  alignment: Alignment.centerLeft,
+                  margin: const EdgeInsets.only(left: 22),
+                  child: SizedBox(
+                    width: 350,
+                    child: TextField(
+                        controller: directionsController,
+                        decoration: const InputDecoration(
+                          border: OutlineInputBorder(),
+                          hintText: 'Directions',
+                        ),
+                        keyboardType: TextInputType.multiline,
+                        maxLines: null
+                    ),
+                  ),
+                ),
+                Container(
+                  height: 50,
+                  width: 350,
+                  margin: const EdgeInsets.only(top: 14),
+                  child: ElevatedButton(
+                    onPressed: createBreakfastRecipe,
+                    child: const Text("Create Recipe"),
+                  ),
+                )
+              ],
+          ),
+        ),
+      ),
+      bottomNavigationBar: BottomNavigationBar(
+        items: const <BottomNavigationBarItem>[
+          BottomNavigationBarItem(
+            icon: Icon(Icons.home),
+            label: 'Home',
+          ),
+          BottomNavigationBarItem(
+            icon: Icon(Icons.favorite),
+            label: 'Favorite',
+          ),
+        ],
+        currentIndex: _selectedIndex,
+        selectedItemColor: Colors.red,
+        //backgroundColor: Colors.red,
+        onTap: _onItemTapped,
       ),
     );
   }
