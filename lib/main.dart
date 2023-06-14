@@ -32,6 +32,9 @@ class MyApp extends StatelessWidget {
         bottomNavigationBarTheme: BottomNavigationBarThemeData(
           backgroundColor: Colors.deepOrange[50]
         ),
+        appBarTheme: AppBarTheme(
+          backgroundColor: Colors.red[300],
+        )
       ),
       home: LoginPage(),
     );
@@ -78,7 +81,7 @@ class _MyHomePageState extends State<MyHomePage> {
         iconTheme: const IconThemeData(
             color: Colors.white
         ),
-        backgroundColor: Colors.red,
+        backgroundColor: Colors.red[300],
         title: const Text("Mama's Recipes", style: TextStyle(
           color: Colors.white,
           fontWeight: FontWeight.bold,

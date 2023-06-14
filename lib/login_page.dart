@@ -68,6 +68,7 @@ class _LoginPageState extends State<LoginPage> {
                     ),
                     Container(
                       width: 330,
+                      height: 55,
                       margin: const EdgeInsets.only(top: 10, bottom: 5),
                       child: ElevatedButton(
                         child: Text("Login"),
@@ -99,15 +100,19 @@ class _LoginPageState extends State<LoginPage> {
                       ),
                     ),
                     Container(
-                      width: 150,
-                      child: ElevatedButton(
-                        child: const Text("Sign up"),
-                        onPressed: () {
-                          Navigator.push( //change screens
-                            context,
-                            MaterialPageRoute(builder: (context) => const SignupPage()),
-                          );
-                        },
+                      margin: const EdgeInsets.only(top: 5),
+                      child: SizedBox(
+                        height: 35,
+                        width: 150,
+                        child: ElevatedButton(
+                          child: const Text("Sign up"),
+                          onPressed: () {
+                            Navigator.push( //change screens
+                              context,
+                              MaterialPageRoute(builder: (context) => const SignupPage()),
+                            );
+                          },
+                        ),
                       ),
                     )
                   ],

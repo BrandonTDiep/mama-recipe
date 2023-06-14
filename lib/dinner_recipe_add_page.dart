@@ -55,9 +55,7 @@ class _DinnerRecipeAddPageState extends State<DinnerRecipeAddPage> {
       appBar: AppBar(
         iconTheme: const IconThemeData(
             color: Colors.white
-        ),
-        backgroundColor: Colors.red,
-        title: const Text("Add a Dinner Recipe", style: TextStyle(
+        ), title: const Text("Add a Dinner Recipe", style: TextStyle(
             color: Colors.white,
             fontWeight: FontWeight.bold
         ),),

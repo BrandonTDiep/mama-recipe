@@ -56,7 +56,6 @@ class _LunchRecipeAddPageState extends State<LunchRecipeAddPage> {
         iconTheme: const IconThemeData(
             color: Colors.white
         ),
-        backgroundColor: Colors.red,
         title: const Text("Add a Lunch Recipe", style: TextStyle(
             color: Colors.white,
             fontWeight: FontWeight.bold

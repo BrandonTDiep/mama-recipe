@@ -79,7 +79,7 @@ class _BreakfastPageState extends State<BreakfastPage> {
         iconTheme: const IconThemeData(
             color: Colors.white
         ),
-        backgroundColor: Colors.red,
+        backgroundColor: Colors.red[300],
         title: const Text("Breakfast Recipes", style: TextStyle(
             color: Colors.white,
             fontWeight: FontWeight.bold,

@@ -56,10 +56,10 @@ class _BreakfastRecipeAddPageState extends State<BreakfastRecipeAddPage> {
         iconTheme: const IconThemeData(
             color: Colors.white
         ),
-        backgroundColor: Colors.red,
         title: const Text("Add a Breakfast Recipe", style: TextStyle(
             color: Colors.white,
-            fontWeight: FontWeight.bold
+            fontWeight: FontWeight.bold,
+          fontSize: 25,
         ),),
       ), //
       body: ListView(

@@ -59,7 +59,6 @@ class _FavoriteRecipesPageState extends State<FavoriteRecipesPage> {
         iconTheme: const IconThemeData(
             color: Colors.white
         ),
-        backgroundColor: Colors.red,
         title: const Text("Favorite Recipes", style: TextStyle(
           color: Colors.white,
           fontWeight: FontWeight.bold,

@@ -79,7 +79,6 @@ class _LunchPageState extends State<LunchPage> {
         iconTheme: const IconThemeData(
             color: Colors.white
         ),
-        backgroundColor: Colors.red,
         title: const Text("Lunch Recipes", style: TextStyle(
           color: Colors.white,
           fontWeight: FontWeight.bold,

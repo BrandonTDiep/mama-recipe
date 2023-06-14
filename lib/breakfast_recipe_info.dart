@@ -109,12 +109,11 @@ class _BreakfastRecipeInfoPageState extends State<BreakfastRecipeInfoPage> {
         iconTheme: const IconThemeData(
             color: Colors.white
         ),
-        backgroundColor: Colors.red,
+        backgroundColor: Colors.red[300],
         title: Text(widget.breakfastRecipe['name'], style: const TextStyle(
             color: Colors.white,
             fontWeight: FontWeight.bold,
           fontSize: 25,
-
         ),),
       ),
       body: Container(

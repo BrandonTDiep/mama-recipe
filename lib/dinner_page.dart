@@ -79,7 +79,6 @@ class _DinnerPageState extends State<DinnerPage> {
         iconTheme: const IconThemeData(
             color: Colors.white
         ),
-        backgroundColor: Colors.red,
         title: const Text("Dinner Recipes", style: TextStyle(
           color: Colors.white,
           fontWeight: FontWeight.bold,

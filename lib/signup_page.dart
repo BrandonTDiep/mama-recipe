@@ -22,11 +22,26 @@ class _SignupPageState extends State<SignupPage> {
           constraints: BoxConstraints(maxHeight: MediaQuery.of(context).size.height),
           child: Column(
             children: [
-              const Expanded(
+              Expanded(
                 flex: 19,
-                child: Image(
-                  image: AssetImage('assets/logo2.png'),
-                  fit: BoxFit.cover,
+                child: Stack(
+                  children: [
+                    const Image(
+                      image: AssetImage('assets/logo2.png'),
+                      fit: BoxFit.cover,
+                    ),
+                    Positioned(
+                      top: 25,
+                      child: IconButton(
+                        iconSize: 30,
+                        icon: const Icon(Icons.arrow_back),
+                        color: Colors.white,
+                        onPressed: () {
+                          Navigator.pop(context);
+                        },
+                      ),
+                    ),
+                  ],
                 ),
               ),
               Expanded(
@@ -34,7 +49,7 @@ class _SignupPageState extends State<SignupPage> {
                 child: Column(
                   children: [
                     Container(
-                      margin: const EdgeInsets.only(top: 20, bottom: 20),
+                      margin: const EdgeInsets.only(top: 10, bottom: 20),
                       child: const Text(
                           'Create an account',
                           style: TextStyle(
@@ -77,7 +92,7 @@ class _SignupPageState extends State<SignupPage> {
                       ),
                     ),
                     Container(
-                      height: 45,
+                      height: 55,
                       width: 330,
                       margin: const EdgeInsets.only(top: 20, bottom: 20),
                       child: ElevatedButton(

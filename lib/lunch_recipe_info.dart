@@ -108,12 +108,10 @@ class _LunchRecipeInfoPageState extends State<LunchRecipeInfoPage> {
         iconTheme: const IconThemeData(
             color: Colors.white
         ),
-        backgroundColor: Colors.red,
         title: Text(widget.lunchRecipe['name'], style: const TextStyle(
           color: Colors.white,
           fontWeight: FontWeight.bold,
           fontSize: 25,
-
         ),),
       ),
       body: Container(

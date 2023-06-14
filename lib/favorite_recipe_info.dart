@@ -44,6 +44,7 @@ class _FavoriteRecipeInfoPageState extends State<FavoriteRecipeInfoPage> {
       }
     });
   }
+
   void _loadFavoriteState() async{
     FirebaseFirestore.instance.collection("users").doc(currentUser?.uid)
         .collection('favorites')
@@ -55,16 +56,16 @@ class _FavoriteRecipeInfoPageState extends State<FavoriteRecipeInfoPage> {
         .where("image", isEqualTo: widget.favoriteRecipe['image'])
         .get()
         .then((value){
-      print("Successfully loaded favorite status of the recipe.");
-      if(value.docs.isNotEmpty){
-        setState(() {
-          isFavorite = true;
+          print("Successfully loaded favorite status of the recipe.");
+          if(value.docs.isNotEmpty){
+            setState(() {
+              isFavorite = true;
+            });
+          }
+        }).catchError((error){
+          print("Failed to load favorite status of the recipe.");
+          print(error);
         });
-      }
-    }).catchError((error){
-      print("Failed to load favorite status of the recipe.");
-      print(error);
-    });
   }
 
   void toggleFavorite(){
@@ -109,12 +110,10 @@ class _FavoriteRecipeInfoPageState extends State<FavoriteRecipeInfoPage> {
         iconTheme: const IconThemeData(
             color: Colors.white
         ),
-        backgroundColor: Colors.red,
         title: Text(widget.favoriteRecipe['name'], style: const TextStyle(
           color: Colors.white,
           fontWeight: FontWeight.bold,
           fontSize: 25,
-
         ),),
       ),
       body: Container(
@@ -265,7 +264,7 @@ class _FavoriteRecipeInfoPageState extends State<FavoriteRecipeInfoPage> {
             label: 'Favorite',
           ),
         ],
-        currentIndex: _selectedIndex,
+        currentIndex: 1,
         selectedItemColor: Colors.red,
         //backgroundColor: Colors.red,
         onTap: _onItemTapped,
