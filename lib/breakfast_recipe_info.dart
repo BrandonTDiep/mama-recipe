@@ -46,7 +46,14 @@ class _BreakfastRecipeInfoPageState extends State<BreakfastRecipeInfoPage> {
   }
    void _loadFavoriteState() async{
     FirebaseFirestore.instance.collection("users").doc(currentUser?.uid)
-        .collection('favorites').where("name", isEqualTo: widget.breakfastRecipe['name']).get()
+        .collection('favorites')
+        .where("name", isEqualTo: widget.breakfastRecipe['name'])
+        .where("time", isEqualTo: widget.breakfastRecipe['time'])
+        .where("servings", isEqualTo: widget.breakfastRecipe['servings'])
+        .where("ingredients", isEqualTo: widget.breakfastRecipe['ingredients'])
+        .where("directions", isEqualTo: widget.breakfastRecipe['directions'])
+        .where("image", isEqualTo: widget.breakfastRecipe['image'])
+        .get()
         .then((value){
           print("Successfully loaded favorite status of the recipe.");
           if(value.docs.isNotEmpty){
@@ -110,150 +117,143 @@ class _BreakfastRecipeInfoPageState extends State<BreakfastRecipeInfoPage> {
 
         ),),
       ),
-      body: SingleChildScrollView(
-        child: ConstrainedBox(
-          constraints: BoxConstraints(maxHeight: MediaQuery.of(context).size.height),
-          child: Column(
-            children: [
-              Expanded(
-                flex: 10,
-                child: Image(
-                  image:  FileImage(File(widget.breakfastRecipe['image'])),
-                  fit: BoxFit.cover,
-                ),
+      body: Container(
+        color: Colors.orange[50],
+        child: ListView(
+          children: [
+            SizedBox(
+              height: MediaQuery.of(context).size.height * 0.34,
+              child: Image(
+                image:  FileImage(File(widget.breakfastRecipe['image'])),
+                fit: BoxFit.cover,
               ),
-              Expanded(
-                flex: 19,
-                child: Container(
-                  color: Colors.orange[50],
-                  child: ListView(
+            ),
+            Column(
+              children: [
+                Row(
+                  children: [
+                    Expanded(
+                      child: Container(
+                        margin: const EdgeInsets.only(top: 15, left: 20),
+                        child: Text(
+                          widget.breakfastRecipe['name'],
+                          style: const TextStyle(
+                            fontWeight: FontWeight.bold,
+                            fontSize: 28,
+                          ),
+                        ),
+                      ),
+                    ),
+                    Container(
+                        margin: const EdgeInsets.only(top: 15, left: 20, right: 20),
+                        child: GestureDetector(
+                          onTap: toggleFavorite,
+                          child: Icon(
+                            size: 30,
+                            isFavorite ? Icons.favorite: Icons.favorite_border,
+                            color: isFavorite ? Colors.red : Colors.grey,
+                          ),
+                        )
+                    ),
+                  ],
+                ),
+                Container(
+                  margin: const EdgeInsets.only(top: 15, bottom: 10),
+                  child: Row(
                     children: [
-                      Row(
-                        children: [
-                          Expanded(
-                            child: Container(
-                              margin: const EdgeInsets.only(top: 15, left: 20),
-                              child: Text(
-                                widget.breakfastRecipe['name'],
-                                style: const TextStyle(
-                                  fontWeight: FontWeight.bold,
-                                  fontSize: 28,
-                                ),
-                              ),
-                            ),
-                          ),
-                          Container(
-                              margin: const EdgeInsets.only(top: 15, left: 20, right: 20),
-                              child: GestureDetector(
-                                onTap: toggleFavorite,
-                                child: Icon(
-                                  size: 30,
-                                  isFavorite ? Icons.favorite: Icons.favorite_border,
-                                  color: isFavorite ? Colors.red : Colors.grey,
-                                ),
-                              )
-                          ),
-                        ],
-                      ),
                       Container(
-                        margin: const EdgeInsets.only(top: 15, bottom: 10),
-                        child: Row(
-                          children: [
-                            Container(
-                              margin: const EdgeInsets.only(left: 20),
-                              child: const Text(
-                                "Total Time: ",
-                                style: TextStyle(
-                                    fontSize: 16,
-                                ),
-                              ),
-                            ),
-                            Container(
-                              alignment: Alignment.centerLeft,
-                              child: Text(
-                                widget.breakfastRecipe['time'],
-                                style: const TextStyle(
-                                  fontSize: 17,
-                                    fontWeight: FontWeight.bold
-                                ),
-                              ),
-                            ),
-                            const Spacer(),
-                            const Text(
-                              "Servings: ",
-                              style: TextStyle(
-                                fontSize: 16,
-                              ),
-                            ),
-                            Container(
-                              margin: const EdgeInsets.only(right: 20),
-                              alignment: Alignment.centerLeft,
-                              child: Text(
-                                widget.breakfastRecipe['servings'],
-                                style: const TextStyle(
-                                  fontSize: 17,
-                                    fontWeight: FontWeight.bold
-                                ),
-                              ),
-                            ),
-                          ],
-                        ),
-                      ),
-                      const Divider(
-                        color: Colors.black,
-                        thickness: 0.8,
-                      ),
-                      Container(
-                        margin: const EdgeInsets.only(left: 20, right: 20, bottom: 2, top: 5),
-                        alignment: Alignment.centerLeft,
+                        margin: const EdgeInsets.only(left: 20),
                         child: const Text(
-                          "Ingredients:",
+                          "Total Time: ",
                           style: TextStyle(
-                            fontWeight: FontWeight.bold,
-                            fontSize: 22,
+                            fontSize: 16,
                           ),
                         ),
                       ),
                       Container(
-                        margin: const EdgeInsets.only(left: 20, right: 20, bottom: 10),
                         alignment: Alignment.centerLeft,
                         child: Text(
-                          widget.breakfastRecipe['ingredients'],
+                          widget.breakfastRecipe['time'],
                           style: const TextStyle(
-                            fontSize: 17,
+                              fontSize: 17,
+                              fontWeight: FontWeight.bold
                           ),
                         ),
                       ),
-
-                      Container(
-                        margin: const EdgeInsets.only(left: 20, right: 20, bottom: 2, top: 20),
-                        alignment: Alignment.centerLeft,
-                        child: const Text(
-                          "Directions:",
-                          style: TextStyle(
-                            fontWeight: FontWeight.bold,
-                            fontSize: 22,
-                          ),
+                      const Spacer(),
+                      const Text(
+                        "Servings: ",
+                        style: TextStyle(
+                          fontSize: 16,
                         ),
                       ),
                       Container(
-                        margin: const EdgeInsets.only(left: 20, right: 20, bottom: 10),
+                        margin: const EdgeInsets.only(right: 20),
                         alignment: Alignment.centerLeft,
                         child: Text(
-                          widget.breakfastRecipe['directions'],
+                          widget.breakfastRecipe['servings'],
                           style: const TextStyle(
-                            fontSize: 17,
+                              fontSize: 17,
+                              fontWeight: FontWeight.bold
                           ),
                         ),
                       ),
                     ],
                   ),
                 ),
-              ),
-            ],
-          ),
+                const Divider(
+                  color: Colors.black,
+                  thickness: 0.2,
+                ),
+                Container(
+                  margin: const EdgeInsets.only(left: 20, right: 20, bottom: 2, top: 5),
+                  alignment: Alignment.centerLeft,
+                  child: const Text(
+                    "Ingredients:",
+                    style: TextStyle(
+                      fontWeight: FontWeight.bold,
+                      fontSize: 22,
+                    ),
+                  ),
+                ),
+                Container(
+                  margin: const EdgeInsets.only(left: 20, right: 20, bottom: 10),
+                  alignment: Alignment.centerLeft,
+                  child: Text(
+                    widget.breakfastRecipe['ingredients'],
+                    style: const TextStyle(
+                      fontSize: 17,
+                    ),
+                  ),
+                ),
+
+                Container(
+                  margin: const EdgeInsets.only(left: 20, right: 20, bottom: 2, top: 20),
+                  alignment: Alignment.centerLeft,
+                  child: const Text(
+                    "Directions:",
+                    style: TextStyle(
+                      fontWeight: FontWeight.bold,
+                      fontSize: 22,
+                    ),
+                  ),
+                ),
+                Container(
+                  margin: const EdgeInsets.only(left: 20, right: 20, bottom: 10),
+                  alignment: Alignment.centerLeft,
+                  child: Text(
+                    widget.breakfastRecipe['directions'],
+                    style: const TextStyle(
+                      fontSize: 17,
+                    ),
+                  ),
+                ),
+              ],
+            ),
+          ],
         ),
       ),
+
       bottomNavigationBar: BottomNavigationBar(
         items: const <BottomNavigationBarItem>[
           BottomNavigationBarItem(

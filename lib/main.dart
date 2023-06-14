@@ -1,3 +1,4 @@
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:mama_recipe_app/breakfast_page.dart';
 import 'package:mama_recipe_app/dinner_page.dart';
@@ -61,6 +62,15 @@ class _MyHomePageState extends State<MyHomePage> {
     });
   }
 
+  void signOut(){
+    FirebaseAuth.instance.signOut();
+    Navigator.pushAndRemoveUntil(
+        context,
+        MaterialPageRoute(builder: (context) => const LoginPage()),
+            (route) => false
+    );
+  }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -72,14 +82,20 @@ class _MyHomePageState extends State<MyHomePage> {
         title: const Text("Mama's Recipes", style: TextStyle(
           color: Colors.white,
           fontWeight: FontWeight.bold,
-          fontSize: 35,
+          fontSize: 33,
         ),),
+        actions: [
+          IconButton(
+              onPressed: signOut,
+              icon: Icon(Icons.logout)
+          )
+        ],
       ), //
       body: ListView(
         children: [
           Container(
             margin: const EdgeInsets.only(top: 5, left: 15),
-            child: const Text("Mealtimes", style: TextStyle(
+            child:  const Text("Mealtimes", style: TextStyle(
               fontWeight: FontWeight.bold,
               color: Colors.black,
               fontSize: 30,
@@ -119,125 +135,134 @@ class _MyHomePageState extends State<MyHomePage> {
     );
   }
   Widget buildBreakfastCard() {
-    return Card(
-      elevation: 10,
-      clipBehavior: Clip.antiAlias,
-      shape: RoundedRectangleBorder(
-        borderRadius: BorderRadius.circular(24),
-      ),
-      child: Stack(
-        alignment: Alignment.center,
-        children: [
-          Ink.image(
-            image: const AssetImage('assets/breakfast.jpg'),
-            height: 175,
-            fit: BoxFit.cover,
-            child: InkWell(
-              onTap: () {
-                Navigator.push(
-                  context,
-                  MaterialPageRoute(builder: (context) => const BreakfastPage()),
-                );
-              },
-            ),
-          ),
-          Container(
-            decoration: BoxDecoration(
-                color: Colors.black.withOpacity(0.5),
-                borderRadius: BorderRadius.circular(12)
-            ),
-            child: const Text(
-              'Breakfast',
-              style: TextStyle(
-                fontWeight: FontWeight.bold,
-                color: Colors.white,
-                fontSize: 30,
+    return SizedBox(
+      width: 385,
+      child: Card(
+        elevation: 10,
+        clipBehavior: Clip.antiAlias,
+        shape: RoundedRectangleBorder(
+          borderRadius: BorderRadius.circular(24),
+        ),
+        child: Stack(
+          alignment: Alignment.center,
+          children: [
+            Ink.image(
+              image: const AssetImage('assets/breakfast.jpg'),
+              height: 175,
+              fit: BoxFit.cover,
+              child: InkWell(
+                onTap: () {
+                  Navigator.push(
+                    context,
+                    MaterialPageRoute(builder: (context) => const BreakfastPage()),
+                  );
+                },
               ),
             ),
-          ),
-        ],
+            Container(
+              decoration: BoxDecoration(
+                  color: Colors.black.withOpacity(0.5),
+                  borderRadius: BorderRadius.circular(12)
+              ),
+              child: const Text(
+                'Breakfast',
+                style: TextStyle(
+                  fontWeight: FontWeight.bold,
+                  color: Colors.white,
+                  fontSize: 30,
+                ),
+              ),
+            ),
+          ],
+        ),
       ),
     );
   }
   Widget buildLunchCard() {
-    return Card(
-      elevation: 10,
-      clipBehavior: Clip.antiAlias,
-      shape: RoundedRectangleBorder(
-        borderRadius: BorderRadius.circular(24),
-      ),
-      child: Stack(
-        alignment: Alignment.center,
-        children: [
-          Ink.image(
-            image: const AssetImage('assets/lunch.jpg'),
-            height: 175,
-            fit: BoxFit.cover,
-            child: InkWell(
-              onTap: () {
-                Navigator.push(
-                  context,
-                  MaterialPageRoute(builder: (context) => const LunchPage()),
-                );
-              },
-            ),
-          ),
-          Container(
-            decoration: BoxDecoration(
-                color: Colors.black.withOpacity(0.5),
-                borderRadius: BorderRadius.circular(12)
-            ),
-            child: const Text(
-              'Lunch',
-              style: TextStyle(
-                fontWeight: FontWeight.bold,
-                color: Colors.white,
-                fontSize: 30,
+    return SizedBox(
+      width: 385,
+      child: Card(
+        elevation: 10,
+        clipBehavior: Clip.antiAlias,
+        shape: RoundedRectangleBorder(
+          borderRadius: BorderRadius.circular(24),
+        ),
+        child: Stack(
+          alignment: Alignment.center,
+          children: [
+            Ink.image(
+              image: const AssetImage('assets/lunch.jpg'),
+              height: 175,
+              fit: BoxFit.cover,
+              child: InkWell(
+                onTap: () {
+                  Navigator.push(
+                    context,
+                    MaterialPageRoute(builder: (context) => const LunchPage()),
+                  );
+                },
               ),
             ),
-          ),
-        ],
+            Container(
+              decoration: BoxDecoration(
+                  color: Colors.black.withOpacity(0.5),
+                  borderRadius: BorderRadius.circular(12)
+              ),
+              child: const Text(
+                'Lunch',
+                style: TextStyle(
+                  fontWeight: FontWeight.bold,
+                  color: Colors.white,
+                  fontSize: 30,
+                ),
+              ),
+            ),
+          ],
+        ),
       ),
     );
   }
   Widget buildDinnerCard() {
-    return Card(
-      elevation: 10,
-      clipBehavior: Clip.antiAlias,
-      shape: RoundedRectangleBorder(
-        borderRadius: BorderRadius.circular(24),
-      ),
-      child: Stack(
-        alignment: Alignment.center,
-        children: [
-          Ink.image(
-            image: const AssetImage('assets/dinner.jpg'),
-            height: 175,
-            fit: BoxFit.cover,
-            child: InkWell(
-              onTap: () {
-                Navigator.push(
-                  context,
-                  MaterialPageRoute(builder: (context) => const DinnerPage()),
-                );
-              },
-            ),
-          ),
-          Container(
-            decoration: BoxDecoration(
-                color: Colors.black.withOpacity(0.5),
-                borderRadius: BorderRadius.circular(12)
-            ),
-            child: const Text(
-              'Dinner',
-              style: TextStyle(
-                fontWeight: FontWeight.bold,
-                color: Colors.white,
-                fontSize: 30,
+    return SizedBox(
+      width: 385,
+      child: Card(
+        elevation: 10,
+        clipBehavior: Clip.antiAlias,
+        shape: RoundedRectangleBorder(
+          borderRadius: BorderRadius.circular(24),
+        ),
+        child: Stack(
+          alignment: Alignment.center,
+          children: [
+            Ink.image(
+              image: const AssetImage('assets/dinner.jpg'),
+              height: 175,
+              fit: BoxFit.cover,
+              child: InkWell(
+                onTap: () {
+                  Navigator.push(
+                    context,
+                    MaterialPageRoute(builder: (context) => const DinnerPage()),
+                  );
+                },
               ),
             ),
-          ),
-        ],
+            Container(
+              decoration: BoxDecoration(
+                  color: Colors.black.withOpacity(0.5),
+                  borderRadius: BorderRadius.circular(12)
+              ),
+              child: const Text(
+                'Dinner',
+                style: TextStyle(
+                  fontWeight: FontWeight.bold,
+                  color: Colors.white,
+                  fontSize: 30,
+                ),
+              ),
+            ),
+          ],
+        ),
       ),
     );
   }

@@ -71,13 +71,16 @@ class _LunchRecipeAddPageState extends State<LunchRecipeAddPage> {
               fontSize: 20,
             ),),
           ),
-          Container(
-            height: 60,
-            margin: const EdgeInsets.only(top: 10),
-            child: ElevatedButton.icon(
-              onPressed: _selectGallery,
-              icon: const Icon(Icons.camera_alt),
-              label: const Text("Add a Photo"),
+          UnconstrainedBox(
+            child: Container(
+              height: 60,
+              width: 350,
+              margin: const EdgeInsets.only(top: 10),
+              child: ElevatedButton.icon(
+                onPressed: _selectGallery,
+                icon: const Icon(Icons.camera_alt),
+                label: const Text("Add a Photo"),
+              ),
             ),
           ),
           Container(
@@ -216,11 +219,14 @@ class _LunchRecipeAddPageState extends State<LunchRecipeAddPage> {
               ),
             ),
           ),
-          Container(
-            margin: const EdgeInsets.only(top: 20),
-            child: ElevatedButton(
-              onPressed: createLunchRecipe,
-              child: const Text("Create Recipe"),
+          UnconstrainedBox(
+            child: Container(
+              width: 350,
+              margin: const EdgeInsets.only(top: 20),
+              child: ElevatedButton(
+                onPressed: createLunchRecipe,
+                child: const Text("Create Recipe"),
+              ),
             ),
           )
         ],

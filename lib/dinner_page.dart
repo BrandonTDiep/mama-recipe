@@ -26,11 +26,9 @@ class _DinnerPageState extends State<DinnerPage> {
         .collection('dinner-recipes').get()
         .then((querySnapshot) {
           print("Successfully load all the recipes");
-          print(querySnapshot);
           var recipeTmpList = [];
           querySnapshot.docs.forEach((element){
             recipeTmpList.add(element.data());
-            print(element.data());
           });
           dinnerRecipes = recipeTmpList;
           setState(() {
@@ -58,9 +56,10 @@ class _DinnerPageState extends State<DinnerPage> {
     setState(() {
       _selectedIndex = index;
       if(_selectedIndex == 1){
-        Navigator.push(
-          context,
-          MaterialPageRoute(builder: (context) => const FavoriteRecipesPage()),
+        Navigator.pushAndRemoveUntil(
+            context,
+            MaterialPageRoute(builder: (context) => const FavoriteRecipesPage()),
+                (route) => false
         );
       }
       else{
@@ -82,72 +81,87 @@ class _DinnerPageState extends State<DinnerPage> {
         ),
         backgroundColor: Colors.red,
         title: const Text("Dinner Recipes", style: TextStyle(
-            color: Colors.white,
-            fontWeight: FontWeight.bold
+          color: Colors.white,
+          fontWeight: FontWeight.bold,
+          fontSize: 25,
         ),),
-      ), //
+      ),
       body: ListView.builder(
           itemCount: dinnerRecipes.length,
           itemBuilder: (BuildContext context, int index) {
-            print(dinnerRecipes.length);
             final String imagePath = '${dinnerRecipes[index]['image']}';
-            return Card(
-              clipBehavior: Clip.antiAlias,
-              shape: RoundedRectangleBorder(
-                borderRadius: BorderRadius.circular(24),
-              ),
-              child: Stack(
-                alignment: Alignment.bottomLeft,
-                children: [
-                  Ink.image(
-                    image:  FileImage(File(imagePath)),
-                    height: 150,
-                    fit: BoxFit.cover,
-                    child: InkWell(
-                      onTap: () {
-                        Navigator.push(
-                          context,
-                          MaterialPageRoute(builder: (context) => DinnerRecipeInfoPage(dinnerRecipes[index])),
-                        );
-                      },
-                    ),
+            return UnconstrainedBox(
+              child: Container(
+                width: 375,
+                margin: const EdgeInsets.only(bottom: 15),
+                child: Card(
+                  elevation: 15,
+                  clipBehavior: Clip.antiAlias,
+                  shape: RoundedRectangleBorder(
+                    borderRadius: BorderRadius.circular(24),
                   ),
-                  Column(
-                    crossAxisAlignment: CrossAxisAlignment.start,
+                  child: Stack(
+                    alignment: Alignment.bottomLeft,
                     children: [
-                      Container(
-                        decoration: BoxDecoration(
-                            color: Colors.black.withOpacity(0.5),
-                            borderRadius: BorderRadius.circular(10)
-                        ),
-                        margin: const EdgeInsets.only(left: 8, bottom: 5),
-                        child: Text(
-                          '${dinnerRecipes[index]['name']}',
-                          style: const TextStyle(
-                            fontWeight: FontWeight.bold,
-                            color: Colors.white,
-                            fontSize: 22,
-                          ),
+                      Ink.image(
+                        image:  FileImage(File(imagePath)),
+                        height: 230,
+                        fit: BoxFit.cover,
+                        child: InkWell(
+                          onTap: () {
+                            Navigator.push(
+                              context,
+                              MaterialPageRoute(builder: (context) => DinnerRecipeInfoPage(dinnerRecipes[index])),
+                            );
+                          },
                         ),
                       ),
-                      Container(
-                        decoration: BoxDecoration(
-                            color: Colors.black.withOpacity(0.5),
-                            borderRadius: BorderRadius.circular(10)
-                        ),
-                        margin: const EdgeInsets.only(left: 8, bottom: 5),
-                        child: Text(
-                          '${dinnerRecipes[index]['time']}',
-                          style: const TextStyle(
-                            fontWeight: FontWeight.bold,
-                            color: Colors.white,
-                            fontSize: 22,
+                      Column(
+                        crossAxisAlignment: CrossAxisAlignment.start,
+                        children: [
+                          Container(
+                            decoration: BoxDecoration(
+                                color: Colors.black.withOpacity(0.5),
+                                borderRadius: BorderRadius.circular(10)
+                            ),
+                            margin: const EdgeInsets.only(left: 8, bottom: 5),
+                            child: Text(
+                              '${dinnerRecipes[index]['name']}',
+                              style: const TextStyle(
+                                fontWeight: FontWeight.bold,
+                                color: Colors.white,
+                                fontSize: 25,
+                              ),
+                            ),
                           ),
-                        ),
+                          Container(
+                            decoration: BoxDecoration(
+                                color: Colors.black.withOpacity(0.5),
+                                borderRadius: BorderRadius.circular(10)
+                            ),
+                            margin: const EdgeInsets.only(left: 8, bottom: 5),
+                            child: Wrap(
+                              children: [
+                                const Icon(
+                                  Icons.access_alarm,
+                                  size: 25,
+                                ),
+                                const SizedBox(width: 5),
+                                Text(
+                                  '${dinnerRecipes[index]['time']}',
+                                  style: const TextStyle(
+                                    color: Colors.white,
+                                    fontSize: 20,
+                                  ),
+                                ),
+                              ],
+                            ),
+                          ),
+                        ],
                       ),
                     ],
                   ),
-                ],
+                ),
               ),
             );
           }
@@ -172,7 +186,7 @@ class _DinnerPageState extends State<DinnerPage> {
         onPressed: _addRecipe,
         tooltip: 'Add Recipe',
         child: const Icon(Icons.add),
-      ), // Th
+      ),
     );
   }
 }

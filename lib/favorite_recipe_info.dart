@@ -30,8 +30,8 @@ class _FavoriteRecipeInfoPageState extends State<FavoriteRecipeInfoPage> {
       _selectedIndex = index;
       if(_selectedIndex == 1){
         Navigator.pushAndRemoveUntil(
-          context,
-          MaterialPageRoute(builder: (context) => const FavoriteRecipesPage()),
+            context,
+            MaterialPageRoute(builder: (context) => const FavoriteRecipesPage()),
                 (route) => false
         );
       }
@@ -44,20 +44,27 @@ class _FavoriteRecipeInfoPageState extends State<FavoriteRecipeInfoPage> {
       }
     });
   }
-   void _loadFavoriteState() async{
+  void _loadFavoriteState() async{
     FirebaseFirestore.instance.collection("users").doc(currentUser?.uid)
-        .collection('favorites').where("name", isEqualTo: widget.favoriteRecipe['name']).get()
+        .collection('favorites')
+        .where("name", isEqualTo: widget.favoriteRecipe['name'])
+        .where("time", isEqualTo: widget.favoriteRecipe['time'])
+        .where("servings", isEqualTo: widget.favoriteRecipe['servings'])
+        .where("ingredients", isEqualTo: widget.favoriteRecipe['ingredients'])
+        .where("directions", isEqualTo: widget.favoriteRecipe['directions'])
+        .where("image", isEqualTo: widget.favoriteRecipe['image'])
+        .get()
         .then((value){
-          print("Successfully loaded favorite status of the recipe.");
-          if(value.docs.isNotEmpty){
-            setState(() {
-              isFavorite = true;
-            });
-          }
-        }).catchError((error){
-          print("Failed to load favorite status of the recipe.");
-          print(error);
+      print("Successfully loaded favorite status of the recipe.");
+      if(value.docs.isNotEmpty){
+        setState(() {
+          isFavorite = true;
         });
+      }
+    }).catchError((error){
+      print("Failed to load favorite status of the recipe.");
+      print(error);
+    });
   }
 
   void toggleFavorite(){
@@ -67,30 +74,30 @@ class _FavoriteRecipeInfoPageState extends State<FavoriteRecipeInfoPage> {
         FirebaseFirestore.instance.collection("users").doc(currentUser?.uid)
             .collection('favorites').add(widget.favoriteRecipe)
             .then((value){
-              print("Successfully favorite the recipe.");
-            }).catchError((error){
-              print("Failed to favorite the recipe.");
-              print(error);
-            });
+          print("Successfully favorite the recipe.");
+        }).catchError((error){
+          print("Failed to favorite the recipe.");
+          print(error);
+        });
       }
       else{
         FirebaseFirestore.instance.collection("users").doc(currentUser?.uid)
             .collection('favorites').where("name", isEqualTo: widget.favoriteRecipe['name']).get()
             .then((value){
-              String docId = value.docs.first.id;
-              FirebaseFirestore.instance.collection("users").doc(currentUser?.uid)
-                  .collection('favorites').doc(docId).delete()
-                  .then((value){
-                    //print(docId);
-                    print("Successfully remove favorite status of the recipe.");
-                  }).catchError((error){
-                    print("Failed to remove favorite status of the recipe.");
-                    print(error);
-                  });
-            }).catchError((error){
-              print("Failed to delete the favorite recipe.");
-              print(error);
-            });
+          String docId = value.docs.first.id;
+          FirebaseFirestore.instance.collection("users").doc(currentUser?.uid)
+              .collection('favorites').doc(docId).delete()
+              .then((value){
+            //print(docId);
+            print("Successfully remove favorite status of the recipe.");
+          }).catchError((error){
+            print("Failed to remove favorite status of the recipe.");
+            print(error);
+          });
+        }).catchError((error){
+          print("Failed to delete the favorite recipe.");
+          print(error);
+        });
       }
     });
   }
@@ -104,156 +111,149 @@ class _FavoriteRecipeInfoPageState extends State<FavoriteRecipeInfoPage> {
         ),
         backgroundColor: Colors.red,
         title: Text(widget.favoriteRecipe['name'], style: const TextStyle(
-            color: Colors.white,
-            fontWeight: FontWeight.bold,
+          color: Colors.white,
+          fontWeight: FontWeight.bold,
           fontSize: 25,
 
         ),),
       ),
-      body: SingleChildScrollView(
-        child: ConstrainedBox(
-          constraints: BoxConstraints(maxHeight: MediaQuery.of(context).size.height),
-          child: Column(
-            children: [
-              Expanded(
-                flex: 10,
-                child: Image(
-                  image:  FileImage(File(widget.favoriteRecipe['image'])),
-                  fit: BoxFit.cover,
-                ),
+      body: Container(
+        color: Colors.orange[50],
+        child: ListView(
+          children: [
+            SizedBox(
+              height: MediaQuery.of(context).size.height * 0.34,
+              child: Image(
+                image:  FileImage(File(widget.favoriteRecipe['image'])),
+                fit: BoxFit.cover,
               ),
-              Expanded(
-                flex: 19,
-                child: Container(
-                  color: Colors.orange[50],
-                  child: ListView(
+            ),
+            Column(
+              children: [
+                Row(
+                  children: [
+                    Expanded(
+                      child: Container(
+                        margin: const EdgeInsets.only(top: 15, left: 20),
+                        child: Text(
+                          widget.favoriteRecipe['name'],
+                          style: const TextStyle(
+                            fontWeight: FontWeight.bold,
+                            fontSize: 28,
+                          ),
+                        ),
+                      ),
+                    ),
+                    Container(
+                        margin: const EdgeInsets.only(top: 15, left: 20, right: 20),
+                        child: GestureDetector(
+                          onTap: toggleFavorite,
+                          child: Icon(
+                            size: 30,
+                            isFavorite ? Icons.favorite: Icons.favorite_border,
+                            color: isFavorite ? Colors.red : Colors.grey,
+                          ),
+                        )
+                    ),
+                  ],
+                ),
+                Container(
+                  margin: const EdgeInsets.only(top: 15, bottom: 10),
+                  child: Row(
                     children: [
-                      Row(
-                        children: [
-                          Expanded(
-                            child: Container(
-                              margin: const EdgeInsets.only(top: 15, left: 20),
-                              child: Text(
-                                widget.favoriteRecipe['name'],
-                                style: const TextStyle(
-                                  fontWeight: FontWeight.bold,
-                                  fontSize: 28,
-                                ),
-                              ),
-                            ),
-                          ),
-                          Container(
-                              margin: const EdgeInsets.only(top: 15, left: 20, right: 20),
-                              child: GestureDetector(
-                                onTap: toggleFavorite,
-                                child: Icon(
-                                  size: 30,
-                                  isFavorite ? Icons.favorite: Icons.favorite_border,
-                                  color: isFavorite ? Colors.red : Colors.grey,
-                                ),
-                              )
-                          ),
-                        ],
-                      ),
                       Container(
-                        margin: const EdgeInsets.only(top: 15, bottom: 10),
-                        child: Row(
-                          children: [
-                            Container(
-                              margin: const EdgeInsets.only(left: 20),
-                              child: const Text(
-                                "Total Time: ",
-                                style: TextStyle(
-                                    fontSize: 16,
-                                ),
-                              ),
-                            ),
-                            Container(
-                              alignment: Alignment.centerLeft,
-                              child: Text(
-                                widget.favoriteRecipe['time'],
-                                style: const TextStyle(
-                                  fontSize: 17,
-                                    fontWeight: FontWeight.bold
-                                ),
-                              ),
-                            ),
-                            const Spacer(),
-                            const Text(
-                              "Servings: ",
-                              style: TextStyle(
-                                fontSize: 16,
-                              ),
-                            ),
-                            Container(
-                              margin: const EdgeInsets.only(right: 20),
-                              alignment: Alignment.centerLeft,
-                              child: Text(
-                                widget.favoriteRecipe['servings'],
-                                style: const TextStyle(
-                                  fontSize: 17,
-                                    fontWeight: FontWeight.bold
-                                ),
-                              ),
-                            ),
-                          ],
-                        ),
-                      ),
-                      const Divider(
-                        color: Colors.black,
-                        thickness: 0.8,
-                      ),
-                      Container(
-                        margin: const EdgeInsets.only(left: 20, right: 20, bottom: 2, top: 5),
-                        alignment: Alignment.centerLeft,
+                        margin: const EdgeInsets.only(left: 20),
                         child: const Text(
-                          "Ingredients:",
+                          "Total Time: ",
                           style: TextStyle(
-                            fontWeight: FontWeight.bold,
-                            fontSize: 22,
+                            fontSize: 16,
                           ),
                         ),
                       ),
                       Container(
-                        margin: const EdgeInsets.only(left: 20, right: 20, bottom: 10),
                         alignment: Alignment.centerLeft,
                         child: Text(
-                          widget.favoriteRecipe['ingredients'],
+                          widget.favoriteRecipe['time'],
                           style: const TextStyle(
-                            fontSize: 17,
+                              fontSize: 17,
+                              fontWeight: FontWeight.bold
                           ),
                         ),
                       ),
-
-                      Container(
-                        margin: const EdgeInsets.only(left: 20, right: 20, bottom: 2, top: 20),
-                        alignment: Alignment.centerLeft,
-                        child: const Text(
-                          "Directions:",
-                          style: TextStyle(
-                            fontWeight: FontWeight.bold,
-                            fontSize: 22,
-                          ),
+                      const Spacer(),
+                      const Text(
+                        "Servings: ",
+                        style: TextStyle(
+                          fontSize: 16,
                         ),
                       ),
                       Container(
-                        margin: const EdgeInsets.only(left: 20, right: 20, bottom: 10),
+                        margin: const EdgeInsets.only(right: 20),
                         alignment: Alignment.centerLeft,
                         child: Text(
-                          widget.favoriteRecipe['directions'],
+                          widget.favoriteRecipe['servings'],
                           style: const TextStyle(
-                            fontSize: 17,
+                              fontSize: 17,
+                              fontWeight: FontWeight.bold
                           ),
                         ),
                       ),
                     ],
                   ),
                 ),
-              ),
-            ],
-          ),
+                const Divider(
+                  color: Colors.black,
+                  thickness: 0.2,
+                ),
+                Container(
+                  margin: const EdgeInsets.only(left: 20, right: 20, bottom: 2, top: 5),
+                  alignment: Alignment.centerLeft,
+                  child: const Text(
+                    "Ingredients:",
+                    style: TextStyle(
+                      fontWeight: FontWeight.bold,
+                      fontSize: 22,
+                    ),
+                  ),
+                ),
+                Container(
+                  margin: const EdgeInsets.only(left: 20, right: 20, bottom: 10),
+                  alignment: Alignment.centerLeft,
+                  child: Text(
+                    widget.favoriteRecipe['ingredients'],
+                    style: const TextStyle(
+                      fontSize: 17,
+                    ),
+                  ),
+                ),
+
+                Container(
+                  margin: const EdgeInsets.only(left: 20, right: 20, bottom: 2, top: 20),
+                  alignment: Alignment.centerLeft,
+                  child: const Text(
+                    "Directions:",
+                    style: TextStyle(
+                      fontWeight: FontWeight.bold,
+                      fontSize: 22,
+                    ),
+                  ),
+                ),
+                Container(
+                  margin: const EdgeInsets.only(left: 20, right: 20, bottom: 10),
+                  alignment: Alignment.centerLeft,
+                  child: Text(
+                    widget.favoriteRecipe['directions'],
+                    style: const TextStyle(
+                      fontSize: 17,
+                    ),
+                  ),
+                ),
+              ],
+            ),
+          ],
         ),
       ),
+
       bottomNavigationBar: BottomNavigationBar(
         items: const <BottomNavigationBarItem>[
           BottomNavigationBarItem(
@@ -265,7 +265,7 @@ class _FavoriteRecipeInfoPageState extends State<FavoriteRecipeInfoPage> {
             label: 'Favorite',
           ),
         ],
-        currentIndex: 1,
+        currentIndex: _selectedIndex,
         selectedItemColor: Colors.red,
         //backgroundColor: Colors.red,
         onTap: _onItemTapped,

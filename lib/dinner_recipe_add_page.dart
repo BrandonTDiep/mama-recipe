@@ -32,11 +32,11 @@ class _DinnerRecipeAddPageState extends State<DinnerRecipeAddPage> {
     FirebaseFirestore.instance.collection("users").doc(currentUser?.uid)
         .collection('dinner-recipes').add(newRecipe)
         .then((value){
-          print("Successfully added the recipe.");
-        }).catchError((error){
-          print("Failed to add the recipe.");
-          print(error);
-        });
+      print("Successfully added the recipe.");
+    }).catchError((error){
+      print("Failed to add the recipe.");
+      print(error);
+    });
     Navigator.pop(context, newRecipe);
   }
 
@@ -71,13 +71,16 @@ class _DinnerRecipeAddPageState extends State<DinnerRecipeAddPage> {
               fontSize: 20,
             ),),
           ),
-          Container(
-            height: 60,
-            margin: const EdgeInsets.only(top: 10),
-            child: ElevatedButton.icon(
-              onPressed: _selectGallery,
-              icon: const Icon(Icons.camera_alt),
-              label: const Text("Add a Photo"),
+          UnconstrainedBox(
+            child: Container(
+              height: 60,
+              width: 350,
+              margin: const EdgeInsets.only(top: 10),
+              child: ElevatedButton.icon(
+                onPressed: _selectGallery,
+                icon: const Icon(Icons.camera_alt),
+                label: const Text("Add a Photo"),
+              ),
             ),
           ),
           Container(
@@ -216,11 +219,14 @@ class _DinnerRecipeAddPageState extends State<DinnerRecipeAddPage> {
               ),
             ),
           ),
-          Container(
-            margin: const EdgeInsets.only(top: 20),
-            child: ElevatedButton(
-              onPressed: createDinnerRecipe,
-              child: const Text("Create Recipe"),
+          UnconstrainedBox(
+            child: Container(
+              width: 350,
+              margin: const EdgeInsets.only(top: 20),
+              child: ElevatedButton(
+                onPressed: createDinnerRecipe,
+                child: const Text("Create Recipe"),
+              ),
             ),
           )
         ],

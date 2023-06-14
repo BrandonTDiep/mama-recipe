@@ -24,31 +24,25 @@ class _FavoriteRecipesPageState extends State<FavoriteRecipesPage> {
     FirebaseFirestore.instance.collection("users").doc(currentUser?.uid)
         .collection('favorites').get()
         .then((querySnapshot) {
-      print("Successfully load all the favorite recipes");
-      var recipeTmpList = [];
-      querySnapshot.docs.forEach((element){
-        recipeTmpList.add(element.data());
-      });
-      favoriteRecipes = recipeTmpList;
-      setState(() {
+          print("Successfully load all the favorite recipes");
+          var recipeTmpList = [];
+          querySnapshot.docs.forEach((element){
+            recipeTmpList.add(element.data());
+          });
+          favoriteRecipes = recipeTmpList;
+          setState(() {
 
-      });
-    }).catchError((error) {
-      print("Failed to load all the favorite recipes.");
-      print(error);
-    });
+          });
+        }).catchError((error) {
+          print("Failed to load all the favorite recipes.");
+          print(error);
+        });
   }
 
   void _onItemTapped(int index) {
     setState(() {
       _selectedIndex = index;
-      if(_selectedIndex == 1){
-        Navigator.push(
-          context,
-          MaterialPageRoute(builder: (context) => const FavoriteRecipesPage()),
-        );
-      }
-      else{
+      if(_selectedIndex == 0){
         Navigator.pushAndRemoveUntil(
             context,
             MaterialPageRoute(builder: (context) => const MyHomePage()),
@@ -75,68 +69,78 @@ class _FavoriteRecipesPageState extends State<FavoriteRecipesPage> {
       body: ListView.builder(
           itemCount: favoriteRecipes.length,
           itemBuilder: (BuildContext context, int index) {
-            print(favoriteRecipes.length);
             final String imagePath = '${favoriteRecipes[index]['image']}';
-            return Container(
-              margin: const EdgeInsets.only(top: 15),
-              child: Card(
-                elevation: 10,
-                clipBehavior: Clip.antiAlias,
-                shape: RoundedRectangleBorder(
-                  borderRadius: BorderRadius.circular(24),
-                ),
-                child: Stack(
-                  alignment: Alignment.bottomLeft,
-                  children: [
-                    Ink.image(
-                      image:  FileImage(File(imagePath)),
-                      height: 150,
-                      fit: BoxFit.cover,
-                      child: InkWell(
-                        onTap: () {
-                          Navigator.push(
-                            context,
-                            MaterialPageRoute(builder: (context) => FavoriteRecipeInfoPage(favoriteRecipes[index])),
-                          );
-                        },
+            return UnconstrainedBox(
+              child: Container(
+                width: 375,
+                margin: const EdgeInsets.only(bottom: 15),
+                child: Card(
+                  elevation: 15,
+                  clipBehavior: Clip.antiAlias,
+                  shape: RoundedRectangleBorder(
+                    borderRadius: BorderRadius.circular(24),
+                  ),
+                  child: Stack(
+                    alignment: Alignment.bottomLeft,
+                    children: [
+                      Ink.image(
+                        image:  FileImage(File(imagePath)),
+                        height: 230,
+                        fit: BoxFit.cover,
+                        child: InkWell(
+                          onTap: () {
+                            Navigator.push(
+                              context,
+                              MaterialPageRoute(builder: (context) => FavoriteRecipeInfoPage(favoriteRecipes[index])),
+                            );
+                          },
+                        ),
                       ),
-                    ),
-                    Column(
-                      crossAxisAlignment: CrossAxisAlignment.start,
-                      children: [
-                        Container(
-                          decoration: BoxDecoration(
-                              color: Colors.black.withOpacity(0.5),
-                              borderRadius: BorderRadius.circular(10)
-                          ),
-                          margin: const EdgeInsets.only(left: 8, bottom: 5),
-                          child: Text(
-                            '${favoriteRecipes[index]['name']}',
-                            style: const TextStyle(
-                              fontWeight: FontWeight.bold,
-                              color: Colors.white,
-                              fontSize: 22,
+                      Column(
+                        crossAxisAlignment: CrossAxisAlignment.start,
+                        children: [
+                          Container(
+                            decoration: BoxDecoration(
+                                color: Colors.black.withOpacity(0.5),
+                                borderRadius: BorderRadius.circular(10)
+                            ),
+                            margin: const EdgeInsets.only(left: 8, bottom: 5),
+                            child: Text(
+                              '${favoriteRecipes[index]['name']}',
+                              style: const TextStyle(
+                                fontWeight: FontWeight.bold,
+                                color: Colors.white,
+                                fontSize: 25,
+                              ),
                             ),
                           ),
-                        ),
-                        Container(
-                          decoration: BoxDecoration(
-                              color: Colors.black.withOpacity(0.5),
-                              borderRadius: BorderRadius.circular(10)
-                          ),
-                          margin: const EdgeInsets.only(left: 8, bottom: 5),
-                          child: Text(
-                            '${favoriteRecipes[index]['time']}',
-                            style: const TextStyle(
-                              fontWeight: FontWeight.bold,
-                              color: Colors.white,
-                              fontSize: 22,
+                          Container(
+                            decoration: BoxDecoration(
+                                color: Colors.black.withOpacity(0.5),
+                                borderRadius: BorderRadius.circular(10)
+                            ),
+                            margin: const EdgeInsets.only(left: 8, bottom: 5),
+                            child: Wrap(
+                              children: [
+                                const Icon(
+                                  Icons.access_alarm,
+                                  size: 25,
+                                ),
+                                const SizedBox(width: 5),
+                                Text(
+                                  '${favoriteRecipes[index]['time']}',
+                                  style: const TextStyle(
+                                    color: Colors.white,
+                                    fontSize: 20,
+                                  ),
+                                ),
+                              ],
                             ),
                           ),
-                        ),
-                      ],
-                    ),
-                  ],
+                        ],
+                      ),
+                    ],
+                  ),
                 ),
               ),
             );

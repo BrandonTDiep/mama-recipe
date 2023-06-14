@@ -89,68 +89,78 @@ class _BreakfastPageState extends State<BreakfastPage> {
       body: ListView.builder(
           itemCount: breakfastRecipes.length,
           itemBuilder: (BuildContext context, int index) {
-            print(breakfastRecipes.length);
             final String imagePath = '${breakfastRecipes[index]['image']}';
-            return Container(
-              margin: const EdgeInsets.only(top: 15),
-              child: Card(
-                elevation: 10,
-                clipBehavior: Clip.antiAlias,
-                shape: RoundedRectangleBorder(
-                  borderRadius: BorderRadius.circular(24),
-                ),
-                child: Stack(
-                  alignment: Alignment.bottomLeft,
-                  children: [
-                    Ink.image(
-                      image:  FileImage(File(imagePath)),
-                      height: 150,
-                      fit: BoxFit.cover,
-                      child: InkWell(
-                        onTap: () {
-                          Navigator.push(
-                            context,
-                            MaterialPageRoute(builder: (context) => BreakfastRecipeInfoPage(breakfastRecipes[index])),
-                          );
-                        },
+            return UnconstrainedBox(
+              child: Container(
+                width: 375,
+                margin: const EdgeInsets.only(bottom: 15),
+                child: Card(
+                  elevation: 15,
+                  clipBehavior: Clip.antiAlias,
+                  shape: RoundedRectangleBorder(
+                    borderRadius: BorderRadius.circular(24),
+                  ),
+                  child: Stack(
+                    alignment: Alignment.bottomLeft,
+                    children: [
+                      Ink.image(
+                        image:  FileImage(File(imagePath)),
+                        height: 230,
+                        fit: BoxFit.cover,
+                        child: InkWell(
+                          onTap: () {
+                            Navigator.push(
+                              context,
+                              MaterialPageRoute(builder: (context) => BreakfastRecipeInfoPage(breakfastRecipes[index])),
+                            );
+                          },
+                        ),
                       ),
-                    ),
-                    Column(
-                      crossAxisAlignment: CrossAxisAlignment.start,
-                      children: [
-                        Container(
-                          decoration: BoxDecoration(
-                              color: Colors.black.withOpacity(0.5),
-                              borderRadius: BorderRadius.circular(10)
-                          ),
-                          margin: const EdgeInsets.only(left: 8, bottom: 5),
-                          child: Text(
-                            '${breakfastRecipes[index]['name']}',
-                            style: const TextStyle(
-                              fontWeight: FontWeight.bold,
-                              color: Colors.white,
-                              fontSize: 22,
+                      Column(
+                        crossAxisAlignment: CrossAxisAlignment.start,
+                        children: [
+                          Container(
+                            decoration: BoxDecoration(
+                                color: Colors.black.withOpacity(0.5),
+                                borderRadius: BorderRadius.circular(10)
+                            ),
+                            margin: const EdgeInsets.only(left: 8, bottom: 5),
+                            child: Text(
+                              '${breakfastRecipes[index]['name']}',
+                              style: const TextStyle(
+                                fontWeight: FontWeight.bold,
+                                color: Colors.white,
+                                fontSize: 25,
+                              ),
                             ),
                           ),
-                        ),
-                        Container(
-                          decoration: BoxDecoration(
-                              color: Colors.black.withOpacity(0.5),
-                              borderRadius: BorderRadius.circular(10)
-                          ),
-                          margin: const EdgeInsets.only(left: 8, bottom: 5),
-                          child: Text(
-                            '${breakfastRecipes[index]['time']}',
-                            style: const TextStyle(
-                              fontWeight: FontWeight.bold,
-                              color: Colors.white,
-                              fontSize: 22,
+                          Container(
+                            decoration: BoxDecoration(
+                                color: Colors.black.withOpacity(0.5),
+                                borderRadius: BorderRadius.circular(10)
+                            ),
+                            margin: const EdgeInsets.only(left: 8, bottom: 5),
+                            child: Wrap(
+                              children: [
+                                const Icon(
+                                  Icons.access_alarm,
+                                  size: 25,
+                                ),
+                                const SizedBox(width: 5),
+                                Text(
+                                  '${breakfastRecipes[index]['time']}',
+                                  style: const TextStyle(
+                                    color: Colors.white,
+                                    fontSize: 20,
+                                  ),
+                                ),
+                              ],
                             ),
                           ),
-                        ),
-                      ],
-                    ),
-                  ],
+                        ],
+                      ),
+                    ],
+                  ),
                 ),
               ),
             );
