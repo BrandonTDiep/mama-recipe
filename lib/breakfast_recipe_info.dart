@@ -200,9 +200,12 @@ class _BreakfastRecipeInfoPageState extends State<BreakfastRecipeInfoPage> {
                     ],
                   ),
                 ),
-                const Divider(
-                  color: Colors.black,
-                  thickness: 0.2,
+                const SizedBox(
+                  width: 350,
+                  child: Divider(
+                    color: Colors.black,
+                    thickness: 0.2,
+                  ),
                 ),
                 Container(
                   margin: const EdgeInsets.only(left: 20, right: 20, bottom: 2, top: 5),

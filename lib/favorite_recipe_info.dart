@@ -30,9 +30,9 @@ class _FavoriteRecipeInfoPageState extends State<FavoriteRecipeInfoPage> {
       _selectedIndex = index;
       if(_selectedIndex == 1){
         Navigator.pushAndRemoveUntil(
-            context,
-            MaterialPageRoute(builder: (context) => const FavoriteRecipesPage()),
-                (route) => false
+          context,
+          MaterialPageRoute(builder: (context) => const FavoriteRecipesPage()),
+              (route) => false,
         );
       }
       else{
@@ -56,16 +56,16 @@ class _FavoriteRecipeInfoPageState extends State<FavoriteRecipeInfoPage> {
         .where("image", isEqualTo: widget.favoriteRecipe['image'])
         .get()
         .then((value){
-          print("Successfully loaded favorite status of the recipe.");
-          if(value.docs.isNotEmpty){
-            setState(() {
-              isFavorite = true;
-            });
-          }
-        }).catchError((error){
-          print("Failed to load favorite status of the recipe.");
-          print(error);
+      print("Successfully loaded favorite status of the recipe.");
+      if(value.docs.isNotEmpty){
+        setState(() {
+          isFavorite = true;
         });
+      }
+    }).catchError((error){
+      print("Failed to load favorite status of the recipe.");
+      print(error);
+    });
   }
 
   void toggleFavorite(){
@@ -200,9 +200,12 @@ class _FavoriteRecipeInfoPageState extends State<FavoriteRecipeInfoPage> {
                     ],
                   ),
                 ),
-                const Divider(
-                  color: Colors.black,
-                  thickness: 0.2,
+                const SizedBox(
+                  width: 350,
+                  child: Divider(
+                    color: Colors.black,
+                    thickness: 0.2,
+                  ),
                 ),
                 Container(
                   margin: const EdgeInsets.only(left: 20, right: 20, bottom: 2, top: 5),
@@ -238,7 +241,7 @@ class _FavoriteRecipeInfoPageState extends State<FavoriteRecipeInfoPage> {
                   ),
                 ),
                 Container(
-                  margin: const EdgeInsets.only(left: 20, right: 20, bottom: 10),
+                  margin: const EdgeInsets.only(left: 20, right: 20, bottom: 20),
                   alignment: Alignment.centerLeft,
                   child: Text(
                     widget.favoriteRecipe['directions'],
