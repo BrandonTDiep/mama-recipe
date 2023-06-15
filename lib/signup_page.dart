@@ -2,6 +2,8 @@ import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 
+import 'main.dart';
+
 class SignupPage extends StatefulWidget {
   const SignupPage({Key? key}) : super(key: key);
 
@@ -111,15 +113,46 @@ class _SignupPageState extends State<SignupPage> {
                                 FirebaseFirestore.instance.collection("users").doc(value.user?.uid).set(userProfile)
                                     .then((value){
                                       print("Successfully created the profile info.");
+
                                     }).catchError((error){
                                       print("Failed to create the profile info.");
                                       print(error);
                                 });
-
-                                Navigator.pop(context);
+                                Navigator.pushAndRemoveUntil(
+                                    context,
+                                    MaterialPageRoute(builder: (context) => const MyHomePage()),
+                                        (route) => false
+                                );
                               }).catchError((error){
-                                print("Failed to sign up the user!");
-                                print(error.toString());
+                                if(nameController.text.isNotEmpty && emailController.text.isNotEmpty && passwordController.text.length < 6){
+                                  showDialog(context: context, builder: (context){
+                                    return const AlertDialog(
+                                      title: Text(
+                                        "Password should be at least 6 characters",
+                                        textAlign: TextAlign.center,
+                                        style: TextStyle(
+                                          fontSize: 20,
+                                        ),
+                                      ),
+                                    );
+                                  });
+                                  print(error.toString());
+                                }
+                                else{
+                                  showDialog(context: context, builder: (context){
+                                    return const AlertDialog(
+                                      title: Text(
+                                        "Please fill out all details.",
+                                        textAlign: TextAlign.center,
+                                        style: TextStyle(
+                                          fontSize: 20,
+                                        ),
+                                      ),
+                                    );
+                                  });
+                                  print("Failed to sign up the user!");
+                                  print(error.toString());
+                                }
                           });
                         },
                       ),

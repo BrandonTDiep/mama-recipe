@@ -112,17 +112,58 @@ class _LoginPageState extends State<LoginPage> {
                               }).catchError((error){
                                 print("Failed to login");
                                 print(error.toString());
-                                showDialog(context: context, builder: (context){
-                                  return const AlertDialog(
-                                    title: Text(
-                                      "Incorrect email or password.\nTry Again.",
-                                      textAlign: TextAlign.center,
-                                      style: TextStyle(
-                                        fontSize: 20,
+                                if(emailController.text.isNotEmpty && passwordController.text.isNotEmpty){
+                                  showDialog(context: context, builder: (context){
+                                    return const AlertDialog(
+                                      title: Text(
+                                        "Incorrect email or password.\nTry Again.",
+                                        textAlign: TextAlign.center,
+                                        style: TextStyle(
+                                          fontSize: 20,
+                                        ),
                                       ),
-                                    ),
-                                  );
-                                });
+                                    );
+                                  });
+                                }
+                                else if (emailController.text.isEmpty && passwordController.text.isEmpty){
+                                  showDialog(context: context, builder: (context){
+                                    return const AlertDialog(
+                                      title: Text(
+                                        "Please enter your email and password",
+                                        textAlign: TextAlign.center,
+                                        style: TextStyle(
+                                          fontSize: 20,
+                                        ),
+                                      ),
+                                    );
+                                  });
+                                }
+                                else if (passwordController.text.isNotEmpty && emailController.text.isEmpty){
+                                  showDialog(context: context, builder: (context){
+                                    return const AlertDialog(
+                                      title: Text(
+                                        "Please enter your email",
+                                        textAlign: TextAlign.center,
+                                        style: TextStyle(
+                                          fontSize: 20,
+                                        ),
+                                      ),
+                                    );
+                                  });
+                                }
+                                else if(passwordController.text.isEmpty && emailController.text.isNotEmpty){
+                                  showDialog(context: context, builder: (context){
+                                    return const AlertDialog(
+                                      title: Text(
+                                        "Please enter your password.",
+                                        textAlign: TextAlign.center,
+                                        style: TextStyle(
+                                          fontSize: 20,
+                                        ),
+                                      ),
+                                    );
+                                  });
+                                }
                               });
                         },
                       ),
