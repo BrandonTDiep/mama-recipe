@@ -137,7 +137,10 @@ class _LoginPageState extends State<LoginPage> {
                               'Don\'t have an account?',
                               style: TextStyle(
                                 fontWeight: FontWeight.bold,
-                                  color: Colors.grey
+                                color: Colors.grey,
+                                fontSize: 14,
+
+
                               ),
                             ),
                           ),
@@ -145,7 +148,7 @@ class _LoginPageState extends State<LoginPage> {
                             margin: const EdgeInsets.only(left: 5),
                             child: GestureDetector(
                               child: const Text(
-                                  'Sign Up?',
+                                  'Sign Up',
                                   style: TextStyle(
                                     color: Colors.red,
                                     fontSize: 14,

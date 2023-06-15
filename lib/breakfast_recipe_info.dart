@@ -102,6 +102,91 @@ class _BreakfastRecipeInfoPageState extends State<BreakfastRecipeInfoPage> {
     });
   }
 
+  void deleteBreakfastRecipe(){
+    showDialog(context: context, builder: (context){
+      return AlertDialog(
+        title: const Text(
+          "Delete Recipe",
+          textAlign: TextAlign.center,
+          style: TextStyle(
+            fontSize: 22,
+          ),
+        ),
+        content: const Text(
+          "Are you sure you want to delete you want to delete this recipe?",
+          textAlign: TextAlign.center,
+          style: TextStyle(
+            fontSize: 20,
+          ),
+        ),
+        actions: [
+          Row(
+            mainAxisAlignment: MainAxisAlignment.center,
+            children: [
+              TextButton(
+                onPressed: () => Navigator.pop(context),
+                child: const Text(
+                  "Cancel",
+                  style: TextStyle(
+                    fontSize: 18,
+                  ),
+                ),
+              ),
+              TextButton(
+                onPressed: () async{
+                  FirebaseFirestore.instance.collection("users").doc(currentUser?.uid)
+                      .collection('favorites')
+                      .where("name", isEqualTo: widget.breakfastRecipe['name'])
+                      .where("time", isEqualTo: widget.breakfastRecipe['time'])
+                      .where("servings", isEqualTo: widget.breakfastRecipe['servings'])
+                      .where("ingredients", isEqualTo: widget.breakfastRecipe['ingredients'])
+                      .where("directions", isEqualTo: widget.breakfastRecipe['directions'])
+                      .where("image", isEqualTo: widget.breakfastRecipe['image'])
+                      .get()
+                      .then((value){
+                    value.docs.forEach((value){
+                      value.reference.delete();
+                    });
+                  }).catchError((error){
+                    print("No favorite recipes to delete");
+                    print(error);
+                  });
+                  FirebaseFirestore.instance.collection("users").doc(currentUser?.uid)
+                      .collection('breakfast-recipes')
+                      .where("name", isEqualTo: widget.breakfastRecipe['name'])
+                      .where("time", isEqualTo: widget.breakfastRecipe['time'])
+                      .where("servings", isEqualTo: widget.breakfastRecipe['servings'])
+                      .where("ingredients", isEqualTo: widget.breakfastRecipe['ingredients'])
+                      .where("directions", isEqualTo: widget.breakfastRecipe['directions'])
+                      .where("image", isEqualTo: widget.breakfastRecipe['image'])
+                      .get()
+                      .then((value){
+                    value.docs.forEach((value){
+                      value.reference.delete();
+                      print("Successfully deleted recipe ");
+                      Navigator.pop(context);
+                    });
+                    Navigator.pop(context);
+                    Navigator.pop(context);
+                  }).catchError((error){
+                    print("Failed to delete recipe ");
+                    print(error);
+                  });
+                },
+                child: const Text(
+                  "Delete",
+                  style: TextStyle(
+                    fontSize: 18,
+                  ),
+                ),
+              )
+            ]
+          ),
+        ],
+      );
+    });
+  }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -115,6 +200,19 @@ class _BreakfastRecipeInfoPageState extends State<BreakfastRecipeInfoPage> {
             fontWeight: FontWeight.bold,
           fontSize: 25,
         ),),
+        actions: [
+          Container(
+              margin: const EdgeInsets.only(right: 10),
+              child: GestureDetector(
+                onTap: deleteBreakfastRecipe,
+                child: const Icon(
+                  color: Colors.white,
+                  Icons.delete,
+                  size: 30,
+                ),
+              )
+          ),
+        ],
       ),
       body: Container(
         color: Colors.orange[50],

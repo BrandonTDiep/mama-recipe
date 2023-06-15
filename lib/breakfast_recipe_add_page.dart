@@ -32,11 +32,11 @@ class _BreakfastRecipeAddPageState extends State<BreakfastRecipeAddPage> {
     FirebaseFirestore.instance.collection("users").doc(currentUser?.uid)
         .collection('breakfast-recipes').add(newRecipe)
         .then((value){
-      print("Successfully added the recipe.");
-    }).catchError((error){
-      print("Failed to add the recipe.");
-      print(error);
-    });
+          print("Successfully added the recipe.");
+        }).catchError((error){
+          print("Failed to add the recipe.");
+          print(error);
+        });
     Navigator.pop(context, newRecipe);
   }
 
