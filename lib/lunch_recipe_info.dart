@@ -202,7 +202,7 @@ class _LunchRecipeInfoPageState extends State<LunchRecipeInfoPage> {
                   width: 350,
                   child: Divider(
                     color: Colors.black,
-                    thickness: 0.2,
+                    thickness: 0.3,
                   ),
                 ),
                 Container(
@@ -239,7 +239,7 @@ class _LunchRecipeInfoPageState extends State<LunchRecipeInfoPage> {
                   ),
                 ),
                 Container(
-                  margin: const EdgeInsets.only(left: 20, right: 20, bottom: 10),
+                  margin: const EdgeInsets.only(left: 20, right: 20, bottom: 15),
                   alignment: Alignment.centerLeft,
                   child: Text(
                     widget.lunchRecipe['directions'],

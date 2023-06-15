@@ -204,7 +204,7 @@ class _FavoriteRecipeInfoPageState extends State<FavoriteRecipeInfoPage> {
                   width: 350,
                   child: Divider(
                     color: Colors.black,
-                    thickness: 0.2,
+                    thickness: 0.3,
                   ),
                 ),
                 Container(
@@ -241,7 +241,7 @@ class _FavoriteRecipeInfoPageState extends State<FavoriteRecipeInfoPage> {
                   ),
                 ),
                 Container(
-                  margin: const EdgeInsets.only(left: 20, right: 20, bottom: 20),
+                  margin: const EdgeInsets.only(left: 20, right: 20, bottom: 15),
                   alignment: Alignment.centerLeft,
                   child: Text(
                     widget.favoriteRecipe['directions'],

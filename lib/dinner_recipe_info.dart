@@ -203,7 +203,7 @@ class _DinnerRecipeInfoPageState extends State<DinnerRecipeInfoPage> {
                   width: 350,
                   child: Divider(
                     color: Colors.black,
-                    thickness: 0.2,
+                    thickness: 0.3,
                   ),
                 ),
                 Container(
@@ -240,7 +240,7 @@ class _DinnerRecipeInfoPageState extends State<DinnerRecipeInfoPage> {
                   ),
                 ),
                 Container(
-                  margin: const EdgeInsets.only(left: 20, right: 20, bottom: 10),
+                  margin: const EdgeInsets.only(left: 20, right: 20, bottom: 15),
                   alignment: Alignment.centerLeft,
                   child: Text(
                     widget.dinnerRecipe['directions'],
