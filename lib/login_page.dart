@@ -1,5 +1,6 @@
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
+import 'package:mama_recipe_app/forgot_pwd_page.dart';
 import 'package:mama_recipe_app/main.dart';
 import 'package:mama_recipe_app/signup_page.dart';
 
@@ -67,11 +68,37 @@ class _LoginPageState extends State<LoginPage> {
                       ),
                     ),
                     Container(
+                      alignment: Alignment.centerRight,
+                      margin: const EdgeInsets.only(top: 5,bottom: 15, right: 35),
+                      child: GestureDetector(
+                        onTap: (){
+                          Navigator.push( //change screens
+                            context,
+                            MaterialPageRoute(builder: (context) => const ForgotPwdPage()),
+                          );
+                        },
+                        child: const Text(
+                            'Forgot Password?',
+                            style: TextStyle(
+                              color: Colors.red,
+                              fontSize: 14,
+                              fontWeight: FontWeight.bold,
+                            )
+                        ),
+                      ),
+                    ),
+                    Container(
                       width: 330,
                       height: 55,
-                      margin: const EdgeInsets.only(top: 10, bottom: 5),
+                      margin: const EdgeInsets.only(top: 60, bottom: 5),
                       child: ElevatedButton(
-                        child: Text("Login"),
+                        child: const Text(
+                            'Login',
+                            style: TextStyle(
+                              fontSize: 18,
+                              fontWeight: FontWeight.bold,
+                            )
+                        ),
                         onPressed: () {
                           FirebaseAuth.instance.signInWithEmailAndPassword(
                               email: emailController.text, password: passwordController.text)
@@ -85,36 +112,57 @@ class _LoginPageState extends State<LoginPage> {
                               }).catchError((error){
                                 print("Failed to login");
                                 print(error.toString());
+                                showDialog(context: context, builder: (context){
+                                  return const AlertDialog(
+                                    title: Text(
+                                      "Incorrect email or password.\nTry Again.",
+                                      textAlign: TextAlign.center,
+                                      style: TextStyle(
+                                        fontSize: 20,
+                                      ),
+                                    ),
+                                  );
+                                });
                               });
                         },
                       ),
                     ),
                     Container(
-                      margin: const EdgeInsets.only(top: 65),
-                      child: const Text(
-                        'Don\'t have an account?',
-                        style: TextStyle(
-                          fontWeight: FontWeight.bold,
-                            color: Colors.grey
-                        ),
+                      margin: const EdgeInsets.only(top: 10, bottom: 5),
+                      child: Row(
+                        mainAxisAlignment: MainAxisAlignment.center,
+                        children: [
+                          Container(
+                            child: const Text(
+                              'Don\'t have an account?',
+                              style: TextStyle(
+                                fontWeight: FontWeight.bold,
+                                  color: Colors.grey
+                              ),
+                            ),
+                          ),
+                          Container(
+                            margin: const EdgeInsets.only(left: 5),
+                            child: GestureDetector(
+                              child: const Text(
+                                  'Sign Up?',
+                                  style: TextStyle(
+                                    color: Colors.red,
+                                    fontSize: 14,
+                                    fontWeight: FontWeight.bold,
+                                  )
+                              ),
+                              onTap: () {
+                                Navigator.push( //change screens
+                                  context,
+                                  MaterialPageRoute(builder: (context) => const SignupPage()),
+                                );
+                              },
+                            ),
+                          )
+                        ],
                       ),
                     ),
-                    Container(
-                      margin: const EdgeInsets.only(top: 5),
-                      child: SizedBox(
-                        height: 35,
-                        width: 150,
-                        child: ElevatedButton(
-                          child: const Text("Sign up"),
-                          onPressed: () {
-                            Navigator.push( //change screens
-                              context,
-                              MaterialPageRoute(builder: (context) => const SignupPage()),
-                            );
-                          },
-                        ),
-                      ),
-                    )
                   ],
                 ),
               ),
