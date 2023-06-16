@@ -163,8 +163,8 @@ class _LunchRecipeInfoPageState extends State<LunchRecipeInfoPage> {
                       value.docs.forEach((value){
                         value.reference.delete();
                         print("Successfully deleted recipe ");
-                        Navigator.pop(context);
                       });
+                      Navigator.pop(context);
                       Navigator.pop(context);
                       Navigator.pop(context);
                     }).catchError((error){
@@ -206,7 +206,7 @@ class _LunchRecipeInfoPageState extends State<LunchRecipeInfoPage> {
                 child: const Icon(
                   color: Colors.white,
                   Icons.delete,
-                  size: 30,
+                  size: 28,
                 ),
               )
           ),

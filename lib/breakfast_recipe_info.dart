@@ -164,8 +164,8 @@ class _BreakfastRecipeInfoPageState extends State<BreakfastRecipeInfoPage> {
                     value.docs.forEach((value){
                       value.reference.delete();
                       print("Successfully deleted recipe ");
-                      Navigator.pop(context);
                     });
+                    Navigator.pop(context);
                     Navigator.pop(context);
                     Navigator.pop(context);
                   }).catchError((error){
@@ -208,7 +208,7 @@ class _BreakfastRecipeInfoPageState extends State<BreakfastRecipeInfoPage> {
                 child: const Icon(
                   color: Colors.white,
                   Icons.delete,
-                  size: 30,
+                  size: 28,
                 ),
               )
           ),
@@ -219,11 +219,14 @@ class _BreakfastRecipeInfoPageState extends State<BreakfastRecipeInfoPage> {
         child: ListView(
           children: [
             SizedBox(
-              height: MediaQuery.of(context).size.height * 0.34,
-              child: Image(
-                image:  FileImage(File(widget.breakfastRecipe['image'])),
-                fit: BoxFit.cover,
-              ),
+                height: MediaQuery.of(context).size.height * 0.34,
+                child: widget.breakfastRecipe['image'].startsWith("assets/")
+                    ? Image.asset(widget.breakfastRecipe["image"],
+                  fit: BoxFit.cover,
+                ) : Image(
+                  image:  FileImage(File(widget.breakfastRecipe['image'])),
+                  fit: BoxFit.cover,
+                )
             ),
             Column(
               children: [
