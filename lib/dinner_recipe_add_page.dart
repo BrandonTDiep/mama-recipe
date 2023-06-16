@@ -40,8 +40,9 @@ class _DinnerRecipeAddPageState extends State<DinnerRecipeAddPage> {
     Navigator.pop(context, newRecipe);
   }
 
-  late File _image;
+  late File _image = File("assets/logo2.png");
   final imagePicker = ImagePicker();
+
   Future<void> _selectGallery() async {
     final image = await imagePicker.pickImage(source: ImageSource.gallery);
     if (image == null) return;
@@ -49,6 +50,61 @@ class _DinnerRecipeAddPageState extends State<DinnerRecipeAddPage> {
       _image = File(image.path);
     });
   }
+
+  Future<void> _selectCamera() async {
+    final image = await imagePicker.pickImage(source: ImageSource.camera);
+    if (image == null) return;
+    setState(() {
+      _image = File(image.path);
+    });
+  }
+
+  void addPhoto(){
+    showDialog(context: context, builder: (context){
+      return AlertDialog(
+        title: const Text(
+          "Choose Image",
+          textAlign: TextAlign.center,
+          style: TextStyle(
+            fontSize: 22,
+          ),
+        ),
+        actions: [
+          Center(
+            child: Column(
+                children: [
+                  TextButton(
+                    onPressed: () async{
+                      _selectCamera();
+                      Navigator.pop(context);
+                    },
+                    child: const Text(
+                      "Camera",
+                      style: TextStyle(
+                        fontSize: 18,
+                      ),
+                    ),
+                  ),
+                  TextButton(
+                    onPressed: () async{
+                      _selectGallery();
+                      Navigator.pop(context);
+                    },
+                    child: const Text(
+                      "Gallery",
+                      style: TextStyle(
+                        fontSize: 18,
+                      ),
+                    ),
+                  ),
+                ]
+            ),
+          ),
+        ],
+      );
+    });
+  }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -75,7 +131,7 @@ class _DinnerRecipeAddPageState extends State<DinnerRecipeAddPage> {
               width: 350,
               margin: const EdgeInsets.only(top: 10),
               child: ElevatedButton.icon(
-                onPressed: _selectGallery,
+                onPressed: addPhoto,
                 icon: const Icon(Icons.camera_alt),
                 label: const Text("Add a Photo"),
               ),

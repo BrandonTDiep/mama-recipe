@@ -44,6 +44,7 @@ class _LunchRecipeInfoPageState extends State<LunchRecipeInfoPage> {
       }
     });
   }
+
   void _loadFavoriteState() async{
     FirebaseFirestore.instance.collection("users").doc(currentUser?.uid)
         .collection('favorites')
@@ -217,11 +218,14 @@ class _LunchRecipeInfoPageState extends State<LunchRecipeInfoPage> {
         child: ListView(
           children: [
             SizedBox(
-              height: MediaQuery.of(context).size.height * 0.34,
-              child: Image(
-                image:  FileImage(File(widget.lunchRecipe['image'])),
-                fit: BoxFit.cover,
-              ),
+                height: MediaQuery.of(context).size.height * 0.34,
+                child: widget.lunchRecipe['image'].startsWith("assets/")
+                    ? Image.asset(widget.lunchRecipe["image"],
+                  fit: BoxFit.cover,
+                ) : Image(
+                  image:  FileImage(File(widget.lunchRecipe['image'])),
+                  fit: BoxFit.cover,
+                )
             ),
             Column(
               children: [

@@ -44,6 +44,7 @@ class _BreakfastRecipeInfoPageState extends State<BreakfastRecipeInfoPage> {
       }
     });
   }
+
    void _loadFavoriteState() async{
     FirebaseFirestore.instance.collection("users").doc(currentUser?.uid)
         .collection('favorites')

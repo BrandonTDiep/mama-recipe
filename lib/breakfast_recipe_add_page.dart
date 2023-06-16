@@ -41,6 +41,7 @@ class _BreakfastRecipeAddPageState extends State<BreakfastRecipeAddPage> {
   }
 
   late File _image = File("assets/logo2.png");
+
   final imagePicker = ImagePicker();
   Future<void> _selectGallery() async {
     final image = await imagePicker.pickImage(source: ImageSource.gallery);
@@ -104,7 +105,6 @@ class _BreakfastRecipeAddPageState extends State<BreakfastRecipeAddPage> {
       );
     });
   }
-
 
   @override
   Widget build(BuildContext context) {

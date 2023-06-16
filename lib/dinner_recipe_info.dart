@@ -44,6 +44,7 @@ class _DinnerRecipeInfoPageState extends State<DinnerRecipeInfoPage> {
       }
     });
   }
+
   void _loadFavoriteState() async{
     FirebaseFirestore.instance.collection("users").doc(currentUser?.uid)
         .collection('favorites')
@@ -101,6 +102,7 @@ class _DinnerRecipeInfoPageState extends State<DinnerRecipeInfoPage> {
       }
     });
   }
+
   void deleteDinnerRecipe(){
     showDialog(context: context, builder: (context){
       return AlertDialog(
@@ -217,11 +219,14 @@ class _DinnerRecipeInfoPageState extends State<DinnerRecipeInfoPage> {
         child: ListView(
           children: [
             SizedBox(
-              height: MediaQuery.of(context).size.height * 0.34,
-              child: Image(
-                image:  FileImage(File(widget.dinnerRecipe['image'])),
-                fit: BoxFit.cover,
-              ),
+                height: MediaQuery.of(context).size.height * 0.34,
+                child: widget.dinnerRecipe['image'].startsWith("assets/")
+                    ? Image.asset(widget.dinnerRecipe["image"],
+                  fit: BoxFit.cover,
+                ) : Image(
+                  image:  FileImage(File(widget.dinnerRecipe['image'])),
+                  fit: BoxFit.cover,
+                )
             ),
             Column(
               children: [
