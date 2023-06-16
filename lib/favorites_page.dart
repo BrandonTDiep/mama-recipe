@@ -62,7 +62,7 @@ class _FavoriteRecipesPageState extends State<FavoriteRecipesPage> {
         title: const Text("Favorite Recipes", style: TextStyle(
           color: Colors.white,
           fontWeight: FontWeight.bold,
-          fontSize: 25,
+          fontSize: 33,
         ),),
       ),
       body: ListView.builder(

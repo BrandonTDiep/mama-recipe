@@ -3,6 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:mama_recipe_app/forgot_pwd_page.dart';
 import 'package:mama_recipe_app/main.dart';
 import 'package:mama_recipe_app/signup_page.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 
 class LoginPage extends StatefulWidget {
   const LoginPage({Key? key}) : super(key: key);
@@ -15,6 +16,32 @@ class _LoginPageState extends State<LoginPage> {
 
   var emailController = TextEditingController();
   var passwordController = TextEditingController();
+
+  _LoginPageState(){
+    loginStatus;
+  }
+
+
+  void loginStatus(){
+    SharedPreferences.getInstance().then((pref){
+      var loginStatus = pref.getBool("login");
+      print(loginStatus);
+      if(loginStatus != null && loginStatus == true){
+        Navigator.pushAndRemoveUntil(
+            context,
+            MaterialPageRoute(builder: (context) => const MyHomePage()),
+                (route) => false
+        );
+      }
+      else{
+        Navigator.pushAndRemoveUntil(
+            context,
+            MaterialPageRoute(builder: (context) => const LoginPage()),
+                (route) => false
+        );
+      }
+    });
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -104,6 +131,9 @@ class _LoginPageState extends State<LoginPage> {
                               email: emailController.text, password: passwordController.text)
                               .then((value){
                                 print("Successfully login!");
+                                SharedPreferences.getInstance().then((pref){
+                                  pref.setBool("login", true);
+                                });
                                 Navigator.pushAndRemoveUntil(
                                   context,
                                   MaterialPageRoute(builder: (context) => const MyHomePage()),

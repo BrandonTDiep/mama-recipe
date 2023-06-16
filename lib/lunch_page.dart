@@ -20,7 +20,13 @@ class _LunchPageState extends State<LunchPage> {
 
   var lunchRecipes = [];
 
-  _LunchPageState(){
+  @override
+  void initState(){
+    super.initState();
+    loadLunchRecipes();
+  }
+
+  void loadLunchRecipes() async{
     var currentUser = FirebaseAuth.instance.currentUser;
     FirebaseFirestore.instance.collection("users").doc(currentUser?.uid)
         .collection('lunch-recipes').get()

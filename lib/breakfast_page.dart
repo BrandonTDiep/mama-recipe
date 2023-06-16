@@ -20,7 +20,13 @@ class _BreakfastPageState extends State<BreakfastPage> {
 
   var breakfastRecipes = [];
 
-  _BreakfastPageState(){
+  @override
+  void initState(){
+    super.initState();
+    loadBreakfastRecipes();
+  }
+
+  void loadBreakfastRecipes() async{
     var currentUser = FirebaseAuth.instance.currentUser;
     FirebaseFirestore.instance.collection("users").doc(currentUser?.uid)
         .collection('breakfast-recipes').get()
