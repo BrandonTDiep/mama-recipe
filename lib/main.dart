@@ -6,6 +6,7 @@ import 'package:mama_recipe_app/login_page.dart';
 import 'package:mama_recipe_app/lunch_page.dart';
 import 'package:mama_recipe_app/favorites_page.dart';
 import 'package:firebase_core/firebase_core.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 import 'firebase_options.dart';
 
 void main() async{
@@ -49,7 +50,7 @@ class MyHomePage extends StatefulWidget {
 }
 
 class _MyHomePageState extends State<MyHomePage> {
-
+  late SharedPreferences loginData;
   int _selectedIndex = 0;
 
   void _onItemTapped(int index) {
@@ -66,6 +67,9 @@ class _MyHomePageState extends State<MyHomePage> {
   }
 
   void signOut(){
+    SharedPreferences.getInstance().then((pref){
+      pref.setBool("login", false);
+    });
     FirebaseAuth.instance.signOut();
     Navigator.pushAndRemoveUntil(
         context,

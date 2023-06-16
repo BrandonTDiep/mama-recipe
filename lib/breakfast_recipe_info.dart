@@ -115,7 +115,7 @@ class _BreakfastRecipeInfoPageState extends State<BreakfastRecipeInfoPage> {
           ),
         ),
         content: const Text(
-          "Are you sure you want to delete you want to delete this recipe?",
+          "Are you sure you want to delete this recipe?",
           textAlign: TextAlign.center,
           style: TextStyle(
             fontSize: 20,
