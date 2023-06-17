@@ -213,7 +213,7 @@ class _DinnerRecipeInfoPageState extends State<DinnerRecipeInfoPage> {
               )
           ),
           Container(
-              margin: const EdgeInsets.only(right: 10),
+              margin: const EdgeInsets.only(right: 20),
               child: GestureDetector(
                 onTap: deleteDinnerRecipe,
                 child: const Icon(
