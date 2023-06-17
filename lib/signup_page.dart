@@ -1,6 +1,7 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 
 import 'main.dart';
 
@@ -113,7 +114,9 @@ class _SignupPageState extends State<SignupPage> {
                                 FirebaseFirestore.instance.collection("users").doc(value.user?.uid).set(userProfile)
                                     .then((value){
                                       print("Successfully created the profile info.");
-
+                                      SharedPreferences.getInstance().then((pref){
+                                        pref.setBool("login", true);
+                                      });
                                     }).catchError((error){
                                       print("Failed to create the profile info.");
                                       print(error);
