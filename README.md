@@ -1,6 +1,7 @@
 # mama_recipe_app
 
-A new Flutter project.
+A recipe app is made for anyone looking for an easy way to save their beloved mama's recipes. 
+Users can store their families and personal recipes to ensure they are never forgotten.
 
 ## Getting Started
 
