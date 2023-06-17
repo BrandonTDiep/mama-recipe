@@ -1,6 +1,6 @@
 <manifest xmlns:android="http://schemas.android.com/apk/res/android">
     <application
-        android:label="mama_recipe_app"
+        android:label="Mama's Recipes"
         android:name="${applicationName}"
         android:icon="@mipmap/launcher_icon">
         <activity

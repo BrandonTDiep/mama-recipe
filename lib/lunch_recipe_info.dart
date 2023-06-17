@@ -324,6 +324,9 @@ class _LunchRecipeInfoPageState extends State<LunchRecipeInfoPage> {
                   child: SingleChildScrollView(
                     child: Column(
                       children: (widget.lunchRecipe['ingredients'] as String).split("\n")
+                          .where((ingredient) {
+                            return ingredient.trim().isNotEmpty;
+                          })
                           .toList()
                           .asMap()
                           .entries
@@ -368,6 +371,9 @@ class _LunchRecipeInfoPageState extends State<LunchRecipeInfoPage> {
                       child: Column(
                         crossAxisAlignment: CrossAxisAlignment.start,
                         children: (widget.lunchRecipe['directions'] as String).split("\n")
+                            .where((direction) {
+                              return direction.trim().isNotEmpty;
+                            })
                             .toList()
                             .asMap()
                             .entries

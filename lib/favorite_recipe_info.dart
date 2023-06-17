@@ -230,6 +230,9 @@ class _FavoriteRecipeInfoPageState extends State<FavoriteRecipeInfoPage> {
                   child: SingleChildScrollView(
                     child: Column(
                       children: (widget.favoriteRecipe['ingredients'] as String).split("\n")
+                          .where((ingredient) {
+                            return ingredient.trim().isNotEmpty;
+                          })
                           .toList()
                           .asMap()
                           .entries
@@ -274,6 +277,9 @@ class _FavoriteRecipeInfoPageState extends State<FavoriteRecipeInfoPage> {
                       child: Column(
                         crossAxisAlignment: CrossAxisAlignment.start,
                         children: (widget.favoriteRecipe['directions'] as String).split("\n")
+                            .where((direction) {
+                              return direction.trim().isNotEmpty;
+                            })
                             .toList()
                             .asMap()
                             .entries

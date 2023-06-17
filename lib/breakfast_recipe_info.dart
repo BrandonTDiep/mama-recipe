@@ -327,10 +327,14 @@ class _BreakfastRecipeInfoPageState extends State<BreakfastRecipeInfoPage> {
                   child: SingleChildScrollView(
                     child: Column(
                       children: (widget.breakfastRecipe['ingredients'] as String).split("\n")
+                          .where((ingredient) {
+                            return ingredient.trim().isNotEmpty;
+                          })
                           .toList()
                           .asMap()
                           .entries
                           .map<Widget>((ingredients){
+                            print(ingredients);
                             var ingredient = ingredients.value;
                             return Container(
                                 margin: const EdgeInsets.only(bottom: 8),
@@ -354,7 +358,7 @@ class _BreakfastRecipeInfoPageState extends State<BreakfastRecipeInfoPage> {
                   ),
                 ),
                 Container(
-                  margin: const EdgeInsets.only(left: 20, right: 20, bottom: 12, top: 40),
+                margin: const EdgeInsets.only(left: 20, right: 20, bottom: 12, top: 40),
                   alignment: Alignment.centerLeft,
                   child: const Text(
                     "Directions",
@@ -371,10 +375,14 @@ class _BreakfastRecipeInfoPageState extends State<BreakfastRecipeInfoPage> {
                     child: Column(
                       crossAxisAlignment: CrossAxisAlignment.start,
                       children: (widget.breakfastRecipe['directions'] as String).split("\n")
+                          .where((direction) {
+                            return direction.trim().isNotEmpty;
+                          })
                           .toList()
                           .asMap()
                           .entries
                           .map<Widget>((directions){
+                            print(directions);
                             var index = directions.key + 1;
                             var direction = directions.value;
                             return Container(
