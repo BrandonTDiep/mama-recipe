@@ -260,7 +260,7 @@ class _BreakfastRecipeInfoPageState extends State<BreakfastRecipeInfoPage> {
                   ],
                 ),
                 Container(
-                  margin: const EdgeInsets.only(top: 15, bottom: 10),
+                  margin: const EdgeInsets.only(top: 15, bottom: 20),
                   child: Row(
                     children: [
                       Container(
@@ -307,52 +307,98 @@ class _BreakfastRecipeInfoPageState extends State<BreakfastRecipeInfoPage> {
                   width: 350,
                   child: Divider(
                     color: Colors.black,
-                    thickness: 0.3,
+                    thickness: 0.6,
                   ),
                 ),
                 Container(
-                  margin: const EdgeInsets.only(left: 20, right: 20, bottom: 2, top: 5),
+                  margin: const EdgeInsets.only(left: 20, right: 20, bottom: 12, top: 20),
                   alignment: Alignment.centerLeft,
                   child: const Text(
-                    "Ingredients:",
+                    "Ingredients",
                     style: TextStyle(
                       fontWeight: FontWeight.bold,
-                      fontSize: 22,
+                      fontSize: 27,
                     ),
                   ),
                 ),
                 Container(
-                  margin: const EdgeInsets.only(left: 20, right: 20, bottom: 10),
+                  margin: const EdgeInsets.only(left: 20, right: 20, bottom: 20),
                   alignment: Alignment.centerLeft,
-                  child: Text(
-                    widget.breakfastRecipe['ingredients'],
-                    style: const TextStyle(
-                      fontSize: 17,
+                  child: SingleChildScrollView(
+                    child: Column(
+                      children: (widget.breakfastRecipe['ingredients'] as String).split("\n")
+                          .toList()
+                          .asMap()
+                          .entries
+                          .map<Widget>((ingredients){
+                            var ingredient = ingredients.value;
+                            return Container(
+                                margin: const EdgeInsets.only(bottom: 8),
+                                child: Row(
+                                  crossAxisAlignment: CrossAxisAlignment.start,
+                                  children: [
+                                    const Text(
+                                      "• ",
+                                      style: TextStyle(fontSize: 18),
+                                    ),
+                                    Expanded(
+                                        child: Text(
+                                          ingredient,
+                                          style: const TextStyle(fontSize: 18),
+                                        )
+                                    )
+                                  ],
+                                )
+                            );}).toList(),
                     ),
                   ),
                 ),
-
                 Container(
-                  margin: const EdgeInsets.only(left: 20, right: 20, bottom: 2, top: 20),
+                  margin: const EdgeInsets.only(left: 20, right: 20, bottom: 12, top: 40),
                   alignment: Alignment.centerLeft,
                   child: const Text(
-                    "Directions:",
+                    "Directions",
                     style: TextStyle(
                       fontWeight: FontWeight.bold,
-                      fontSize: 22,
+                      fontSize: 27,
                     ),
                   ),
                 ),
                 Container(
-                  margin: const EdgeInsets.only(left: 20, right: 20, bottom: 15),
+                  margin: const EdgeInsets.only(left: 20, right: 20, bottom: 20),
                   alignment: Alignment.centerLeft,
-                  child: Text(
-                    widget.breakfastRecipe['directions'],
-                    style: const TextStyle(
-                      fontSize: 17,
+                  child: SingleChildScrollView(
+                    child: Column(
+                      crossAxisAlignment: CrossAxisAlignment.start,
+                      children: (widget.breakfastRecipe['directions'] as String).split("\n")
+                          .toList()
+                          .asMap()
+                          .entries
+                          .map<Widget>((directions){
+                            var index = directions.key + 1;
+                            var direction = directions.value;
+                            return Container(
+                              margin: const EdgeInsets.only(bottom: 20),
+                              child: Row(
+                                crossAxisAlignment: CrossAxisAlignment.start,
+                                children: [
+                                  Text(
+                                    "$index. ",
+                                    style: const TextStyle(fontSize: 18)
+                                  ),
+                                  Expanded(
+                                    child: Text(
+                                        direction,
+                                        style: const TextStyle(fontSize: 18)
+                                    ),
+                                  )
+                                ],
+                              ),
+                            );
+                      }).toList(),
                     ),
-                  ),
-                ),
+                  )
+                )
               ],
             ),
           ],
