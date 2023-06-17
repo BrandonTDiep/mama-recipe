@@ -198,13 +198,24 @@ class _BreakfastRecipeInfoPageState extends State<BreakfastRecipeInfoPage> {
         ),
         backgroundColor: Colors.red[300],
         title: Text(widget.breakfastRecipe['name'], style: const TextStyle(
-            color: Colors.white,
-            fontWeight: FontWeight.bold,
-          fontSize: 25,
+          color: Colors.white,
+          fontWeight: FontWeight.bold,
+          fontSize: 20,
         ),),
         actions: [
           Container(
-              margin: const EdgeInsets.only(right: 10),
+              margin: const EdgeInsets.only(left: 20, right: 20),
+              child: GestureDetector(
+                onTap: toggleFavorite,
+                child: Icon(
+                  size: 28,
+                  isFavorite ? Icons.favorite: Icons.favorite_border,
+                  color: isFavorite ? Colors.red[900] : Colors.white,
+                ),
+              )
+          ),
+          Container(
+              margin: const EdgeInsets.only(right: 20),
               child: GestureDetector(
                 onTap: deleteBreakfastRecipe,
                 child: const Icon(
@@ -241,21 +252,10 @@ class _BreakfastRecipeInfoPageState extends State<BreakfastRecipeInfoPage> {
                           widget.breakfastRecipe['name'],
                           style: const TextStyle(
                             fontWeight: FontWeight.bold,
-                            fontSize: 28,
+                            fontSize: 29,
                           ),
                         ),
                       ),
-                    ),
-                    Container(
-                        margin: const EdgeInsets.only(top: 15, left: 20, right: 20),
-                        child: GestureDetector(
-                          onTap: toggleFavorite,
-                          child: Icon(
-                            size: 30,
-                            isFavorite ? Icons.favorite: Icons.favorite_border,
-                            color: isFavorite ? Colors.red : Colors.grey,
-                          ),
-                        )
                     ),
                   ],
                 ),
@@ -317,7 +317,7 @@ class _BreakfastRecipeInfoPageState extends State<BreakfastRecipeInfoPage> {
                     "Ingredients",
                     style: TextStyle(
                       fontWeight: FontWeight.bold,
-                      fontSize: 27,
+                      fontSize: 26,
                     ),
                   ),
                 ),
@@ -339,7 +339,7 @@ class _BreakfastRecipeInfoPageState extends State<BreakfastRecipeInfoPage> {
                                   children: [
                                     const Text(
                                       "• ",
-                                      style: TextStyle(fontSize: 18),
+                                      style: TextStyle(fontSize: 17),
                                     ),
                                     Expanded(
                                         child: Text(
@@ -360,7 +360,7 @@ class _BreakfastRecipeInfoPageState extends State<BreakfastRecipeInfoPage> {
                     "Directions",
                     style: TextStyle(
                       fontWeight: FontWeight.bold,
-                      fontSize: 27,
+                      fontSize: 26,
                     ),
                   ),
                 ),
@@ -384,7 +384,7 @@ class _BreakfastRecipeInfoPageState extends State<BreakfastRecipeInfoPage> {
                                 children: [
                                   Text(
                                     "$index. ",
-                                    style: const TextStyle(fontSize: 18)
+                                    style: const TextStyle(fontSize: 17)
                                   ),
                                   Expanded(
                                     child: Text(

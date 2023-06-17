@@ -197,9 +197,20 @@ class _LunchRecipeInfoPageState extends State<LunchRecipeInfoPage> {
         title: Text(widget.lunchRecipe['name'], style: const TextStyle(
           color: Colors.white,
           fontWeight: FontWeight.bold,
-          fontSize: 25,
+          fontSize: 20,
         ),),
         actions: [
+          Container(
+              margin: const EdgeInsets.only(left: 20, right: 20),
+              child: GestureDetector(
+                onTap: toggleFavorite,
+                child: Icon(
+                  size: 28,
+                  isFavorite ? Icons.favorite: Icons.favorite_border,
+                  color: isFavorite ? Colors.red[900] : Colors.white,
+                ),
+              )
+          ),
           Container(
               margin: const EdgeInsets.only(right: 10),
               child: GestureDetector(
@@ -238,26 +249,15 @@ class _LunchRecipeInfoPageState extends State<LunchRecipeInfoPage> {
                           widget.lunchRecipe['name'],
                           style: const TextStyle(
                             fontWeight: FontWeight.bold,
-                            fontSize: 28,
+                            fontSize: 29,
                           ),
                         ),
                       ),
                     ),
-                    Container(
-                        margin: const EdgeInsets.only(top: 15, left: 20, right: 20),
-                        child: GestureDetector(
-                          onTap: toggleFavorite,
-                          child: Icon(
-                            size: 30,
-                            isFavorite ? Icons.favorite: Icons.favorite_border,
-                            color: isFavorite ? Colors.red : Colors.grey,
-                          ),
-                        )
-                    ),
                   ],
                 ),
                 Container(
-                  margin: const EdgeInsets.only(top: 15, bottom: 10),
+                  margin: const EdgeInsets.only(top: 15, bottom: 20),
                   child: Row(
                     children: [
                       Container(
@@ -304,52 +304,98 @@ class _LunchRecipeInfoPageState extends State<LunchRecipeInfoPage> {
                   width: 350,
                   child: Divider(
                     color: Colors.black,
-                    thickness: 0.3,
+                    thickness: 0.6,
                   ),
                 ),
                 Container(
-                  margin: const EdgeInsets.only(left: 20, right: 20, bottom: 2, top: 5),
+                  margin: const EdgeInsets.only(left: 20, right: 20, bottom: 12, top: 20),
                   alignment: Alignment.centerLeft,
                   child: const Text(
                     "Ingredients:",
                     style: TextStyle(
                       fontWeight: FontWeight.bold,
-                      fontSize: 22,
+                      fontSize: 26,
                     ),
                   ),
                 ),
                 Container(
-                  margin: const EdgeInsets.only(left: 20, right: 20, bottom: 10),
+                  margin: const EdgeInsets.only(left: 20, right: 20, bottom: 20),
                   alignment: Alignment.centerLeft,
-                  child: Text(
-                    widget.lunchRecipe['ingredients'],
-                    style: const TextStyle(
-                      fontSize: 17,
+                  child: SingleChildScrollView(
+                    child: Column(
+                      children: (widget.lunchRecipe['ingredients'] as String).split("\n")
+                          .toList()
+                          .asMap()
+                          .entries
+                          .map<Widget>((ingredients){
+                        var ingredient = ingredients.value;
+                        return Container(
+                            margin: const EdgeInsets.only(bottom: 8),
+                            child: Row(
+                              crossAxisAlignment: CrossAxisAlignment.start,
+                              children: [
+                                const Text(
+                                  "• ",
+                                  style: TextStyle(fontSize: 17),
+                                ),
+                                Expanded(
+                                    child: Text(
+                                      ingredient,
+                                      style: const TextStyle(fontSize: 18),
+                                    )
+                                )
+                              ],
+                            )
+                        );}).toList(),
                     ),
                   ),
                 ),
-
                 Container(
-                  margin: const EdgeInsets.only(left: 20, right: 20, bottom: 2, top: 20),
+                  margin: const EdgeInsets.only(left: 20, right: 20, bottom: 12, top: 40),
                   alignment: Alignment.centerLeft,
                   child: const Text(
-                    "Directions:",
+                    "Directions",
                     style: TextStyle(
                       fontWeight: FontWeight.bold,
-                      fontSize: 22,
+                      fontSize: 26,
                     ),
                   ),
                 ),
                 Container(
-                  margin: const EdgeInsets.only(left: 20, right: 20, bottom: 15),
-                  alignment: Alignment.centerLeft,
-                  child: Text(
-                    widget.lunchRecipe['directions'],
-                    style: const TextStyle(
-                      fontSize: 17,
-                    ),
-                  ),
-                ),
+                    margin: const EdgeInsets.only(left: 20, right: 20, bottom: 20),
+                    alignment: Alignment.centerLeft,
+                    child: SingleChildScrollView(
+                      child: Column(
+                        crossAxisAlignment: CrossAxisAlignment.start,
+                        children: (widget.lunchRecipe['directions'] as String).split("\n")
+                            .toList()
+                            .asMap()
+                            .entries
+                            .map<Widget>((directions){
+                          var index = directions.key + 1;
+                          var direction = directions.value;
+                          return Container(
+                            margin: const EdgeInsets.only(bottom: 20),
+                            child: Row(
+                              crossAxisAlignment: CrossAxisAlignment.start,
+                              children: [
+                                Text(
+                                    "$index. ",
+                                    style: const TextStyle(fontSize: 17)
+                                ),
+                                Expanded(
+                                  child: Text(
+                                      direction,
+                                      style: const TextStyle(fontSize: 18)
+                                  ),
+                                )
+                              ],
+                            ),
+                          );
+                        }).toList(),
+                      ),
+                    )
+                )
               ],
             ),
           ],
