@@ -166,8 +166,7 @@ class _LunchRecipeInfoPageState extends State<LunchRecipeInfoPage> {
                         print("Successfully deleted recipe ");
                       });
                       Navigator.pop(context);
-                      Navigator.pop(context);
-                      Navigator.pop(context);
+                      Navigator.pop(context, widget.lunchRecipe);
                     }).catchError((error){
                       print("Failed to delete recipe ");
                       print(error);
@@ -331,25 +330,25 @@ class _LunchRecipeInfoPageState extends State<LunchRecipeInfoPage> {
                           .asMap()
                           .entries
                           .map<Widget>((ingredients){
-                        var ingredient = ingredients.value;
-                        return Container(
-                            margin: const EdgeInsets.only(bottom: 8),
-                            child: Row(
-                              crossAxisAlignment: CrossAxisAlignment.start,
-                              children: [
-                                const Text(
-                                  "• ",
-                                  style: TextStyle(fontSize: 17),
-                                ),
-                                Expanded(
-                                    child: Text(
-                                      ingredient,
-                                      style: const TextStyle(fontSize: 18),
+                            var ingredient = ingredients.value;
+                            return Container(
+                                margin: const EdgeInsets.only(bottom: 8),
+                                child: Row(
+                                  crossAxisAlignment: CrossAxisAlignment.start,
+                                  children: [
+                                    const Text(
+                                      "• ",
+                                      style: TextStyle(fontSize: 17),
+                                    ),
+                                    Expanded(
+                                        child: Text(
+                                          ingredient,
+                                          style: const TextStyle(fontSize: 18),
+                                        )
                                     )
+                                  ],
                                 )
-                              ],
-                            )
-                        );}).toList(),
+                            );}).toList(),
                     ),
                   ),
                 ),
@@ -378,27 +377,27 @@ class _LunchRecipeInfoPageState extends State<LunchRecipeInfoPage> {
                             .asMap()
                             .entries
                             .map<Widget>((directions){
-                          var index = directions.key + 1;
-                          var direction = directions.value;
-                          return Container(
-                            margin: const EdgeInsets.only(bottom: 20),
-                            child: Row(
-                              crossAxisAlignment: CrossAxisAlignment.start,
-                              children: [
-                                Text(
-                                    "$index. ",
-                                    style: const TextStyle(fontSize: 17)
+                              var index = directions.key + 1;
+                              var direction = directions.value;
+                              return Container(
+                                margin: const EdgeInsets.only(bottom: 20),
+                                child: Row(
+                                  crossAxisAlignment: CrossAxisAlignment.start,
+                                  children: [
+                                    Text(
+                                        "$index. ",
+                                        style: const TextStyle(fontSize: 17)
+                                    ),
+                                    Expanded(
+                                      child: Text(
+                                          direction,
+                                          style: const TextStyle(fontSize: 18)
+                                      ),
+                                    )
+                                  ],
                                 ),
-                                Expanded(
-                                  child: Text(
-                                      direction,
-                                      style: const TextStyle(fontSize: 18)
-                                  ),
-                                )
-                              ],
-                            ),
-                          );
-                        }).toList(),
+                              );
+                            }).toList(),
                       ),
                     )
                 )

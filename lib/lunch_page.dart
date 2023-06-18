@@ -58,6 +58,18 @@ class _LunchPageState extends State<LunchPage> {
     }
   }
 
+  void _infoRecipe(lunchRecipe) async {
+    final newRecipe = await Navigator.push(
+      context,
+      MaterialPageRoute(builder: (context) =>  LunchRecipeInfoPage(lunchRecipe)),
+    );
+    if(newRecipe != null){
+      setState(() {
+        lunchRecipes.remove(newRecipe);
+      });
+    }
+  }
+
   void _onItemTapped(int index) {
     setState(() {
       _selectedIndex = index;
@@ -114,10 +126,7 @@ class _LunchPageState extends State<LunchPage> {
                         fit: BoxFit.cover,
                         child: InkWell(
                           onTap: () {
-                            Navigator.push(
-                              context,
-                              MaterialPageRoute(builder: (context) => LunchRecipeInfoPage(lunchRecipes[index])),
-                            );
+                            _infoRecipe(lunchRecipes[index]);
                           },
                         ),
                       ),

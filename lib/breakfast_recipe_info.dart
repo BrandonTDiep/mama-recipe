@@ -168,8 +168,7 @@ class _BreakfastRecipeInfoPageState extends State<BreakfastRecipeInfoPage> {
                       print("Successfully deleted recipe ");
                     });
                     Navigator.pop(context);
-                    Navigator.pop(context);
-                    Navigator.pop(context);
+                    Navigator.pop(context, widget.breakfastRecipe);
                   }).catchError((error){
                     print("Failed to delete recipe ");
                     print(error);
