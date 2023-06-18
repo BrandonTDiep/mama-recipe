@@ -32,12 +32,9 @@ class _BreakfastRecipeAddPageState extends State<BreakfastRecipeAddPage> {
     FirebaseFirestore.instance.collection("users").doc(currentUser?.uid)
         .collection('breakfast-recipes').add(newRecipe)
         .then((value){
-          print("Successfully added the recipe.");
+          Navigator.pop(context, newRecipe);
         }).catchError((error){
-          print("Failed to add the recipe.");
-          print(error);
-        });
-    Navigator.pop(context, newRecipe);
+    });
   }
 
   late File _image = File("assets/logo2.png");
@@ -58,7 +55,6 @@ class _BreakfastRecipeAddPageState extends State<BreakfastRecipeAddPage> {
       _image = File(image.path);
     });
   }
-
 
   void addPhoto(){
     showDialog(context: context, builder: (context){

@@ -37,7 +37,7 @@ class MyApp extends StatelessWidget {
           backgroundColor: Colors.red[300],
         )
       ),
-      home: LoginPage(),
+      home: const LoginPage(),
     );
   }
 }
@@ -273,8 +273,6 @@ class _MyHomePageState extends State<MyHomePage> {
       ),
     );
   }
-
-
 }
 
 

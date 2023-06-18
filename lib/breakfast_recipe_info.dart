@@ -25,7 +25,6 @@ class _BreakfastRecipeInfoPageState extends State<BreakfastRecipeInfoPage> {
     _loadFavoriteState();
   }
 
-
   void _onItemTapped(int index) {
     setState(() {
       _selectedIndex = index;
@@ -57,15 +56,12 @@ class _BreakfastRecipeInfoPageState extends State<BreakfastRecipeInfoPage> {
         .where("image", isEqualTo: widget.breakfastRecipe['image'])
         .get()
         .then((value){
-          print("Successfully loaded favorite status of the recipe.");
           if(value.docs.isNotEmpty){
             setState(() {
               isFavorite = true;
             });
           }
         }).catchError((error){
-          print("Failed to load favorite status of the recipe.");
-          print(error);
         });
   }
 
@@ -76,10 +72,7 @@ class _BreakfastRecipeInfoPageState extends State<BreakfastRecipeInfoPage> {
         FirebaseFirestore.instance.collection("users").doc(currentUser?.uid)
             .collection('favorites').add(widget.breakfastRecipe)
             .then((value){
-              print("Successfully favorite the recipe.");
             }).catchError((error){
-              print("Failed to favorite the recipe.");
-              print(error);
             });
       }
       else{
@@ -90,14 +83,9 @@ class _BreakfastRecipeInfoPageState extends State<BreakfastRecipeInfoPage> {
               FirebaseFirestore.instance.collection("users").doc(currentUser?.uid)
                   .collection('favorites').doc(docId).delete()
                   .then((value){
-                    print("Successfully remove favorite status of the recipe.");
                   }).catchError((error){
-                    print("Failed to remove favorite status of the recipe.");
-                    print(error);
                   });
             }).catchError((error){
-              print("Failed to delete the favorite recipe.");
-              print(error);
             });
       }
     });
@@ -149,8 +137,6 @@ class _BreakfastRecipeInfoPageState extends State<BreakfastRecipeInfoPage> {
                           value.reference.delete();
                         });
                       }).catchError((error){
-                        print("No favorite recipes to delete");
-                        print(error);
                       });
                   FirebaseFirestore.instance.collection("users").doc(currentUser?.uid)
                       .collection('breakfast-recipes')
@@ -164,13 +150,10 @@ class _BreakfastRecipeInfoPageState extends State<BreakfastRecipeInfoPage> {
                       .then((value){
                         value.docs.forEach((value){
                           value.reference.delete();
-                          print("Successfully deleted recipe ");
                         });
                         Navigator.pop(context);
                         Navigator.pop(context, widget.breakfastRecipe);
                       }).catchError((error){
-                        print("Failed to delete recipe ");
-                        print(error);
                       });
                   },
                 child: const Text(
@@ -332,7 +315,6 @@ class _BreakfastRecipeInfoPageState extends State<BreakfastRecipeInfoPage> {
                           .asMap()
                           .entries
                           .map<Widget>((ingredients){
-                            print(ingredients);
                             var ingredient = ingredients.value;
                             return Container(
                                 margin: const EdgeInsets.only(bottom: 8),
@@ -380,7 +362,6 @@ class _BreakfastRecipeInfoPageState extends State<BreakfastRecipeInfoPage> {
                           .asMap()
                           .entries
                           .map<Widget>((directions){
-                            print(directions);
                             var index = directions.key + 1;
                             var direction = directions.value;
                             return Container(
