@@ -31,7 +31,6 @@ class _DinnerPageState extends State<DinnerPage> {
     FirebaseFirestore.instance.collection("users").doc(currentUser?.uid)
         .collection('dinner-recipes').get()
         .then((querySnapshot) {
-          print("Successfully load all the recipes");
           var recipeTmpList = [];
           querySnapshot.docs.forEach((element){
             recipeTmpList.add(element.data());
@@ -41,8 +40,6 @@ class _DinnerPageState extends State<DinnerPage> {
 
           });
         }).catchError((error) {
-          print("Failed to load all the recipes.");
-          print(error);
         });
   }
 

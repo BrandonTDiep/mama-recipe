@@ -32,12 +32,9 @@ class _DinnerRecipeAddPageState extends State<DinnerRecipeAddPage> {
     FirebaseFirestore.instance.collection("users").doc(currentUser?.uid)
         .collection('dinner-recipes').add(newRecipe)
         .then((value){
-      print("Successfully added the recipe.");
-    }).catchError((error){
-      print("Failed to add the recipe.");
-      print(error);
-    });
-    Navigator.pop(context, newRecipe);
+          Navigator.pop(context, newRecipe);
+        }).catchError((error){
+        });
   }
 
   late File _image = File("assets/logo2.png");
