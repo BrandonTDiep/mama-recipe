@@ -213,7 +213,7 @@ class _BreakfastRecipeInfoPageState extends State<BreakfastRecipeInfoPage> {
         child: ListView(
           children: [
             SizedBox(
-                height: MediaQuery.of(context).size.height * 0.34,
+                height: MediaQuery.of(context).size.height * 0.40,
                 child: widget.breakfastRecipe['image'].startsWith("assets/")
                     ? Image.asset(widget.breakfastRecipe["image"],
                   fit: BoxFit.cover,
