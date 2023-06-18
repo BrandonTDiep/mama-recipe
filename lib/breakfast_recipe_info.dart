@@ -90,7 +90,6 @@ class _BreakfastRecipeInfoPageState extends State<BreakfastRecipeInfoPage> {
               FirebaseFirestore.instance.collection("users").doc(currentUser?.uid)
                   .collection('favorites').doc(docId).delete()
                   .then((value){
-                    //print(docId);
                     print("Successfully remove favorite status of the recipe.");
                   }).catchError((error){
                     print("Failed to remove favorite status of the recipe.");
@@ -146,13 +145,13 @@ class _BreakfastRecipeInfoPageState extends State<BreakfastRecipeInfoPage> {
                       .where("image", isEqualTo: widget.breakfastRecipe['image'])
                       .get()
                       .then((value){
-                    value.docs.forEach((value){
-                      value.reference.delete();
-                    });
-                  }).catchError((error){
-                    print("No favorite recipes to delete");
-                    print(error);
-                  });
+                        value.docs.forEach((value){
+                          value.reference.delete();
+                        });
+                      }).catchError((error){
+                        print("No favorite recipes to delete");
+                        print(error);
+                      });
                   FirebaseFirestore.instance.collection("users").doc(currentUser?.uid)
                       .collection('breakfast-recipes')
                       .where("name", isEqualTo: widget.breakfastRecipe['name'])
@@ -163,17 +162,17 @@ class _BreakfastRecipeInfoPageState extends State<BreakfastRecipeInfoPage> {
                       .where("image", isEqualTo: widget.breakfastRecipe['image'])
                       .get()
                       .then((value){
-                    value.docs.forEach((value){
-                      value.reference.delete();
-                      print("Successfully deleted recipe ");
-                    });
-                    Navigator.pop(context);
-                    Navigator.pop(context, widget.breakfastRecipe);
-                  }).catchError((error){
-                    print("Failed to delete recipe ");
-                    print(error);
-                  });
-                },
+                        value.docs.forEach((value){
+                          value.reference.delete();
+                          print("Successfully deleted recipe ");
+                        });
+                        Navigator.pop(context);
+                        Navigator.pop(context, widget.breakfastRecipe);
+                      }).catchError((error){
+                        print("Failed to delete recipe ");
+                        print(error);
+                      });
+                  },
                 child: const Text(
                   "Delete",
                   style: TextStyle(

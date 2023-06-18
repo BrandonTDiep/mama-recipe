@@ -144,12 +144,12 @@ class _LunchRecipeInfoPageState extends State<LunchRecipeInfoPage> {
                         .where("image", isEqualTo: widget.lunchRecipe['image'])
                         .get()
                         .then((value){
-                      value.docs.forEach((value){
-                        value.reference.delete();
-                      });
-                    }).catchError((error){
-                      print("No favorite recipes to delete");
-                      print(error);
+                          value.docs.forEach((value){
+                            value.reference.delete();
+                          });
+                        }).catchError((error){
+                          print("No favorite recipes to delete");
+                          print(error);
                     });
                     FirebaseFirestore.instance.collection("users").doc(currentUser?.uid)
                         .collection('lunch-recipes')
@@ -161,17 +161,17 @@ class _LunchRecipeInfoPageState extends State<LunchRecipeInfoPage> {
                         .where("image", isEqualTo: widget.lunchRecipe['image'])
                         .get()
                         .then((value){
-                      value.docs.forEach((value){
-                        value.reference.delete();
-                        print("Successfully deleted recipe ");
-                      });
-                      Navigator.pop(context);
-                      Navigator.pop(context, widget.lunchRecipe);
-                    }).catchError((error){
-                      print("Failed to delete recipe ");
-                      print(error);
-                    });
-                  },
+                          value.docs.forEach((value){
+                            value.reference.delete();
+                            print("Successfully deleted recipe ");
+                          });
+                          Navigator.pop(context);
+                          Navigator.pop(context, widget.lunchRecipe);
+                        }).catchError((error){
+                          print("Failed to delete recipe ");
+                          print(error);
+                        });
+                    },
                   child: const Text(
                     "Delete",
                     style: TextStyle(
