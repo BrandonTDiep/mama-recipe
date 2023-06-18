@@ -134,7 +134,7 @@ class _FavoriteRecipeInfoPageState extends State<FavoriteRecipeInfoPage> {
         child: ListView(
           children: [
             SizedBox(
-                height: MediaQuery.of(context).size.height * 0.34,
+                height: MediaQuery.of(context).size.height * 0.40,
                 child: widget.favoriteRecipe['image'].startsWith("assets/")
                     ? Image.asset(widget.favoriteRecipe["image"],
                   fit: BoxFit.cover,

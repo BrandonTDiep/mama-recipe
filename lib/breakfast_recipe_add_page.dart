@@ -47,7 +47,6 @@ class _BreakfastRecipeAddPageState extends State<BreakfastRecipeAddPage> {
     setState(() {
       _image = File(image.path);
       _imageSelected = true;
-
     });
   }
 
@@ -57,7 +56,6 @@ class _BreakfastRecipeAddPageState extends State<BreakfastRecipeAddPage> {
     setState(() {
       _image = File(image.path);
       _imageSelected = true;
-
     });
   }
 
@@ -138,22 +136,22 @@ class _BreakfastRecipeAddPageState extends State<BreakfastRecipeAddPage> {
                     child:
                     _imageSelected ?
                     Container(
-                      margin: const EdgeInsets.only(top: 10),
-                      width: MediaQuery.of(context).size.width * 0.88,
-                          child: Image.file(
-                      _image,
-                      fit: BoxFit.cover,
-                    ),
-                    ): Container(
+                        margin: const EdgeInsets.only(top: 10),
+                        width: MediaQuery.of(context).size.width * 0.88,
+                        child: Image.file(
+                          _image,
+                          fit: BoxFit.cover,
+                        )
+                    ):Container (
                       margin: const EdgeInsets.only(top: 10),
                       height: 60,
                       width: 350,
                       child: ElevatedButton.icon(
-                        onPressed: addPhoto,
-                        icon: const Icon(Icons.camera_alt),
-                        label: const Text("Add a Photo"),
+                          onPressed: addPhoto,
+                          icon: const Icon(Icons.camera_alt),
+                          label: const Text("Add a Photo")
                       ),
-                    ),
+                    )
                   ),
                 ),
                 Container(
