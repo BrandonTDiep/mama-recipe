@@ -27,7 +27,6 @@ class _LoginPageState extends State<LoginPage> {
   void loginStatus(){
     SharedPreferences.getInstance().then((pref){
       var loginStatus = pref.getBool("login");
-      print(loginStatus);
       if(loginStatus != null && loginStatus == true){
         Navigator.pushAndRemoveUntil(
             context,
@@ -58,7 +57,7 @@ class _LoginPageState extends State<LoginPage> {
                 child: Column(
                   children: [
                     Container(
-                      margin: EdgeInsets.only(top: 20, bottom: 20),
+                      margin: const EdgeInsets.only(top: 20, bottom: 20),
                       child: const Text(
                           'Login',
                           style: TextStyle(
@@ -68,7 +67,7 @@ class _LoginPageState extends State<LoginPage> {
                       ),
                     ),
                     Container(
-                      margin: EdgeInsets.only(left: 35, right: 35, bottom: 10, top: 10),
+                      margin: const EdgeInsets.only(left: 35, right: 35, bottom: 10, top: 10),
                       child: TextField(
                         controller: emailController,
                         obscureText: false,
@@ -125,52 +124,49 @@ class _LoginPageState extends State<LoginPage> {
                           FirebaseAuth.instance.signInWithEmailAndPassword(
                               email: emailController.text, password: passwordController.text)
                               .then((value){
-                            print("Successfully login!");
-                            SharedPreferences.getInstance().then((pref){
-                              pref.setBool("login", true);
-                            });
-                            Navigator.pushAndRemoveUntil(
-                                context,
-                                MaterialPageRoute(builder: (context) => const MyHomePage()),
-                                    (route) => false
-                            );
-                          }).catchError((error){
-                            print("Failed to login");
-                            print(error.toString());
-                            if(emailController.text.isNotEmpty && passwordController.text.isNotEmpty){
-                              showDialog(context: context, builder: (context){
-                                return const AlertDialog(
-                                  title: Text(
-                                    "Incorrect email or password.\nTry Again.",
-                                    textAlign: TextAlign.center,
-                                    style: TextStyle(
-                                      fontSize: 20,
-                                    ),
-                                  ),
+                                SharedPreferences.getInstance().then((pref){
+                                  pref.setBool("login", true);
+                                });
+                                Navigator.pushAndRemoveUntil(
+                                    context,
+                                    MaterialPageRoute(builder: (context) => const MyHomePage()),
+                                        (route) => false
                                 );
-                              });
-                            }
-                            else if (emailController.text.isEmpty && passwordController.text.isEmpty){
-                              showDialog(context: context, builder: (context){
-                                return const AlertDialog(
-                                  title: Text(
-                                    "Please enter your email and password",
-                                    textAlign: TextAlign.center,
-                                    style: TextStyle(
-                                      fontSize: 20,
-                                    ),
-                                  ),
-                                );
-                              });
-                            }
-                            else if (passwordController.text.isNotEmpty && emailController.text.isEmpty){
-                              showDialog(context: context, builder: (context){
-                                return const AlertDialog(
-                                  title: Text(
-                                    "Please enter your email",
-                                    textAlign: TextAlign.center,
-                                    style: TextStyle(
-                                      fontSize: 20,
+                              }).catchError((error){
+                                if(emailController.text.isNotEmpty && passwordController.text.isNotEmpty){
+                                  showDialog(context: context, builder: (context){
+                                    return const AlertDialog(
+                                      title: Text(
+                                        "Incorrect email or password.\nTry Again.",
+                                        textAlign: TextAlign.center,
+                                        style: TextStyle(
+                                          fontSize: 20,
+                                        ),
+                                      ),
+                                    );
+                                  });
+                                }
+                                else if (emailController.text.isEmpty && passwordController.text.isEmpty){
+                                  showDialog(context: context, builder: (context){
+                                    return const AlertDialog(
+                                      title: Text(
+                                        "Please enter your email and password",
+                                        textAlign: TextAlign.center,
+                                        style: TextStyle(
+                                          fontSize: 20,
+                                        ),
+                                      ),
+                                    );
+                                  });
+                                }
+                                else if (passwordController.text.isNotEmpty && emailController.text.isEmpty){
+                                  showDialog(context: context, builder: (context){
+                                    return const AlertDialog(
+                                      title: Text(
+                                        "Please enter your email",
+                                        textAlign: TextAlign.center,
+                                        style: TextStyle(
+                                          fontSize: 20,
                                     ),
                                   ),
                                 );
@@ -205,8 +201,6 @@ class _LoginPageState extends State<LoginPage> {
                                 fontWeight: FontWeight.bold,
                                 color: Colors.grey,
                                 fontSize: 14,
-
-
                               ),
                             ),
                           ),

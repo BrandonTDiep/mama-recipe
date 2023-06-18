@@ -99,13 +99,11 @@ class _SignupPageState extends State<SignupPage> {
                       width: 330,
                       margin: const EdgeInsets.only(top: 20, bottom: 20),
                       child: ElevatedButton(
-                        child: Text("Create Account"),
+                        child: const Text("Create Account"),
                         onPressed: () {
                           FirebaseAuth.instance.createUserWithEmailAndPassword(
                               email: emailController.text, password: passwordController.text)
                               .then((value) {
-                                print("Successfully sign up the user!");
-
                                 var userProfile = {
                                   'uid' : value.user?.uid,
                                   'name' : nameController.text,
@@ -113,13 +111,10 @@ class _SignupPageState extends State<SignupPage> {
                                 };
                                 FirebaseFirestore.instance.collection("users").doc(value.user?.uid).set(userProfile)
                                     .then((value){
-                                      print("Successfully created the profile info.");
                                       SharedPreferences.getInstance().then((pref){
                                         pref.setBool("login", true);
                                       });
                                     }).catchError((error){
-                                      print("Failed to create the profile info.");
-                                      print(error);
                                 });
                                 Navigator.pushAndRemoveUntil(
                                     context,
@@ -139,7 +134,6 @@ class _SignupPageState extends State<SignupPage> {
                                       ),
                                     );
                                   });
-                                  print(error.toString());
                                 }
                                 else{
                                   showDialog(context: context, builder: (context){
@@ -153,8 +147,6 @@ class _SignupPageState extends State<SignupPage> {
                                       ),
                                     );
                                   });
-                                  print("Failed to sign up the user!");
-                                  print(error.toString());
                                 }
                           });
                         },

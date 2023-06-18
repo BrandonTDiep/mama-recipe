@@ -20,6 +20,7 @@ class _ForgotPwdPageState extends State<ForgotPwdPage> {
   Future passwordReset() async {
     await FirebaseAuth.instance.sendPasswordResetEmail(email: _emailController.text.trim());
   }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -77,7 +78,6 @@ class _ForgotPwdPageState extends State<ForgotPwdPage> {
               onPressed: () {
                 FirebaseAuth.instance.sendPasswordResetEmail(email: _emailController.text.trim())
                     .then((value){
-                      print("Successfully sent email to reset password!");
                       showDialog(context: context, builder: (context){
                         return const AlertDialog(
                           title: Text(
@@ -90,8 +90,6 @@ class _ForgotPwdPageState extends State<ForgotPwdPage> {
                         );
                       });
                     }).catchError((error){
-                      print("Failed to send email to reset password");
-                      print(error.toString());
                       showDialog(context: context, builder: (context){
                         return const AlertDialog(
                           title: Text(
@@ -107,7 +105,6 @@ class _ForgotPwdPageState extends State<ForgotPwdPage> {
                 },
             ),
           ),
-
         ],
       ),
     );
