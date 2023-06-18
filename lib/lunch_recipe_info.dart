@@ -56,15 +56,12 @@ class _LunchRecipeInfoPageState extends State<LunchRecipeInfoPage> {
         .where("image", isEqualTo: widget.lunchRecipe['image'])
         .get()
         .then((value){
-          print("Successfully loaded favorite status of the recipe.");
           if(value.docs.isNotEmpty){
             setState(() {
               isFavorite = true;
             });
           }
         }).catchError((error){
-          print("Failed to load favorite status of the recipe.");
-          print(error);
         });
   }
 
@@ -75,10 +72,7 @@ class _LunchRecipeInfoPageState extends State<LunchRecipeInfoPage> {
         FirebaseFirestore.instance.collection("users").doc(currentUser?.uid)
             .collection('favorites').add(widget.lunchRecipe)
             .then((value){
-              print("Successfully favorite the recipe.");
             }).catchError((error){
-              print("Failed to favorite the recipe.");
-              print(error);
         });
       }
       else{
@@ -89,14 +83,9 @@ class _LunchRecipeInfoPageState extends State<LunchRecipeInfoPage> {
           FirebaseFirestore.instance.collection("users").doc(currentUser?.uid)
               .collection('favorites').doc(docId).delete()
               .then((value){
-                print("Successfully remove favorite status of the recipe.");
               }).catchError((error){
-                print("Failed to remove favorite status of the recipe.");
-                print(error);
               });
             }).catchError((error){
-              print("Failed to delete the favorite recipe.");
-              print(error);
             });
       }
     });
@@ -148,8 +137,6 @@ class _LunchRecipeInfoPageState extends State<LunchRecipeInfoPage> {
                             value.reference.delete();
                           });
                         }).catchError((error){
-                          print("No favorite recipes to delete");
-                          print(error);
                     });
                     FirebaseFirestore.instance.collection("users").doc(currentUser?.uid)
                         .collection('lunch-recipes')
@@ -163,13 +150,10 @@ class _LunchRecipeInfoPageState extends State<LunchRecipeInfoPage> {
                         .then((value){
                           value.docs.forEach((value){
                             value.reference.delete();
-                            print("Successfully deleted recipe ");
                           });
                           Navigator.pop(context);
                           Navigator.pop(context, widget.lunchRecipe);
                         }).catchError((error){
-                          print("Failed to delete recipe ");
-                          print(error);
                         });
                     },
                   child: const Text(

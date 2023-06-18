@@ -56,15 +56,12 @@ class _FavoriteRecipeInfoPageState extends State<FavoriteRecipeInfoPage> {
         .where("image", isEqualTo: widget.favoriteRecipe['image'])
         .get()
         .then((value){
-          print("Successfully loaded favorite status of the recipe.");
           if(value.docs.isNotEmpty){
             setState(() {
               isFavorite = true;
             });
           }
         }).catchError((error){
-          print("Failed to load favorite status of the recipe.");
-          print(error);
         });
   }
 
@@ -75,10 +72,7 @@ class _FavoriteRecipeInfoPageState extends State<FavoriteRecipeInfoPage> {
         FirebaseFirestore.instance.collection("users").doc(currentUser?.uid)
             .collection('favorites').add(widget.favoriteRecipe)
             .then((value){
-              print("Successfully favorite the recipe.");
             }).catchError((error){
-              print("Failed to favorite the recipe.");
-              print(error);
             });
       }
       else{
@@ -89,14 +83,9 @@ class _FavoriteRecipeInfoPageState extends State<FavoriteRecipeInfoPage> {
               FirebaseFirestore.instance.collection("users").doc(currentUser?.uid)
                   .collection('favorites').doc(docId).delete()
                   .then((value){
-                    print("Successfully remove favorite status of the recipe.");
                   }).catchError((error){
-                    print("Failed to remove favorite status of the recipe.");
-                    print(error);
                   });
             }).catchError((error){
-              print("Failed to delete the favorite recipe.");
-              print(error);
             });
       }
     });

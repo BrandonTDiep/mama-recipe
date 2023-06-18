@@ -24,7 +24,6 @@ class _FavoriteRecipesPageState extends State<FavoriteRecipesPage> {
     FirebaseFirestore.instance.collection("users").doc(currentUser?.uid)
         .collection('favorites').get()
         .then((querySnapshot) {
-          print("Successfully load all the favorite recipes");
           var recipeTmpList = [];
           querySnapshot.docs.forEach((element){
             recipeTmpList.add(element.data());
@@ -34,8 +33,6 @@ class _FavoriteRecipesPageState extends State<FavoriteRecipesPage> {
 
           });
         }).catchError((error) {
-          print("Failed to load all the favorite recipes.");
-          print(error);
         });
   }
 
