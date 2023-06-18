@@ -52,6 +52,18 @@ class _FavoriteRecipesPageState extends State<FavoriteRecipesPage> {
     });
   }
 
+  void _infoRecipe(favoriteRecipe) async {
+    final newRecipe = await Navigator.push(
+      context,
+      MaterialPageRoute(builder: (context) =>  FavoriteRecipeInfoPage(favoriteRecipe)),
+    );
+    if(newRecipe != null){
+      setState(() {
+        favoriteRecipes.remove(newRecipe);
+      });
+    }
+  }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -88,10 +100,7 @@ class _FavoriteRecipesPageState extends State<FavoriteRecipesPage> {
                         fit: BoxFit.cover,
                         child: InkWell(
                           onTap: () {
-                            Navigator.push(
-                              context,
-                              MaterialPageRoute(builder: (context) => FavoriteRecipeInfoPage(favoriteRecipes[index])),
-                            );
+                            _infoRecipe(favoriteRecipes[index]);
                           },
                         ),
                       ),

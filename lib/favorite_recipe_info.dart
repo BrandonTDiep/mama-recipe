@@ -56,16 +56,16 @@ class _FavoriteRecipeInfoPageState extends State<FavoriteRecipeInfoPage> {
         .where("image", isEqualTo: widget.favoriteRecipe['image'])
         .get()
         .then((value){
-      print("Successfully loaded favorite status of the recipe.");
-      if(value.docs.isNotEmpty){
-        setState(() {
-          isFavorite = true;
+          print("Successfully loaded favorite status of the recipe.");
+          if(value.docs.isNotEmpty){
+            setState(() {
+              isFavorite = true;
+            });
+          }
+        }).catchError((error){
+          print("Failed to load favorite status of the recipe.");
+          print(error);
         });
-      }
-    }).catchError((error){
-      print("Failed to load favorite status of the recipe.");
-      print(error);
-    });
   }
 
   void toggleFavorite(){
@@ -75,30 +75,29 @@ class _FavoriteRecipeInfoPageState extends State<FavoriteRecipeInfoPage> {
         FirebaseFirestore.instance.collection("users").doc(currentUser?.uid)
             .collection('favorites').add(widget.favoriteRecipe)
             .then((value){
-          print("Successfully favorite the recipe.");
-        }).catchError((error){
-          print("Failed to favorite the recipe.");
-          print(error);
-        });
+              print("Successfully favorite the recipe.");
+            }).catchError((error){
+              print("Failed to favorite the recipe.");
+              print(error);
+            });
       }
       else{
         FirebaseFirestore.instance.collection("users").doc(currentUser?.uid)
             .collection('favorites').where("name", isEqualTo: widget.favoriteRecipe['name']).get()
             .then((value){
-          String docId = value.docs.first.id;
-          FirebaseFirestore.instance.collection("users").doc(currentUser?.uid)
-              .collection('favorites').doc(docId).delete()
-              .then((value){
-            //print(docId);
-            print("Successfully remove favorite status of the recipe.");
-          }).catchError((error){
-            print("Failed to remove favorite status of the recipe.");
-            print(error);
-          });
-        }).catchError((error){
-          print("Failed to delete the favorite recipe.");
-          print(error);
-        });
+              String docId = value.docs.first.id;
+              FirebaseFirestore.instance.collection("users").doc(currentUser?.uid)
+                  .collection('favorites').doc(docId).delete()
+                  .then((value){
+                    print("Successfully remove favorite status of the recipe.");
+                  }).catchError((error){
+                    print("Failed to remove favorite status of the recipe.");
+                    print(error);
+                  });
+            }).catchError((error){
+              print("Failed to delete the favorite recipe.");
+              print(error);
+            });
       }
     });
   }
@@ -116,6 +115,17 @@ class _FavoriteRecipeInfoPageState extends State<FavoriteRecipeInfoPage> {
           fontWeight: FontWeight.bold,
           fontSize: 20,
         ),),
+        leading: IconButton(
+          icon: const Icon(Icons.arrow_back),
+          onPressed: () {
+            if(isFavorite){
+              Navigator.pop(context);
+            }
+            else{
+              Navigator.pop(context, widget.favoriteRecipe);
+            }
+          },
+        ),
         actions: [
           Container(
               margin: const EdgeInsets.only(left: 20, right: 20),
