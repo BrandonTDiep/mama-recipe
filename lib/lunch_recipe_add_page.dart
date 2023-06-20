@@ -196,7 +196,7 @@ class _LunchRecipeAddPageState extends State<LunchRecipeAddPage> {
                   alignment: Alignment.centerLeft,
                   margin: const EdgeInsets.only(left: 22, right: 22),
                   child: SizedBox(
-                    width: 100,
+                    width: 130,
                     height: 50,
                     child: TextField(
                       controller: timeController,
