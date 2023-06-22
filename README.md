@@ -3,6 +3,8 @@
 A recipe app made for anyone looking for an easy way to save their beloved mama's recipes. 
 Users can store their families and personal recipes to ensure they are never forgotten.
 
+https://play.google.com/store/apps/details?id=com.bdiep.mama_recipe_app
+
 ## Getting Started
 
 This project is a starting point for a Flutter application.
