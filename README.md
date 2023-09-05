@@ -5,6 +5,8 @@ Users can store their families and personal recipes to ensure they are never for
 
 https://play.google.com/store/apps/details?id=com.bdiep.mama_recipe_app
 
+![image](https://github.com/BrandonTDiep/mama-recipe/assets/108596840/8a588215-6102-454e-849d-fb9ce0aa6c9b)
+
 ## Getting Started
 
 This project is a starting point for a Flutter application.
